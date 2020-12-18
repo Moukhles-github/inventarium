@@ -1,0 +1,225 @@
+html, body {
+    
+    height: 100%; 
+    width: 100%;
+    
+}
+
+.navbar {
+    
+    background-color: #f9fbfc; 
+    padding: 1% 0%;
+    font-size: 1.2em; 
+    
+}
+
+.navbar-brand {
+    
+    min-height: 55px; 
+    padding: 0 15px 5px;
+    
+}
+
+.navbar-default .navbar-nav li a{
+    
+    color:  #363636; 
+      
+}
+
+.navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a.active {
+    
+    color: white;
+    background-color: #FF6000;
+
+}
+
+.navbar-default .navbar-nav > .active > a {
+    
+    color: white !important;
+    background-color: #FF6000 !important;
+    
+    
+}
+
+
+
+
+
+#aboutus {
+    max-width: 60%;
+}
+
+#services {
+    max-width: 50%;  
+    
+}
+
+
+#logo1 {
+    
+     margin-left: 20px !important;
+    
+}
+
+
+#logo {
+    width: 100%; 
+    max-width: 70px; 
+    height: auto; 
+   
+    
+    
+    
+}
+ 
+#home {
+    
+    background: url(../MEDIA/Images/background.jpg) no-repeat center center fixed;
+    display: table; 
+    height: 100%;
+    position: relative;
+    width: 100%;
+    background-size: cover; 
+    
+}
+
+
+#portalbutton {
+    
+    background-color:#FF6000; 
+    border: none !important;
+    color: white;
+    font-size: 1.75em;
+}
+
+#getstartedbtn {
+    max-width: 30px;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    
+}
+
+
+.landing-text { 
+    
+    display: table-cell; 
+    text-align: center; 
+    vertical-align: middle; 
+
+}
+
+.landing-text h1 { 
+    
+    font-size: 500%;
+    font-weight: 700%;
+
+}
+
+.padding {
+    
+    padding: 80px 0; 
+    
+}
+
+.padding img {
+    
+    width: 100%; 
+    
+}
+
+#fixed {
+    
+    background: url(../MEDIA/Images/background6.jpg)  no-repeat center center fixed; 
+    display: table; 
+    height: 60%;
+    position: relative; 
+    width: 100%; 
+    background-size: cover; 
+    
+}
+
+footer { 
+
+    width: 100%; 
+    background-color: #f9fbfc; 
+    padding: 5% 5% 10% 5%;
+    color: #363636; 
+    border-top: 7px solid #FF6000;
+    font-size: 24px;
+    font-family: sans-serif;
+    
+}
+
+#copyright
+{
+    font-size: 18px;
+    margin: 25px;
+    
+    
+}
+
+#imginve
+{
+    max-width: 35%;
+}
+
+
+#address 
+{
+    max-width: 31px;
+    padding: 0px 4px 6px 0px
+}
+
+
+.fa {
+    padding: 15px; 
+    font-size: 40px;
+    color: #363636 ;
+}
+
+.fa:hover {
+    
+    color: #FF6000; 
+    text-decoration: none;
+     
+}
+
+.icon {
+    max-width: 200px; 
+    
+}
+
+
+@media (max-width: 768px) {
+    .landing-text h1 {
+        font-size: 300%;
+        
+    }
+    
+    .fa {
+        
+        font-size: 20px; 
+        padding: 10px; 
+        
+        
+    }
+    
+    .icon {
+        
+        padding-top: 5%;
+        max-width: 100px; 
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

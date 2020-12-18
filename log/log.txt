@@ -1,0 +1,5 @@
+09/12/2020 > 19:02:57 PM: SQL (select * from users where u_uname='' and u_psw='' and u_active=1)
+09/12/2020 > 20:39:17 PM: SQL (select * from users where u_uname='admin' and u_psw='admin' and u_active=1)
+09/12/2020 > 20:39:22 PM: SQL (select * from users where u_uname='admin' and u_psw='admin' and u_active=1)
+09/12/2020 > 20:39:25 PM: SQL (select * from users where u_uname='' and u_psw='' and u_active=1)
+09/12/2020 > 20:39:36 PM: SQL (select * from users where u_uname='admin' and u_psw='admin' and u_active=1)
