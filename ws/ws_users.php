@@ -8,31 +8,32 @@
 	 op=4 (update user)
 	 op=5 (deactivate user)
 	 op=6 (logout)
-	 op=7 (get all users)
-	 op=8 (promote user)
-	 op=9 (get managers)
+	 op=7 (get users)
+	 op=8 (update user)
+	 op=9 (get active users)
+	 op=10 (get type 1 users)
+	 op=11(get type 2 users)
 	 
 */
 
-header( 'Access-Control-Allow-Origin: *' );
-require_once( '../classes/users.class.php' );
+header('Access-Control-Allow-Origin: *');
+require_once('../classes/users.class.php');
 
 $user = new users();
 $result = 0;
 
 
 try {
-	if ( isset( $_GET[ "op" ] ) ) //check if op exists
+	if (isset($_GET["op"])) //check if op exists
 	{
-		$op = $_GET[ "op" ];
+		$op = $_GET["op"];
 
 
-		switch ( $op ) { //login
-			case 1:
-				{
-					$result = $user->getLogin( $_GET[ "uname" ], $_GET[ "upwd" ] );
+		switch ($op) { //login
+			case 1: {
+					$result = $user->getLogin($_GET["uname"], $_GET["upwd"]);
 
-					if ( is_array( $result ) ) {
+					if (is_array($result)) {
 						session_start();
 
 						//store id, uname, type in session, so it can be accessible in any php file
@@ -43,26 +44,26 @@ try {
 
 						//store the type in result so to return it
 						//$result=$result->getType();
-						$result = $result[ "user_type" ];
+						$result = $result["user_type"];
 					}
 				}
 
 				break;
 
 			case 2: //check if username exists
-				$result = $user->checkUsername( $_GET[ "uname" ] );
+				$result = $user->checkUsername($_GET["user_name"]);
 				break;
 
 			case 3: //add user
-				$result = $user->addUser( $_GET[ "u_ssn" ], $_GET[ "u_rankid" ], $_GET[ "u_name" ], $_GET[ "u_lname" ], $_GET[ "u_uname" ], $_GET[ "u_psw" ] );
+				$result = $user->addUser($_GET["user_emp_id"], $_GET["user_name"], $_GET["user_pwd"], $_GET["user_type"]);
 				break;
 
 			case 4: //update user
-				$result = $user->updateUser( $_GET[ "id" ], $_GET[ "u_ssn" ], $_GET[ "u_rankid" ], $_GET[ "u_name" ], $_GET[ "u_lname" ], $_GET[ "u_uname" ], $_GET[ "u_psw" ], $_GET[ "u_typeid" ], $_GET[ "active" ] );
+				$result = $user->updateUser($_GET["id"], $_GET["u_ssn"], $_GET["u_rankid"], $_GET["u_name"], $_GET["u_lname"], $_GET["u_uname"], $_GET["u_psw"], $_GET["u_typeid"], $_GET["active"]);
 				break;
 
 			case 5: //deactivate user
-				$result = $user->deactivateUser( $_GET[ "u_id" ], $_GET[ "val" ] );
+				$result = $user->toggleUser($_GET["u_id"], $_GET["val"]);
 				break;
 
 			case 6: //Logout
@@ -76,31 +77,29 @@ try {
 				break;
 
 			case 7: //get users
-				$result = $user->getemps();
+				$result = $user->getusers();
 				break;
 
 			case 8:
-				$result = $user->promuser( $_GET[ 'eid' ] );
+				$result = $user->promuser($_GET['eid']);
 				break;
 
 			case 9:
-				$result = $user->getmngs();
+				$result = $user->popEmployees(); //populate elegible employees to users. 
 				break;
 
+			case 10:
+				$result = $user->popUsertype();
+				break;
 			default:
 				return 0;
 				break;
 		}
-
 	}
 
-	header( "Content-type:application/json" );
-	echo json_encode( $result );
-} catch ( Exception $e ) {
+	header("Content-type:application/json");
+	echo json_encode($result);
+} catch (Exception $e) {
 
-	echo - 1;
+	echo -1;
 }
-
-
-
-?>

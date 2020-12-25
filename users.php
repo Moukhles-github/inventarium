@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/users.js"></script>
+
 
 </head>
 
@@ -52,13 +54,58 @@
     </nav>
     <div class="main-content">
         <h1> users </h1>
+
+        <!-- Button trigger modal -->
+        <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Create User
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Create a new User</p> </br>
+                        <label>Select An Employee</label>
+                        <Select id="emp_id">
+                            
+                        </Select></br>
+                        <label for="username">Create Username:</label>
+                        <input type="text" id="new_usrname" placeholder="e.g. Myusername"></input></br>
+                        <label>Create a password:</label>
+                        <input type="password" id="new_password" placeholder="Password"></input></br>
+                        <label>Confirm password:</label>
+                        <input type="password" id="confirm_password" placeholder="Password"></input></br>
+                        <label>Assign the user's Type:</label>
+                        <Select id="user_type"> 
+                           
+                        </Select></br>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_create_user" type="button" class="btn btn-primary">Create User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
 
 
 
             <caption>List of Users</caption>
 
-            <thead id="lusers">
+            <thead>
                 <tr>
                     <th scope="col">Username</th>
                     <th scope="col">Employee</th>
@@ -67,11 +114,13 @@
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
-            <tbody id="b_wabody">
-
+            <tbody id="tbody_users">
 
             </tbody>
+
+
     </div>
+
 </body>
 
 </html>

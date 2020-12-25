@@ -3,3 +3,6 @@
 09/12/2020 > 20:39:22 PM: SQL (select * from users where u_uname='admin' and u_psw='admin' and u_active=1)
 09/12/2020 > 20:39:25 PM: SQL (select * from users where u_uname='' and u_psw='' and u_active=1)
 09/12/2020 > 20:39:36 PM: SQL (select * from users where u_uname='admin' and u_psw='admin' and u_active=1)
+21/12/2020 > 20:22:20 PM: SQL (UPDATE `user` SET `user_status` =  WHERE `user`.`user_id` = 0;)
+21/12/2020 > 20:22:29 PM: SQL (UPDATE `user` SET `user_status` =  WHERE `user`.`user_id` = 0;)
+21/12/2020 > 20:22:33 PM: SQL (UPDATE `user` SET `user_status` =  WHERE `user`.`user_id` = 0;)
