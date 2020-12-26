@@ -59,6 +59,96 @@
         <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createusermodal">
             Create User
         </button>
+        
+        
+        <?php
+			
+			//get initial values
+			$sort = "1";
+			$show = "0";
+			$rank = "-1";
+            $keyy = "";
+			//check if sort order is set
+			if(isset($_GET["sort"]) && ($_GET["sort"] != ""))
+			{
+				$sort = $_GET["sort"];
+            }
+            
+			//check if show option is set
+			if(isset($_GET["show"]) && ($_GET["show"] != ""))
+			{
+				$show = $_GET["show"];
+            }
+            
+			//check if rank option is set
+			if(isset($_GET["rank"]) && ($_GET["rank"] != ""))
+			{
+				$rank = $_GET["rank"];
+			}
+
+			//check if workstation option is set
+			if(isset($_GET["key"]) && ($_GET["key"] != ""))
+			{
+				$keyy = $_GET["key"];
+            }
+
+			//create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
+			echo('<input type="hidden" class="sortlisthidden" id="sort'.$sort.'"><input type="hidden" class="showlisthidden" id="show'.$show.'"><input type="hidden" class="rankhidden" id="rank'.$rank.'">');
+
+        ?>
+        
+        <div class="sortandfilterhead" style="height: 90px;">
+			<div style="float: left">
+				<div class='form-group' >
+					 <div class="form-group">
+					  <label for="order" style='margin-right: 10px'>Sort By:</label>
+					  <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
+						<option value="1">UserName Asc</option>
+                        <option value="2">UserName Desc</option>
+                        <option value="3">Name Asc</option>
+						<option value="4">Name Desc</option>
+					  </select>
+					</div> 
+				</div>
+			</div>
+			
+			<div style="float: left">
+				<div class='form-group' >
+					 <div class="form-group">
+					  <label for="order" style='margin-right: 10px'>Show Employees:</label>
+					  <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
+					  	<option value="0">All</option>
+						<option value="1">Active</option>
+						<option value="2">Not Active</option>
+					  </select>
+					</div>
+				</div>
+            </div>
+            
+            <div style="float: left">
+				<div class='form-group' >
+					 <div class="form-group">
+					  <label for="order" style='margin-right: 10px'>Rank:</label>
+					  <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
+					  	<option value="-1">All</option>
+					  </select>
+					</div>
+				</div>
+            </div>
+            
+            
+            <div style="float: left">
+				<div class='form-group' >
+					<div class="form-group">
+					  <label for="order" style='margin-right: 10px'>Search:</label>
+						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
+						
+            		</div>
+            	</div>
+            </div>
+		</div>
+        
+        
 
         <!-- create users Modal -->
         <div class="modal fade" id="createusermodal" tabindex="-1" role="dialog" aria-labelledby="createusermodalTitle" aria-hidden="true">
@@ -159,7 +249,31 @@
 
             </tbody>
 
-
+</table>
+        <?php
+			/////////////////////pagination//////////////////////
+			
+			//check if the on the first page
+			if(isset($_GET["page"]))
+			{
+				$page = $_GET["page"];
+			}
+			else
+			{
+				$page = 1;
+			}
+			//display the pages
+			echo("<br/><br/>
+				<div class='pages' style='width: 100%;text-align: center;'>
+					 <div style='display: inline-block;'>
+						<ul class='pagination'>
+							<li class='page-item' style='display: none;' id='".$page."'></li>
+						</ul>
+					</div>
+				</div>
+			");
+			/////////////////////pagination//////////////////////
+        ?>
     </div>
 
 </body>

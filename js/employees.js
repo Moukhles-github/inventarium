@@ -80,6 +80,7 @@ $(document).ready(function(){
     {
         $.each(data, function(index, row){
             $("#rankorder").append('<option value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</option>');
+            $("#emp_rank").append('<option value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</option>');
         });
         
         setRank();
@@ -130,6 +131,7 @@ $(document).ready(function(){
     {
         $.each(data, function(index, row){
             $("#workstationorder").append('<option value="'+row.wrkst_id+'">'+row.wrkst_name+'</option>');
+            $("#emp_wrks").append('<option value="'+row.wrkst_id+'">'+row.wrkst_name+'</option>'); //populate the add employee form
         });
         
         setWorkstation();
@@ -347,10 +349,24 @@ $(document).ready(function(){
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_users").append('<tr><td>'+row.emp_ssn+'</td><td>'+row.emp_cmp_id+'</td><td>'+row.emp_name+'</td><td>'+row.emp_lname+'</td><td>'+row.emp_ph_nb+'</td><td>'+row.emp_address+'</td><td>'+row.emp_join_date+'</td><td>'+row.emp_wrkst_id+'</td><td>'+row.emp_rank_id+'</td><td>'+row.emp_fouls+'</td><td>'+row.emp_rfid+'</td><td>'+row.emp_status+'</td><td><button>1</button><button>2</button></td></tr>');
+                    $("#tbody_users").append('<tr><td>'+row.emp_ssn+'</td><td>'+row.emp_cmp_id+'</td><td>'+row.emp_name+'</td><td>'+row.emp_lname+'</td><td>'+row.emp_ph_nb+'</td><td>'+row.emp_address+'</td><td>'+row.emp_join_date+'</td><td>'+row.emp_wrkst_id+'</td><td>'+row.emp_rank_id+'</td><td>'+row.emp_fouls+'</td><td>'+row.emp_rfid+'</td><td value="'+row.emp_status+'">'+convertStatusToText(row.emp_status)+'</td><td id="emp'+row.emp_id+'"><button type="button" class="btn btn-primary btn_edit_employee" data-toggle="modal" data-target="#exampleModalCenter">Edit</button><button class="btn btn-primary btn_toogle_active">Toggle</button></td></tr>');
                 });
             }
+		
+		getCompanies();
     }
+	
+	function convertStatusToText(status)
+	{
+		if(status == 1)
+			{
+				return "Active";
+			}
+		else
+			{
+				return "Banned";
+			}
+	}
 
 
 //////////////////////////////////////////////////////////////////////////pagination///////////////////////////////////////////////////////////////
@@ -381,5 +397,247 @@ $(document).ready(function(){
     $("#searchbutton").click(function () {
         window.location.replace("employees.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
     });
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	//get category function
+	function getCompanies()
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_company.php",
+            data: ({op : 1}), 
+            dataType: 'json',
+            timeout: 5000,
+            success: function(data, textStatus, xhr) 
+            {
+                if(data < 1)
+                {
+                    alert("No companies available");
+                }
+                else
+                {
+                    populateCompanies(data);
+                }  
+            },
+            error: function(xhr, status, errorThrown) 
+            {				  
+                alert("Error" + status + errorThrown);				  
+            }
+        });
+    }
+    
+    // fill the category functionl
+    function populateCompanies(data)
+    {
+        $.each(data, function(index, row){
+            $("#emp_company").append('<option value="'+row.cmp_id+'">'+row.cmp_name+'</option>');
+        });
+    }
+	
+	
+	$(document).on("click", "#btn_modal_cusers", function(){
+		$("#editadd").text("Add");
+		$("#editaddval").val(1);
+	});
+	
+	$(document).on("click", ".btn_edit_employee", function(){
+
+		$("#editadd").text("Edit");
+		
+		var empSSN = $(this).parent().siblings().eq(0).text();
+		var empCompany = $(this).parent().siblings().eq(1).text();
+		var empName = $(this).parent().siblings().eq(2).text();
+		var empLname = $(this).parent().siblings().eq(3).text();
+		var empNumber = $(this).parent().siblings().eq(4).text();
+		var empAddress = $(this).parent().siblings().eq(5).text();
+		var empWorkstation = $(this).parent().siblings().eq(7).text();
+		var empRank = $(this).parent().siblings().eq(8).text();
+		var empFouls = $(this).parent().siblings().eq(9).text();
+		var empRFID = $(this).parent().siblings().eq(10).text();
+		var empID =  $(this).parent().attr("id").substr(3);
+		var actionValue = 0;
+		
+		$("#emp_ssn").val(empSSN);
+		$("#emp_company").val(empCompany);
+		$("#emp_name").val(empName);
+		$("#emp_lname").val(empLname);
+		$("#emp_pnum").val(empNumber);
+		$("#emp_address").val(empAddress);
+		$("#emp_wrks").val(empWorkstation);
+		$("#emp_rank").val(empRank);
+		$("#emp_fouls").val(empFouls);
+		$("#emp_rfid").val(empRFID);
+		$("#emp_id").val(empID);
+		$("#editaddval").val(actionValue);
+		
+	});
+	
+	$(document).on("click", "#btn_create_emp", function(){
+		
+		var empSSN = $("#emp_ssn").val();
+		var empCompany = $("#emp_company").val();
+		var empName = $("#emp_name").val();
+		var empLname = $("#emp_lname").val();
+		var empNumber = $("#emp_pnum").val();
+		var empAddress = $("#emp_address").val();
+		var empWorkstation = $("#emp_wrks").val();
+		var empRank = $("#emp_rank").val();
+		var empFouls = $("#emp_fouls").val();
+		var empRFID = $("#emp_rfid").val();
+		var empID =  $("#emp_id").val();
+		var actionValue = $("#editaddval").val();
+		
+		
+		if(empSSN == "" || empCompany == "" || empName == "" || empLname == "" || empNumber == "" || empAddress == "" || empWorkstation == "" || empRank == "" || empFouls == "" || empRFID == "")
+			{
+				alert("Please Complete all fields");
+				return;
+			}
+		
+		if(actionValue == 1)
+			{
+				addEmployee(empSSN, empCompany, empName, empLname, empNumber, empAddress, empWorkstation, empRank, empFouls, empRFID);
+			}
+		else
+			{
+				updateEmployee(empID, empSSN, empCompany, empName, empLname, empNumber, empAddress, empWorkstation, empRank, empFouls, empRFID);
+			}
+	});
+	
+	$(document).on("click", "#close_add_form", function(){
+		clearForm();
+	});
+	
+	$(document).on("click", "#modalXbutt", function(){
+		clearForm();
+	});
+	
+	
+	function clearForm()
+	{
+		$("#emp_ssn").val("");
+		$("#emp_company").val($("#emp_company option:first").val());
+		$("#emp_name").val("");
+		$("#emp_lname").val("");
+		$("#emp_pnum").val("");
+		$("#emp_address").val("");
+		$("#emp_wrks").val($("#emp_wrks option:first").val());
+		$("#emp_rank").val($("#emp_rank option:first").val());
+		$("#emp_fouls").val(0);
+		$("#emp_rfid").val("");
+		$("#emp_id").val(-1);
+		$("#editaddval").val(1);
+		$("#editadd").text("ADD");
+	}
+	
+
+	function addEmployee(empSSN, empCompany, empName, empLname, empPnum, empAddress, empWorkstation, empRank, empFouls, empRFID)
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_employees.php",
+            data: ({op : 3, empSSN : empSSN, empCompany: empCompany, empName: empName, empLname: empLname, empPnum: empPnum, empAddress: empAddress, empWorkstation: empWorkstation, empRank: empRank, empFouls: empFouls, empRFID: empRFID}), 
+            dataType: 'json',
+            timeout: 5000,
+            success: function(data, textStatus, xhr) 
+            {
+                if(data < 1)
+                {
+                    alert("couldn't add employee");
+                }
+                else
+                {
+                    location.reload();
+                }  
+            },
+            error: function(xhr, status, errorThrown) 
+            {				  
+                alert("Error" + status + errorThrown);				  
+            }
+        });
+    }
+	
+	
+
+	function updateEmployee(empID, empSSN, empCompany, empName, empLname, empPnum, empAddress, empWorkstation, empRank, empFouls, empRFID)
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_employees.php",
+            data: ({op : 4, empID : empID, empSSN : empSSN, empCompany: empCompany, empName: empName, empLname: empLname, empPnum: empPnum, empAddress: empAddress, empWorkstation: empWorkstation, empRank: empRank, empFouls: empFouls, empRFID: empRFID}), 
+            dataType: 'json',
+            timeout: 5000,
+            success: function(data, textStatus, xhr) 
+            {
+                if(data < 0)
+                {
+                    alert("couldn't update employee");
+                }
+                else
+                {
+                    location.reload();
+                }  
+            },
+            error: function(xhr, status, errorThrown) 
+            {				  
+                alert("Error" + status + errorThrown);				  
+            }
+        });
+    }
+	
+	$(document).on("click", ".btn_toogle_active", function(){
+		var empID =  $(this).parent().attr("id").substr(3);
+		var cell = $(this).parent().siblings().eq(11)
+		var empStatus = cell.text();
+		var empStatConverted;
+		if(empStatus == "Active")
+			{
+				empStatConverted = 0;
+			}
+		else
+			{
+				empStatConverted = 1;
+			}
+		
+		toggleEmployee(empID, empStatConverted, cell);
+	});
+	
+	
+	function toggleEmployee(empID, empStatus, cell)
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_employees.php",
+            data: ({op : 5, empID : empID, empStatus : empStatus}), 
+            dataType: 'json',
+            timeout: 5000,
+            success: function(data, textStatus, xhr) 
+            {
+                if(data < 0)
+                {
+                    alert("couldn't update employee");
+                }
+                else
+                {
+					if(empStatus == 1)
+						{
+							cell.text("Active");
+						}
+					else
+						{
+							cell.text("Banned");
+						}
+                    
+                } 
+            },
+            error: function(xhr, status, errorThrown) 
+            {				  
+                alert("Error" + status + errorThrown);				  
+            }
+        });
+    }
+
 
 });

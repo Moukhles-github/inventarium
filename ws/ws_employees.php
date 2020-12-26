@@ -54,12 +54,26 @@ try {
                     $result = $employees->getSearchedEmployees($key, $_GET["sort"], $_GET["show"], $_GET["rank"], $_GET["wrks"], $_GET["page"]);
                 }
                 break;
+            case 3: {
+					//add employee
+                    $result = $employees->addEmployee($_GET["empSSN"], $_GET["empCompany"], $_GET["empName"], $_GET["empLname"], $_GET["empPnum"], $_GET["empAddress"], $_GET["empWorkstation"], $_GET["empRank"], $_GET["empFouls"], $_GET["empRFID"]);
+                }
+				break;
+            case 4: {
+					//editemployee
+                    $result = $employees->updateEmployee($_GET["empID"], $_GET["empSSN"], $_GET["empCompany"], $_GET["empName"], $_GET["empLname"], $_GET["empPnum"], $_GET["empAddress"], $_GET["empWorkstation"], $_GET["empRank"], $_GET["empFouls"], $_GET["empRFID"]);
+                }
+                break;
+            case 5: {
+					//add employee
+                    $result = $employees->toggleEmploye($_GET["empID"], $_GET["empStatus"]);
+                }
+                break;
 			default:
 				return 0;
 				break;
 		}
 	}
-
 	header("Content-type:application/json");
 	echo json_encode($result);
 } catch (Exception $e) {

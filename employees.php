@@ -158,46 +158,65 @@
             </div>
 
         
-
-            <input type="text" class="searchbar" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" style="height: 30px; width:30px;"></button>
-            <button id="clearfilters" style="height: 30px; width:30px;"></button>
+			<div style="float: left">
+				<div class='form-group' >
+					<div class="form-group">
+					  <label for="order" style='margin-right: 10px'>Search:</label>
+						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
+						
+            		</div>
+            	</div>
+            </div>
+            
+            
+            
         </div>
         <!-- Modal -->
-        <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create/Edit employee</h5>
+                        <button type="button" id="modalXbutt" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Create a new User</p> </br>
-                        <label>Select An Employee</label>
-                        <Select id="emp_id">
-                            
-                        </Select></br>
-                        <label for="username">Create Username:</label>
-                        <input type="text" id="new_usrname" placeholder="e.g. Myusername"></input></br>
-                        <label>Create a password:</label>
-                        <input type="password" id="new_password" placeholder="Password"></input></br>
-                        <label>Confirm password:</label>
-                        <input type="password" id="confirm_password" placeholder="Password"></input></br>
-                        <label>Assign the user's Type:</label>
-                        <Select id="user_type"> 
-                           
-                        </Select></br>
+						<h4 id="editadd">Add</h4>
+                        <label>Social Security Number:</label>
+                        <input type="text" id="emp_ssn" placeholder="e.g. 000000000"></input></br>
+                        <label>Company:</label>
+                        <select id="emp_company"></select></br>
+                        <label>Employee Name:</label>
+                        <input type="text" id="emp_name" placeholder="e.g Moukhles"></input></br>
+                        <label>Employee Last Name:</label>
+						<input type="text" id="emp_lname" placeholder="e.g Nicolas"></input></br>
+                        <label>Phone Number:</label>
+						<input type="text" id="emp_pnum" placeholder="e.g 71000000"></input></br>
+                        <label>Address:</label>
+						<input type="text" id="emp_address" placeholder="e.g Zgharta, Besebel..."></input></br>
+						<label>Workstation:</label>
+						<select id="emp_wrks"></select></br>
+						<label>Rank:</label>
+						<select id="emp_rank"></select></br>
+						<label>Fouls:</label>
+						<input type="number" id="emp_fouls" value="0"></input></br>
+						<label>RFID:</label>
+						<input type="number" id="emp_rfid" ></input></br>
+						<input type="number" hidden="" id="emp_id">
+						<input type="number" hidden="" id="editaddval">
+						
+
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_create_user" type="button" class="btn btn-primary">Create User</button>
+                        <button type="button" id="close_add_form"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_create_emp" type="button" class="btn btn-primary">Create/Edit</button>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div> 
 
 
 

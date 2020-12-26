@@ -49,6 +49,22 @@ try {
 				}
 
 				break;
+				
+//				
+//				case 4:
+//					//validate login
+//					$result = $user->getLogin($_GET["uname"], $_GET["pass"]);
+//					//check if the result returned is array of data
+//					if(is_array($result))
+//					{
+//						//start a session for the logged in user
+//						$_SESSION["ID"] = $result ["id"];
+//						$_SESSION["UNAME"] = $result ["uname"];
+//						$_SESSION["TYPE"] = $result ["type"];
+//						$_SESSION["EMAIL"] = $result ["mail"];
+//					}
+//					sleep(1); //just to see the animations
+//				break;
 
 			case 2: //check if username exists
 				$result = $user->checkUsername($_GET["user_name"]);
@@ -91,6 +107,27 @@ try {
 			case 10:
 				$result = $user->popUsertype();
 				break;
+			case 11: {
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $user->CountSearchedUsers($key, $_GET["sort"], $_GET["show"], $_GET["rank"]);
+                }
+                break;
+			case 12: {
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $user->getSearchedUsers($key, $_GET["sort"], $_GET["show"], $_GET["rank"], $_GET["page"]);
+                }
+                break;
 			default:
 				return 0;
 				break;

@@ -4,16 +4,307 @@ $(document).ready(function () {
 
 	window.serverURL = "http://localhost/inventarium/ws/";
 
-	getUsers(); //used to populate the tables
+
+	//call the set values function to automaticaly select values
+	setValues();
+	
+	//set sort and sow values from pre set values
+	function setValues()
+	{
+		var sortOrderId = $(".sortlisthidden").attr('id');
+		var sortOrder = sortOrderId.substring(4);
+		//set selected
+		$("#sortorder option[value="+sortOrder+"]").attr('selected', 'selected');
+		
+		
+		var showOrdersId = $(".showlisthidden").attr('id');
+		var showOrder = showOrdersId.substring(4);
+		//set selected option for showing order
+		$("#showbystatus option[value="+showOrder+"]").attr('selected', 'selected');
+
+        getRanks();
+    }
+	
+
+    ////////////////////////////////////////////////////////////////////////////get all values/////////////////////////////////////////////////////////
+	function wsKeyword()
+	{
+		return $(".searchbar").val();
+	}
+	
+	function wsOrder()
+	{
+		return $("#sortorder").val();
+	}
+	
+	function wsRank()
+	{
+		return $("#rankorder").val();
+	}
+	
+	function wsShowOrders()
+	{
+		return $("#showbystatus").val();
+	}
+    ////////////////////////////////////////////////////////////////////////////get all values/////////////////////////////////////////////////////////
+
+
+    //get category function
+	function getRanks()
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_ranks.php",
+            data: ({op : 1}), 
+            dataType: 'json',
+            timeout: 5000,
+            success: function(data, textStatus, xhr) 
+            {
+                if(data < 1)
+                {
+                    alert("No ranks available");
+                }
+                else
+                {
+                    populateRanks(data);
+                }  
+            },
+            error: function(xhr, status, errorThrown) 
+            {				  
+                alert("Error" + status + errorThrown);				  
+            }
+        });
+    }
+    
+    // fill the category functionl
+    function populateRanks(data)
+    {
+        $.each(data, function(index, row){
+            $("#rankorder").append('<option value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</option>');
+            $("#emp_rank").append('<option value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</option>');
+        });
+        
+        setRank();
+    }
+    
+
+    //set sort and sow values from pre set values
+	function setRank()
+	{
+		var rankOrderId = $(".rankhidden").attr('id');
+		var rankOrder = rankOrderId.substring(4);
+		//set selected option for showing order
+        $("#rankorder option[value="+rankOrder+"]").attr('selected', 'selected');
+		
+		//automaticaly call the count page function for pagination
+        countpages(wsKeyword(), wsOrder(), wsShowOrders(), wsRank());
+    }
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////pagination///////////////////////////////////////////////////////////////
+
+	
+		
+	//count pages
+	function countpages(key, sort, show, rank, wrks)
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_users.php",
+            data: ({op : 11, key : key, sort : sort, show : show, rank : rank}),
+            dataType: 'json',
+            timeout: 5000,
+            success: function(data, textStatus, xhr) 
+            {
+                if(data < 0)
+                {
+                    alert("Couldn't get your users");
+                }
+                else
+                {
+                    displayPages(data);
+                }
+            },
+            error: function(xhr, status, errorThrown) 
+            {				  
+                alert(status +" "+ errorThrown);				  
+            }
+        });
+    }
+
+    //display pages function
+    function displayPages(numberOfPages)
+    {
+        var link = "admin.users.php?key="+wsKeyword()+"&sort="+wsOrder()+"&show="+wsShowOrders()+"&rank="+wsRank()+"&";
+        //used for disabling item and set next and previous indexes
+        var disabledatstart = "";
+        var disabledatend = " ";
+
+        var disabledlinkstart = "";
+        var disabledlinkend = "";
+
+        //if there is no pages
+        if(numberOfPages < 1)
+            {
+                $(".tbody_users").children().remove();
+                $(".tbody_users").append('<h5>No result found!</h5>');
+            }
+        //if there is pages
+        else
+            {
+                var i;
+                var curentpage = $(".page-item").attr('id');
+                var pagesToAppend = "";
+                //next and prev pages
+                var previousIndex = parseInt(curentpage) - 1;
+                var nextIndex = parseInt(curentpage) + 1;
+                
+                //remove existing
+                $(".pagination").children().remove();
+                //check if the curent page is the first or the last page
+                if(curentpage == 1)
+                {
+                    disabledatstart = " disabled";
+                    disabledlinkstart = "";
+                }
+                else
+                {
+                    disabledlinkstart = "href='"+link;
+                }
+                if (curentpage == numberOfPages)
+                {
+                    disabledatend = " disabled";
+                    disabledlinkend = "";
+                }
+                else
+                {
+                    disabledlinkend = "href='"+link;
+                }
+                        
+                //append the first and the previous page 
+                pagesToAppend +="<li class='page-item"+disabledatstart+"' id='first'><a class='page-link' "+disabledlinkstart+"page=1'>First</a></li>";
+                pagesToAppend +="<li class='page-item"+disabledatstart+"' id='previous'><a class='page-link' "+disabledlinkstart+"page="+previousIndex+"'>Previous</a></li>";
+                
+                //check if the number of pages is smaller than the max that can be displayed
+                if(numberOfPages <= 3)
+                {
+                    for (i = 1; i <= numberOfPages; i++)
+                    {
+                        if(i == curentpage)
+                        {
+                            pagesToAppend +="<li class='page-item disabled' id='"+i+"'><a class='page-link' >"+i+"</a></li>";
+                        }
+                        else
+                        {
+                            pagesToAppend +="<li class='page-ite' id='"+i+"'><a class='page-link' href='"+link+"page="+i+"'>"+i+"</a></li>";
+                        }
+                    }
+                }
+                else //number of pages bigger than 3
+                {
+                    //condition if current page is equal to 1 so it display only the first 3 pages
+                    if(curentpage == 1)
+                    {
+                        for (i = 1; i <= 3; i++)
+                        {
+                            if(i == curentpage)
+                            {
+                                pagesToAppend +="<li class='page-item disabled' id='"+i+"'><a class='page-link' >"+i+"</a></li>";
+                            }
+                            else
+                            {
+                                pagesToAppend +="<li class='page-ite' id='"+i+"'><a class='page-link' href='"+link+"page="+i+"'>"+i+"</a></li>";
+                            }
+                        }
+                    }
+                    //condition if current page is bigger or equal to last 3  pages
+                    else if(curentpage == numberOfPages)
+                    {
+                        for (i = numberOfPages - 2; i <= numberOfPages; i++)
+                        {
+                            if(i == curentpage)
+                            {
+                                pagesToAppend +="<li class='page-item disabled' id='"+i+"'><a class='page-link' >"+i+"</a></li>";
+                            }
+                            else
+                            {
+                                pagesToAppend +="<li class='page-ite' id='"+i+"'><a class='page-link' href='"+link+"page="+i+"'>"+i+"</a></li>";
+                            }
+                        }
+                    }
+                    //condition if current page is between last and first
+                    else
+                    {
+                        for (i = parseInt(curentpage) - 1; i <= parseInt(curentpage) + 1; i++)
+                        {
+                            if(i == curentpage)
+                            {
+                                pagesToAppend +="<li class='page-item disabled' id='"+i+"'><a class='page-link' >"+i+"</a></li>";
+                            }
+                            else
+                            {
+                                pagesToAppend +="<li class='page-ite' id='"+i+"'><a class='page-link' href='"+link+"page="+i+"'>"+i+"</a></li>";
+                            }
+                        }
+                    }
+                }
+
+                
+                //append the last and the next page
+                pagesToAppend +="<li class='page-item"+disabledatend+"' id='next'><a class='page-link' "+disabledlinkend+"page="+nextIndex+"'>Next</a></li>";
+                pagesToAppend +="<li class='page-item"+disabledatend+"' id='last'><a class='page-link' "+disabledlinkend+"page="+numberOfPages+"'>Last</a></li>";
+                
+
+                //append to pages list
+                $(".pagination").append(pagesToAppend);
+                getUsers(wsKeyword(), wsOrder(), wsShowOrders(), wsRank(), curentpage);
+            }
+    }
+	
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//////////////////////////////////////////////////////////////////////////pagination///////////////////////////////////////////////////////////////
+
+
+
+    $("#sortorder").change(function () {
+        window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+    });
+
+    $("#showbystatus").change(function () {
+        window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+    });
+
+    $("#rankorder").change(function () {
+        window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+    });
+
+    $("#workstationorder").change(function () {
+        window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+    });
+
+    $("#clearfilters").click(function () {
+        window.location.replace("admin.users.php?key=&sort=1&show=0&rank=-1&page=1");
+    });
+
+    //seachbutton click funtion
+    $("#searchbutton").click(function () {
+        window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+    });
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//------------------------------   Methods ----------------------------------\\
 
 	// Populate Tables function to get users and specific data. 
-	function getUsers() {
+	function getUsers(key, sort, show, rank, page) {
 		$.ajax({
 			type: 'GET',
 			url: window.serverURL + "ws_users.php",
-			data: ({ op: 7 }),
+			data: ({op : 12, key : key, sort : sort, show : show, rank : rank, page: page}),
 
 			dataType: 'json',
 			timeout: 5000,

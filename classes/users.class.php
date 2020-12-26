@@ -1,6 +1,6 @@
 <?php
 require("DAL.class.php");
-
+require_once('utilities.class.php');
 class users
 {
 	//Constructors
@@ -21,35 +21,86 @@ class users
 
 	/////////////////////////////////////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-
-	//login
-	public
-	function getLogin($username, $password)
+	//check if username and pass
+	public function getLogin($username,$password)
 	{
-		$sql = "select * from user where user_name='$username' and user_pwd='$password' and user_status=1";
-
-		try {
-			$data = $this->db->getData($sql);
-
-			//user credentials are not valid or user is not active
-			if (is_null($data))
-				return 0;
-			else //user credentials are valid and user is active
+		$sqlQuery="SELECT * FROM inventarium.user WHERE user_name='$username'";
+		
+		try
+		{
+			//execute the query and get back the data
+			$data=$this->db->getData($sqlQuery);
+			
+			//check if the status of the user is active
+			if(count($data) >= 1)
 			{
-				$user = array(
+				//get the hashed password for verification before sending the data to the web service
+				$hashed = $data[0]["user_pwd"];
 
-					"user_id" => $data[0]["user_id"],
-					"user_name" => $data[0]["user_name"],
-					"user_type" => $data[0]["user_type"],
+				//check if the there is data and the password = to the hashed one in the db
+				if(password_verify($password, $hashed))
+				{
+					//$user = new user();
+					//create a new array that contains the needed data for session
+					$userValues = array(
+						"user_id" => $data[0]["user_id"],
+						"user_name" => $data[0]["user_name"],
+						"user_type" => $data[0]["user_type"],
+						);
 
-				);
-
-				return $user;
+					//return the array of data
+					return $userValues;
+				}
+				else
+				{
+					//in case the user wasn't active
+					return 0;
+				}
 			}
-		} catch (Exception $e) {
+			else
+			{
+				//return -1 if the username wasn't available or the hashed pass didn't match the stored pass
+				return 0;
+			}
+			
+		//catch the exeption if the query wasn't executed properly and throw it back
+		}
+		catch(Exception $e)
+		{	
 			throw $e;
 		}
 	}
+	
+	
+
+//	//login
+//	public
+//	function getLogin($username, $password)
+//	{
+//		$sql = "select * from user where user_name='$username' and user_pwd='$password' and user_status=1";
+//
+//		try {
+//			$data = $this->db->getData($sql);
+//
+//			//user credentials are not valid or user is not active
+//			if (is_null($data))
+//				return 0;
+//			else //user credentials are valid and user is active
+//			{
+//				$user = array(
+//
+//					"user_id" => $data[0]["user_id"],
+//					"user_name" => $data[0]["user_name"],
+//					"user_type" => $data[0]["user_type"],
+//
+//				);
+//
+//				return $user;
+//			}
+//		} catch (Exception $e) {
+//			throw $e;
+//		}
+//	}
 
 	//get users 
 	public
@@ -99,7 +150,9 @@ class users
 	function createUser($u_emp_id, $username, $user_pwd, $user_type)
 	{
 		try {
-			$sql = "insert into user (user_emp_id, user_name, user_pwd, user_type, user_status, user_date) values ('$u_emp_id','$username','$user_pwd','$user_type','1',CURRENT_TIMESTAMP)";
+			//hash the password before storing it
+			$hashedPass = password_hash($user_pwd, PASSWORD_DEFAULT);
+			$sql = "insert into user (user_emp_id, user_name, user_pwd, user_type, user_status, user_date) values ('$u_emp_id','$username','$hashedPass','$user_type','1',CURRENT_TIMESTAMP)";
 
 
 			$result = $this->db->ExecuteidQuery($sql);
@@ -212,6 +265,116 @@ class users
 				return $data;
 		} catch (Exception $e) {
 			throw $e;
+		}
+	}
+	
+	
+		public function getSearchedUsers($key, $sort, $show, $rank, $page)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT user_id, user_name, user_status, employee.emp_name, user_type_id, user_type.user_type_name FROM `user`, `employee`, user_type WHERE user.user_emp_id = employee.emp_id AND user.user_type = user_type.user_type_id".$this->ShowStatus($show);
+
+            if($rank != -1)
+			{
+				//check if all cat is selected
+				$sqlQuery .= " AND user_type_id =".$rank;
+			}
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (employee.emp_name LIKE '%".$key."%' OR user_name = '".$key."')";
+            }
+            
+            $offset = ($page -1) * 20;
+
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT 20 OFFSET ".$offset;
+			UTILITIES::writeToLog($sqlQuery);
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+    public function CountSearchedUsers($key, $sort, $show, $rank)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) FROM `user`, `employee`, user_type WHERE user.user_emp_id = employee.emp_id AND user.user_type = user_type.user_type_id".$this->ShowStatus($show);
+
+			
+            if($rank != -1)
+			{
+				//check if all cat is selected
+				$sqlQuery .= " AND user_type_id =".$rank;
+			}
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (employee.emp_name LIKE '%".$key."%' OR user_name = '".$key."')";
+            }
+			
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / 20);
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+    
+    //set option
+	private function ShowStatus($status)
+	{
+		switch($status)
+		{
+			case 0:
+				return " AND (1=1)";
+				break;
+			case 1:
+				return " AND (user_status = 1)";
+				break;
+			case 2:
+				return " AND (user_status = 0)";
+				break;
+			default:
+				return " AND (1=1)";
+				break;
+		}
+	}
+    
+    //set sort order
+	private function orderStatus($order)
+	{
+		switch($order)
+		{
+			case 1:
+				return " ORDER BY user_name ASC";
+				break;
+			case 2:
+				return " ORDER BY user_name DESC";
+				break;
+			case 3:
+				return " ORDER BY emp_name ASC";
+				break;
+			case 4:
+				return " ORDER BY emp_name DESC";
+				break;
+			default:
+				return " ORDER BY user_name ASC";
+				break;
 		}
 	}
 }

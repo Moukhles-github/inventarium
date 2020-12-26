@@ -151,4 +151,62 @@ class employees
 				break;
 		}
 	}
+	
+	public function addEmployee($empSSN, $empCompany, $empName, $empLname, $empPnum, $empAddress, $empWorkstation, $empRank, $empFouls, $empRFID)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "INSERT INTO employee (emp_id, emp_ssn, emp_cmp_id, emp_name, emp_lname, emp_ph_nb, emp_address, emp_join_date, emp_wrkst_id, emp_rank_id, emp_fouls, emp_rfid, emp_status) ";
+			$sqlQuery .= " VALUES (NULL, '$empSSN', $empCompany, '$empName', '$empLname', '$empPnum', '$empAddress', '".date("Y-m-d")."', $empWorkstation, $empRank, $empFouls, $empRFID, 1)";
+			//execute and put result in a variable
+			$data = $this->db->ExecuteidQuery($sqlQuery);
+			
+			//return the values
+			return $data;
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+	
+	public function updateEmployee($empID, $empSSN, $empCompany, $empName, $empLname, $empPnum, $empAddress, $empWorkstation, $empRank, $empFouls, $empRFID)
+	{
+		try
+		{	
+			//create sql query
+            $sqlQuery = "UPDATE employee SET emp_ssn='$empSSN', emp_cmp_id=$empCompany, emp_name = '$empName', emp_lname = '$empLname', emp_ph_nb = '$empPnum', emp_address = '$empAddress', emp_wrkst_id = $empWorkstation, emp_rank_id = $empRank, emp_fouls = $empFouls, emp_rfid = $empRFID WHERE emp_id=$empID";
+			//execute and put result in a variable
+			$data = $this->db->ExecuteidQuery($sqlQuery);
+			
+			//return the values
+			return $data;
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+	
+	public function toggleEmploye($empID, $status)
+	{
+		try
+		{	
+			//create sql query
+            $sqlQuery = "UPDATE employee SET emp_status = $status WHERE emp_id=$empID";
+			//execute and put result in a variable
+			$data = $this->db->ExecuteidQuery($sqlQuery);
+			
+			//return the values
+			return $data;
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
 }
