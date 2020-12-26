@@ -55,7 +55,7 @@ try {
 				break;
 
 			case 3: //add user
-				$result = $user->addUser($_GET["user_emp_id"], $_GET["user_name"], $_GET["user_pwd"], $_GET["user_type"]);
+				$result = $user->createUser($_GET["user_emp_id"], $_GET["user_name"], $_GET["user_pwd"], $_GET["user_type"]);
 				break;
 
 			case 4: //update user

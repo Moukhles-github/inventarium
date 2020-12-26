@@ -56,7 +56,7 @@ class users
 	function getusers()
 	{
 
-		$sql = "SELECT user_id, user_name, user_status, employee.emp_name, user_type.user_type_name FROM `user`, `employee`, user_type where user.user_emp_id = employee.emp_id and user.user_type = user_type.user_type_id";
+		$sql = "SELECT user_id, user_name, user_status, employee.emp_name, user_type_id, user_type.user_type_name FROM `user`, `employee`, user_type where user.user_emp_id = employee.emp_id and user.user_type = user_type.user_type_id";
 
 		try {
 			$data = $this->db->getData($sql);
@@ -96,10 +96,10 @@ class users
 
 	//add an user
 	public
-	function addUser($u_emp_id, $username, $user_pwd, $user_type)
+	function createUser($u_emp_id, $username, $user_pwd, $user_type)
 	{
 		try {
-			$sql = "insert into users (user_emp_id, user_name, user_pwd, user_type, user_status, user_date) values ('$u_emp_id','$username','$user_pwd','$user_type','1')";
+			$sql = "insert into user (user_emp_id, user_name, user_pwd, user_type, user_status, user_date) values ('$u_emp_id','$username','$user_pwd','$user_type','1',CURRENT_TIMESTAMP)";
 
 
 			$result = $this->db->ExecuteidQuery($sql);

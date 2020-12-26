@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="js/users.js"></script>
+    <script src="js/admin.users.js"></script>
 
 
 </head>
@@ -44,7 +44,7 @@
         <ul class="navbar-primary-menu">
             <li>
                 <a href="admin.php"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
-                <a href="users.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Users</span></a>
+                <a href="admin.users.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Users</span></a>
                 <a href="employees.php"><span class="glyphicon glyphicon-cog"></span><span class="nav-label">Employees</span></a>
                 <a href="#"><span class="glyphicon glyphicon-film"></span><span class="nav-label">Items</span></a>
                 <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Workstations</span></a>
@@ -55,17 +55,17 @@
     <div class="main-content">
         <h1> users </h1>
 
-        <!-- Button trigger modal -->
-        <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        <!-- Create users button -->
+        <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createusermodal">
             Create User
         </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <!-- create users Modal -->
+        <div class="modal fade" id="createusermodal" tabindex="-1" role="dialog" aria-labelledby="createusermodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="createusermodalLongTitle">Modal title</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -87,6 +87,8 @@
                            
                         </Select></br>
 
+                        <input type="text" id="cuser_emp_id" placeholder="u_emp_id"></input>
+                        <input type="text" id="cuser_type" placeholder="user_type"></input>
 
                     </div>
                     <div class="modal-footer">
@@ -96,6 +98,45 @@
                 </div>
             </div>
         </div>
+
+<!-- edit users button -->
+<!-- <button class="btn_modal_edituser" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editusermodal">
+            Edit User
+        </button> -->
+
+        <!-- edit users Modal -->
+        <div class="modal fade" id="editusermodal" tabindex="-1" role="dialog" aria-labelledby="editusermodalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editusermodalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>employee name</p> </br>
+                        
+                        <label for="username">Update Username:</label>
+                        <input type="text" id="updt_usrname" placeholder="e.g. Myusername"></input></br>
+                        
+                        <label for="usertype">Change User's type:</label>
+                        <Select id="updt_user_type"> 
+                           
+                        </Select></br>
+                        
+                        <input type="text" id="updt_user_id" placeholder="user_type"></input>
+                        <input type="text" id="updt_user_type_tb" placeholder="user_type"></input>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_edit_user" type="button" class="btn btn-primary">Create User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
 
