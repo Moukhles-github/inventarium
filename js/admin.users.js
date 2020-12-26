@@ -132,8 +132,8 @@ $(document).ready(function () {
 		var cpwd = $("#new_password").val();
 		var npwd = $("#confirm_password").val();
 		if (fieldval(u_emp_id, username, cpwd, npwd, cusers_type) && checkpwd(cpwd, npwd)) {
-
-			create_user(u_emp_id, username, cpwd, cusers_type);
+alert ("ok");
+			// create_user(u_emp_id, username, cpwd, cusers_type);
 		}
 		else alert("error");
 

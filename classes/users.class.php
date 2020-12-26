@@ -155,26 +155,6 @@ class users
 		}
 	}
 
-	//get employees
-	public
-	function getuser()
-	{
-		$sql = "SELECT u_ssn,u_name FROM `users` WHERE users.u_type_id = 3  ";
-
-		try {
-			$data = $this->db->getData($sql);
-
-
-			//No data
-			if (is_null($data))
-				return 0;
-			else
-				return $data;
-		} catch (Exception $e) {
-			throw $e;
-		}
-	}
-
 	//get available managers 
 	public
 	function getmngs()
@@ -199,7 +179,7 @@ class users
 	public function popEmployees()
 	{
 
-		$sql = "SELECT emp_id, emp_name, emp_lname FROM employee WHERE emp_rank_id = 1 OR emp_rank_id = 2 AND emp_id NOT IN (SELECT emp_name FROM employee, user where emp_id = user.user_emp_id)";
+		$sql = "SELECT emp_id, emp_name, emp_lname FROM employee WHERE emp_id NOT IN(Select emp_id FROM employee, user where user.user_emp_id = employee.emp_id)";
 
 		try {
 			$data = $this->db->getData($sql);
