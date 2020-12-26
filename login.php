@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="css/login.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/login.js"></script>
 
@@ -19,7 +19,7 @@
 <body>
 <!--  Request me for a signup form or any type of help  -->
 <div class="login-form">    
-    <form method="post">
+
 		<div class="avatar">
             <!-- We need an icon --> 
         </div>
@@ -35,7 +35,7 @@
             <a href="#" class="forgot-link">Forgot Password?</a>
         </div> 
         <input id="btnlogin" type="submit" class="btn btn-primary btn-block btn-lg" value="Login">              
-    </form>			
+
     <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
 </div>
 </body>

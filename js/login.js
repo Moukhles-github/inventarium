@@ -4,9 +4,8 @@ $(document).ready(function () {
 
 		var uname = $("#username").val();
 		var pwd = $("#pwd").val();
-
 		getLogin(uname, pwd);
-
+		
 	});
 
 	//this function is login to db using ajax
@@ -20,11 +19,13 @@ $(document).ready(function () {
 			dataType: 'json',
 			timeout: 5000,
 			success: function (data, textStatus, xhr) {
+				
 				if (data == -1)
 					alert("Data couldn't be loaded!");
 				else {
 					data = JSON.parse(xhr.responseText);
 					parseDataLogin(data);
+					
 				}
 			},
 			error: function (xhr, status, errorThrown) {
@@ -40,8 +41,7 @@ $(document).ready(function () {
 	function parseDataLogin(data) {
 		switch (data) {
 			case "0":
-				alert(data);
-				window.location.href="http://localhost/Inventarium/admin.php";
+				window.location.href="./admin.php";
 				break;
 			case "1":
 				alert ("sexes");
@@ -53,16 +53,10 @@ $(document).ready(function () {
 				alert("wrong shit");
 				break;
 		}
+		return;
 	}
 
 	//	//////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
 });
 
 

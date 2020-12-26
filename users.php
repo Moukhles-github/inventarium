@@ -45,7 +45,7 @@
             <li>
                 <a href="admin.php"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
                 <a href="users.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Users</span></a>
-                <a href="#"><span class="glyphicon glyphicon-cog"></span><span class="nav-label">Employees</span></a>
+                <a href="employees.php"><span class="glyphicon glyphicon-cog"></span><span class="nav-label">Employees</span></a>
                 <a href="#"><span class="glyphicon glyphicon-film"></span><span class="nav-label">Items</span></a>
                 <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Workstations</span></a>
                 <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
