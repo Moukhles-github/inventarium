@@ -364,7 +364,7 @@ $(document).ready(function(){
 			}
 		else
 			{
-				return "Banned";
+				return "Unactive";
 			}
 	}
 

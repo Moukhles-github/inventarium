@@ -422,9 +422,9 @@ $(document).ready(function () {
 		var cusers_type = $("#cuser_type").val();
 		var cpwd = $("#new_password").val();
 		var npwd = $("#confirm_password").val();
-		if (fieldval(u_emp_id, username, cpwd, npwd, cusers_type) && checkpwd(cpwd, npwd)) {
-alert ("ok");
-			// create_user(u_emp_id, username, cpwd, cusers_type);
+		if (fieldval(u_emp_id, username, cpwd, npwd, cusers_type) && checkpwd(cpwd, npwd) ) {
+		
+			create_user(u_emp_id, username, cpwd, cusers_type);
 		}
 		else alert("error");
 
@@ -504,7 +504,7 @@ alert ("ok");
 	// validate fields 
 	function fieldval(emp, username, pwd, cpwd, usertype) {
 
-		if (emp == "" && username == "" && pwd == "" && cpwd == "" && usertype == "")
+		if (emp == "" || username == "" || pwd == "" || cpwd == "" || usertype == "")
 			return false;
 		else
 			return true;
