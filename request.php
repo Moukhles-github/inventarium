@@ -141,24 +141,48 @@
         </div>
 
 
+        <!-- edit users Modal -->
+        <div class="modal fade" id="rqstinfomodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="requestmodalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                     <ul id="rqstinfoul"></ul>
+                     
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_edit_user" type="button" class="btn btn-primary">Edit User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
 
 
 
-            <caption>List of Companies</caption>
+            <caption>List of request</caption>
 
             <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">User</th>
+                    <th scope="col">item</th>
                     <th scope="col">Facility</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+
                 </tr>
             </thead>
-            <tbody id="tbody_ranks">
+            <tbody id="tbody_rqst">
 
             </tbody>
 
