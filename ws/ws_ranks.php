@@ -33,7 +33,21 @@ try {
             case 1: {
                     $result = $ranks->getRanks();
                 }
-                break;
+				break;
+				case 2:{
+					$result = $ranks->toggleRanks($_GET["rank_id"], $_GET["liveval"]);
+				} 
+				break;
+				case 3: {
+					$result = $ranks->createranks($_GET["rank_name"]);
+				}
+				break;
+				case 4: 
+					{
+						$result = $ranks->updateranks($_GET["rank_id"], $_GET["rank_name"]);
+						
+					}
+					break;
             default:
                 return 0;
                 break;

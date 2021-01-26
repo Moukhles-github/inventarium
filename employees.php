@@ -42,11 +42,13 @@
         <ul class="navbar-primary-menu">
             <li>
                 <a href="admin.php"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
-                <a href="admin.users.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Users</span></a>
+                <a href="company.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Company</span></a>
+                <a href="users.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Users</span></a>
                 <a href="employees.php"><span class="glyphicon glyphicon-cog"></span><span class="nav-label">Employees</span></a>
-                <a href="#"><span class="glyphicon glyphicon-film"></span><span class="nav-label">Items</span></a>
-                <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Workstations</span></a>
-                <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
+                <a href="warehouse.php"><span class="glyphicon glyphicon-film"></span><span class="nav-label">Warehouse</span></a>
+                <a href="workstation.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Workstations</span></a>
+                <a href="request.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
+
             </li>
         </ul>
     </nav>
@@ -58,121 +60,118 @@
             Create Employee
         </button>
 
+        <a href="ranks.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Ranks</span></a>
+
 
         <?php
-			
-			//get initial values
-			$sort = "1";
-			$show = "0";
-			$rank = "-1";
-			$workstation = "-1";
-            $keyy = "";
-			//check if sort order is set
-			if(isset($_GET["sort"]) && ($_GET["sort"] != ""))
-			{
-				$sort = $_GET["sort"];
-            }
-            
-			//check if show option is set
-			if(isset($_GET["show"]) && ($_GET["show"] != ""))
-			{
-				$show = $_GET["show"];
-            }
-            
-			//check if rank option is set
-			if(isset($_GET["rank"]) && ($_GET["rank"] != ""))
-			{
-				$rank = $_GET["rank"];
-			}
-            
-			//check if workstation option is set
-			if(isset($_GET["wrks"]) && ($_GET["wrks"] != ""))
-			{
-				$workstation = $_GET["wrks"];
-            }
 
-                        
-			//check if workstation option is set
-			if(isset($_GET["key"]) && ($_GET["key"] != ""))
-			{
-				$keyy = $_GET["key"];
-            }
+        //get initial values
+        $sort = "1";
+        $show = "0";
+        $rank = "-1";
+        $workstation = "-1";
+        $keyy = "";
+        //check if sort order is set
+        if (isset($_GET["sort"]) && ($_GET["sort"] != "")) {
+            $sort = $_GET["sort"];
+        }
 
-			//create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
-			echo('<input type="hidden" class="sortlisthidden" id="sort'.$sort.'"><input type="hidden" class="showlisthidden" id="show'.$show.'"><input type="hidden" class="rankhidden" id="rank'.$rank.'"><input type="hidden" class="workstationlisthidden" id="workstation'.$workstation.'">');
+        //check if show option is set
+        if (isset($_GET["show"]) && ($_GET["show"] != "")) {
+            $show = $_GET["show"];
+        }
+
+        //check if rank option is set
+        if (isset($_GET["rank"]) && ($_GET["rank"] != "")) {
+            $rank = $_GET["rank"];
+        }
+
+        //check if workstation option is set
+        if (isset($_GET["wrks"]) && ($_GET["wrks"] != "")) {
+            $workstation = $_GET["wrks"];
+        }
+
+
+        //check if workstation option is set
+        if (isset($_GET["key"]) && ($_GET["key"] != "")) {
+            $keyy = $_GET["key"];
+        }
+
+        //create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
+        echo ('<input type="hidden" class="sortlisthidden" id="sort' . $sort . '"><input type="hidden" class="showlisthidden" id="show' . $show . '"><input type="hidden" class="rankhidden" id="rank' . $rank . '"><input type="hidden" class="workstationlisthidden" id="workstation' . $workstation . '">');
 
         ?>
-        
+
         <div class="sortandfilterhead" style="height: 90px;">
-			<div style="float: left">
-				<div class='form-group' >
-					 <div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Sort By:</label>
-					  <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
-						<option value="1">Name Asc</option>
-                        <option value="2">Name Desc</option>
-                        <option value="3">Last Name Asc</option>
-						<option value="4">Last Name Desc</option>
-						<option value="5">Join Date Asc</option>
-						<option value="6">Join Date Desc</option>
-						<option value="7">Fouls Asc</option>
-						<option value="8">Fouls Desc</option>
-					  </select>
-					</div> 
-				</div>
-			</div>
-			
-			<div style="float: left">
-				<div class='form-group' >
-					 <div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Show Employees:</label>
-					  <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
-					  	<option value="0">All</option>
-						<option value="1">Active</option>
-						<option value="2">Not Active</option>
-					  </select>
-					</div>
-				</div>
-            </div>
-            
             <div style="float: left">
-				<div class='form-group' >
-					 <div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Rank:</label>
-					  <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
-					  	<option value="-1">All</option>
-					  </select>
-					</div>
-				</div>
-            </div>
-            
-            <div style="float: left">
-				<div class='form-group' >
-					 <div class="form-group">
-					  <label for="order" style='margin-right: 10px'>From Workstation:</label>
-					  <select class="form-control" id="workstationorder" style='width: 180px; margin-right: 20px;'>
-					  	<option value="-1">All</option>
-					  </select>
-					</div>
-				</div>
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>Sort By:</label>
+                        <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
+                            <option value="1">Name Asc</option>
+                            <option value="2">Name Desc</option>
+                            <option value="3">Last Name Asc</option>
+                            <option value="4">Last Name Desc</option>
+                            <option value="5">Join Date Asc</option>
+                            <option value="6">Join Date Desc</option>
+                            <option value="7">Fouls Asc</option>
+                            <option value="8">Fouls Desc</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-        
-			<div style="float: left">
-				<div class='form-group' >
-					<div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Search:</label>
-						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
-						
-            		</div>
-            	</div>
+            <div style="float: left">
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>Show Employees:</label>
+                        <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
+                            <option value="0">All</option>
+                            <option value="1">Active</option>
+                            <option value="2">Not Active</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            
-            
-            
+
+            <div style="float: left">
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>Rank:</label>
+                        <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
+                            <option value="-1">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div style="float: left">
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>From Workstation:</label>
+                        <select class="form-control" id="workstationorder" style='width: 180px; margin-right: 20px;'>
+                            <option value="-1">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div style="float: left">
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>Search:</label>
+                        <input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
+
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
         <!-- Modal -->
-         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -182,7 +181,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-						<h4 id="editadd">Add</h4>
+                        <h4 id="editadd">Add</h4>
                         <label>Social Security Number:</label>
                         <input type="text" id="emp_ssn" placeholder="e.g. 000000000"></input></br>
                         <label>Company:</label>
@@ -190,33 +189,33 @@
                         <label>Employee Name:</label>
                         <input type="text" id="emp_name" placeholder="e.g Moukhles"></input></br>
                         <label>Employee Last Name:</label>
-						<input type="text" id="emp_lname" placeholder="e.g Nicolas"></input></br>
+                        <input type="text" id="emp_lname" placeholder="e.g Nicolas"></input></br>
                         <label>Phone Number:</label>
-						<input type="text" id="emp_pnum" placeholder="e.g 71000000"></input></br>
+                        <input type="text" id="emp_pnum" placeholder="e.g 71000000"></input></br>
                         <label>Address:</label>
-						<input type="text" id="emp_address" placeholder="e.g Zgharta, Besebel..."></input></br>
-						<label>Workstation:</label>
-						<select id="emp_wrks"></select></br>
-						<label>Rank:</label>
-						<select id="emp_rank"></select></br>
-						<label>Fouls:</label>
-						<input type="number" id="emp_fouls" value="0"></input></br>
-						<label>RFID:</label>
-						<input type="number" id="emp_rfid" ></input></br>
-						<input type="number" hidden="" id="emp_id">
-						<input type="number" hidden="" id="editaddval">
-						
+                        <input type="text" id="emp_address" placeholder="e.g Zgharta, Besebel..."></input></br>
+                        <label>Workstation:</label>
+                        <select id="emp_wrks"></select></br>
+                        <label>Rank:</label>
+                        <select id="emp_rank"></select></br>
+                        <label>Fouls:</label>
+                        <input type="number" id="emp_fouls" value="0"></input></br>
+                        <label>RFID:</label>
+                        <input type="number" id="emp_rfid"></input></br>
+                        <input type="number" hidden="" id="emp_id">
+                        <input type="number" hidden="" id="editaddval">
+
 
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="close_add_form"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="close_add_form" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button id="btn_create_emp" type="button" class="btn btn-primary">Create/Edit</button>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
 
 
@@ -245,33 +244,30 @@
             </tbody>
         </table>
 
-    
+
 
         <?php
-			/////////////////////pagination//////////////////////
-			
-			//check if the on the first page
-			if(isset($_GET["page"]))
-			{
-				$page = $_GET["page"];
-			}
-			else
-			{
-				$page = 1;
-			}
-			//display the pages
-			echo("<br/><br/>
+        /////////////////////pagination//////////////////////
+
+        //check if the on the first page
+        if (isset($_GET["page"])) {
+            $page = $_GET["page"];
+        } else {
+            $page = 1;
+        }
+        //display the pages
+        echo ("<br/><br/>
 				<div class='pages' style='width: 100%;text-align: center;'>
 					 <div style='display: inline-block;'>
 						<ul class='pagination'>
-							<li class='page-item' style='display: none;' id='".$page."'></li>
+							<li class='page-item' style='display: none;' id='" . $page . "'></li>
 						</ul>
 					</div>
 				</div>
 			");
-			/////////////////////pagination//////////////////////
+        /////////////////////pagination//////////////////////
         ?>
-        
+
     </div>
 </body>
 

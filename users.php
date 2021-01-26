@@ -44,11 +44,12 @@
         <ul class="navbar-primary-menu">
             <li>
                 <a href="admin.php"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
-                <a href="admin.users.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Users</span></a>
+                <a href="company.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Company</span></a>
+                <a href="users.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Users</span></a>
                 <a href="employees.php"><span class="glyphicon glyphicon-cog"></span><span class="nav-label">Employees</span></a>
-                <a href="#"><span class="glyphicon glyphicon-film"></span><span class="nav-label">Items</span></a>
-                <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Workstations</span></a>
-                <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
+                <a href="warehouse.php"><span class="glyphicon glyphicon-film"></span><span class="nav-label">Warehouse</span></a>
+                <a href="workstation.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Workstations</span></a>
+                <a href="request.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
             </li>
         </ul>
     </nav>
@@ -59,96 +60,92 @@
         <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createusermodal">
             Create User
         </button>
-        
-        
+
+
         <?php
-			
-			//get initial values
-			$sort = "1";
-			$show = "0";
-			$rank = "-1";
-            $keyy = "";
-			//check if sort order is set
-			if(isset($_GET["sort"]) && ($_GET["sort"] != ""))
-			{
-				$sort = $_GET["sort"];
-            }
-            
-			//check if show option is set
-			if(isset($_GET["show"]) && ($_GET["show"] != ""))
-			{
-				$show = $_GET["show"];
-            }
-            
-			//check if rank option is set
-			if(isset($_GET["rank"]) && ($_GET["rank"] != ""))
-			{
-				$rank = $_GET["rank"];
-			}
 
-			//check if workstation option is set
-			if(isset($_GET["key"]) && ($_GET["key"] != ""))
-			{
-				$keyy = $_GET["key"];
-            }
+        //get initial values
+        $sort = "1";
+        $show = "0";
+        $rank = "-1";
+        $keyy = "";
+        //check if sort order is set
+        if (isset($_GET["sort"]) && ($_GET["sort"] != "")) {
+            $sort = $_GET["sort"];
+        }
 
-			//create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
-			echo('<input type="hidden" class="sortlisthidden" id="sort'.$sort.'"><input type="hidden" class="showlisthidden" id="show'.$show.'"><input type="hidden" class="rankhidden" id="rank'.$rank.'">');
+        //check if show option is set
+        if (isset($_GET["show"]) && ($_GET["show"] != "")) {
+            $show = $_GET["show"];
+        }
+
+        //check if rank option is set
+        if (isset($_GET["rank"]) && ($_GET["rank"] != "")) {
+            $rank = $_GET["rank"];
+        }
+
+        //check if workstation option is set
+        if (isset($_GET["key"]) && ($_GET["key"] != "")) {
+            $keyy = $_GET["key"];
+        }
+
+        //create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
+        echo ('<input type="hidden" class="sortlisthidden" id="sort' . $sort . '"><input type="hidden" class="showlisthidden" id="show' . $show . '"><input type="hidden" class="rankhidden" id="rank' . $rank . '">');
 
         ?>
-        
+
         <div class="sortandfilterhead" style="height: 90px;">
-			<div style="float: left">
-				<div class='form-group' >
-					 <div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Sort By:</label>
-					  <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
-						<option value="1">UserName Asc</option>
-                        <option value="2">UserName Desc</option>
-                        <option value="3">Name Asc</option>
-						<option value="4">Name Desc</option>
-					  </select>
-					</div> 
-				</div>
-			</div>
-			
-			<div style="float: left">
-				<div class='form-group' >
-					 <div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Show Employees:</label>
-					  <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
-					  	<option value="0">All</option>
-						<option value="1">Active</option>
-						<option value="2">Not Active</option>
-					  </select>
-					</div>
-				</div>
-            </div>
-            
             <div style="float: left">
-				<div class='form-group' >
-					 <div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Rank:</label>
-					  <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
-					  	<option value="-1">All</option>
-					  </select>
-					</div>
-				</div>
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>Sort By:</label>
+                        <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
+                            <option value="1">UserName Asc</option>
+                            <option value="2">UserName Desc</option>
+                            <option value="3">Name Asc</option>
+                            <option value="4">Name Desc</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            
-            
+
             <div style="float: left">
-				<div class='form-group' >
-					<div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Search:</label>
-						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
-						
-            		</div>
-            	</div>
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>Show Employees:</label>
+                        <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
+                            <option value="0">All</option>
+                            <option value="1">Active</option>
+                            <option value="2">Not Active</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-		</div>
-        
-        
+
+            <div style="float: left">
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>Rank:</label>
+                        <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
+                            <option value="-1">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div style="float: left">
+                <div class='form-group'>
+                    <div class="form-group">
+                        <label for="order" style='margin-right: 10px'>Search:</label>
+                        <input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <!-- create users Modal -->
         <div class="modal fade" id="createusermodal" tabindex="-1" role="dialog" aria-labelledby="createusermodalTitle" aria-hidden="true">
@@ -164,7 +161,7 @@
                         <p>Create a new User</p> </br>
                         <label>Select An Employee</label>
                         <Select id="emp_id">
-                            
+
                         </Select></br>
                         <label for="username">Create Username:</label>
                         <input type="text" id="new_usrname" placeholder="e.g. Myusername"></input></br>
@@ -173,8 +170,8 @@
                         <label>Confirm password:</label>
                         <input type="password" id="confirm_password" placeholder="Password"></input></br>
                         <label>Assign the user's Type:</label>
-                        <Select id="user_type"> 
-                           
+                        <Select id="user_type">
+
                         </Select></br>
 
                         <input type="text" id="cuser_emp_id" placeholder="u_emp_id"></input>
@@ -189,8 +186,8 @@
             </div>
         </div>
 
-<!-- edit users button -->
-<!-- <button class="btn_modal_edituser" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editusermodal">
+        <!-- edit users button -->
+        <!-- <button class="btn_modal_edituser" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editusermodal">
             Edit User
         </button> -->
 
@@ -206,18 +203,18 @@
                     </div>
                     <div class="modal-body">
                         <p>employee name</p> </br>
-                        
+
                         <label for="username">Update Username:</label>
                         <input type="text" id="updt_usrname" placeholder="e.g. Myusername"></input></br>
-                        
+
                         <label for="usertype">Change User's type:</label>
-                        <Select id="updt_user_type"> 
-                           
+                        <Select id="updt_user_type">
+
                         </Select></br>
-                        
+
                         <input type="text" id="updt_user_id" placeholder="user_type"></input>
                         <input type="text" id="updt_user_type_tb" placeholder="user_type"></input>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -249,30 +246,27 @@
 
             </tbody>
 
-</table>
+        </table>
         <?php
-			/////////////////////pagination//////////////////////
-			
-			//check if the on the first page
-			if(isset($_GET["page"]))
-			{
-				$page = $_GET["page"];
-			}
-			else
-			{
-				$page = 1;
-			}
-			//display the pages
-			echo("<br/><br/>
+        /////////////////////pagination//////////////////////
+
+        //check if the on the first page
+        if (isset($_GET["page"])) {
+            $page = $_GET["page"];
+        } else {
+            $page = 1;
+        }
+        //display the pages
+        echo ("<br/><br/>
 				<div class='pages' style='width: 100%;text-align: center;'>
 					 <div style='display: inline-block;'>
 						<ul class='pagination'>
-							<li class='page-item' style='display: none;' id='".$page."'></li>
+							<li class='page-item' style='display: none;' id='" . $page . "'></li>
 						</ul>
 					</div>
 				</div>
 			");
-			/////////////////////pagination//////////////////////
+        /////////////////////pagination//////////////////////
         ?>
     </div>
 

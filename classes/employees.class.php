@@ -182,7 +182,7 @@ class employees
 			$data = $this->db->ExecuteidQuery($sqlQuery);
 			
 			//return the values
-			return $data;
+			return $data ;
 		}
 		//catch the execption and throw it back to the ws
 		catch(Exception $e)

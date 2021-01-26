@@ -19,7 +19,20 @@ try {
                     $result = $company->getCompanies();
                 }
                 break;
-				
+			case 2: {
+				//toggle cmp status
+				$result = $company->togglecmp($_GET["cmp_id"], $_GET["val"]);
+				break;
+			}
+			case 3: {
+				//create company 
+				$result = $company->createcmp($_GET["cmp_name"], $_GET["cmp_address"], $_GET["cmp_subsidiary"]);
+				break;
+			}
+			case 4: 
+				// update company
+				$result = $company->updatecmp($_GET["cmp_id"],$_GET["cmp_name"],$_GET["cmp_address"],$_GET["cmp_subsidiary"]);
+				break;
 			default:
 				return 0;
 				break;
