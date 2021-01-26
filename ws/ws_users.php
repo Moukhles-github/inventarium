@@ -75,7 +75,7 @@ try {
 				break;
 
 			case 4: //update user
-				$result = $user->updateUser($_GET["id"], $_GET["u_ssn"], $_GET["u_rankid"], $_GET["u_name"], $_GET["u_lname"], $_GET["u_uname"], $_GET["u_psw"], $_GET["u_typeid"], $_GET["active"]);
+				$result = $user->updateUser($_GET["user_id"], $_GET["user_name"], $_GET["user_type"]);
 				break;
 
 			case 5: //deactivate user

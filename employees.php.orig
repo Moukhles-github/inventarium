@@ -60,7 +60,7 @@
             Create Employee
         </button>
 
-<!--        <a href="ranks.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Ranks</span></a>-->
+        <a href="ranks.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Ranks</span></a>
 
 
         <?php
@@ -101,7 +101,7 @@
         echo ('<input type="hidden" class="sortlisthidden" id="sort' . $sort . '"><input type="hidden" class="showlisthidden" id="show' . $show . '"><input type="hidden" class="rankhidden" id="rank' . $rank . '"><input type="hidden" class="workstationlisthidden" id="workstation' . $workstation . '">');
 
         ?>
-
+<<<<<<< HEAD
         
         <div class="sortandfilterhead" style="height: 90px;" >
 			<div style="float: left">
@@ -135,7 +135,7 @@
 					  </select>
 					</div>
 				</div>
-
+=======
 
         <div class="sortandfilterhead" style="height: 90px;">
             <div style="float: left">
@@ -154,7 +154,7 @@
                         </select>
                     </div>
                 </div>
-
+>>>>>>> d8f8dda16f35be39b41e209780e70d93395d0816
             </div>
 
             <div style="float: left">

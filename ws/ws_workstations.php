@@ -18,15 +18,36 @@ try {
                     $result = $workstation->getWorkstations();
                 }
                 break;
+            case 2: {
+                    $result = $workstation->popWrkst();
+                }
+                break;
+            case 3: {
+                    $result = $workstation->togglewrkst($_GET["wrkst_id"], $_GET["status"]);
+                }
+                break;
+            case 4: {
+                    $result = $workstation->createwrkst($_GET["wrkst_name"], $_GET["wrkst_address"], $_GET["wrkst_mgr_id"]);
+                }
+                break;
+            case 5: {
+                    $result = $workstation->updatewrkst($_GET["wrkst_id"], $_GET["wrkst_name"], $_GET["wrkst_address"], $_GET["wrkst_mgr_id"]);
+            }
+            break;
+            case 6: 
+                {
+                    $result =$workstation->popwrkstmgr();
+                }
+                break; 
             default:
                 return 0;
                 break;
         }
     }
 
-	header("Content-type:application/json");
-	echo json_encode($result);
+    header("Content-type:application/json");
+    echo json_encode($result);
 } catch (Exception $e) {
 
-	echo -1;
+    echo -1;
 }

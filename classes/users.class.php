@@ -165,10 +165,10 @@ class users
 
 	//update an user
 	public
-	function updateUser($id, $ssn, $rank, $name, $lname, $uname, $upwd, $type, $active)
+	function updateUser($id, $username, $utype)
 	{
 		try {
-			$sql = "update users set u_ssn=$ssn,u_rank_id=$rank,u_name='$name',u_lname='$lname',u_uname='$uname',u_psw='$upwd',u_type_id=$type, u_active=$active where u_id=$id";
+			$sql = "UPDATE `user` SET `user_name` = '$username' , `user_type` = '$utype' WHERE `user`.`user_id` = $id;";
 
 			$result = $this->db->ExecuteQuery($sql);
 
