@@ -106,3 +106,11 @@ th:active
 {
 	background-color: #d8e7f3;
 }
+
+.emp_address_td {
+  white-space: nowrap;
+  width: 1px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: red;
+}
