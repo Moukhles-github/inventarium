@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pyramid Employees</title>
 
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="./css/employees.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -103,12 +103,13 @@
 
         ?>
         
-        <div class="sortandfilterhead" style="height: 90px;">
+        <div class="sortandfilterhead" style="height: 90px;" >
 			<div style="float: left">
 				<div class='form-group' >
 					 <div class="form-group">
-					  <label for="order" style='margin-right: 10px'>Sort By:</label>
-					  <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
+<!--
+					  <label hidden="true" for="order" style='margin-right: 10px'>Sort By:</label>
+					  <select  class="form-control"  id="sortorder" style='width: 180px; margin-right: 20px;'>
 						<option value="1">Name Asc</option>
                         <option value="2">Name Desc</option>
                         <option value="3">Last Name Asc</option>
@@ -118,6 +119,7 @@
 						<option value="7">Fouls Asc</option>
 						<option value="8">Fouls Desc</option>
 					  </select>
+-->
 					</div> 
 				</div>
 			</div>
@@ -226,15 +228,76 @@
             <thead>
                 <tr>
                     <th scope="col">SSN</th>
-                    <th scope="col">Company ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Last Name</th>
+                    <th scope="col">Company</th>
+                    <th value="
+                    <?php 
+					if($sort == 1)
+					{
+						echo 0;
+					}
+					else if ($sort == 2)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+							   
+					?>
+                    " id="namesortheader" scope="col">Name<img style="height: 12px; width: 10px; float: right; margin-top: 4px;" src="media/Images/arrows.png"></th>
+                    <th value="
+                    <?php 
+					if($sort == 3)
+					{
+						echo 0;
+					}
+					else if ($sort == 4)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+					?>
+                    " id="lastnamesortheader" scope="col">Last Name<img style="height: 12px; width: 10px; float: right; margin-top: 4px;" src="media/Images/arrows.png"></th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Join Date</th>
-                    <th scope="col">WorkStation ID</th>
+                    <th  value="
+                    <?php 
+					if($sort == 5)
+					{
+						echo 0;
+					}
+					else if ($sort == 6)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+					?>
+                    " id="datesortheader" scope="col">Join Date<img style="height: 12px; width: 10px; float: right; margin-top: 4px;" src="media/Images/arrows.png"></th>
+                    <th scope="col">WorkStation</th>
                     <th scope="col">Rank</th>
-                    <th scope="col">Fouls</th>
+                    <th value="
+                    <?php 
+					if($sort == 7)
+					{
+						echo 0;
+					}
+					else if ($sort == 8)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+					?>
+                    " id="foulssortheader" scope="col">Fouls<img style="height: 12px; width: 10px; float: right; margin-top: 4px;" src="media/Images/arrows.png"></th>
                     <th scope="col">Card ID</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>

@@ -454,7 +454,7 @@ $(document).ready(function () {
 
 				if (data != -1) {
 					alert("Successful");
-					getUsers();
+					window.location.reload();
 				}
 				else {
 					data = JSON.parse(xhr.responseText);

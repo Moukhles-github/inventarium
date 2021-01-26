@@ -9,7 +9,7 @@ $(document).ready(function(){
 		var sortOrderId = $(".sortlisthidden").attr('id');
 		var sortOrder = sortOrderId.substring(4);
 		//set selected
-		$("#sortorder option[value="+sortOrder+"]").attr('selected', 'selected');
+		//$("#sortorder option[value="+sortOrder+"]").attr('selected', 'selected');
 		
 		
 		var showOrdersId = $(".showlisthidden").attr('id');
@@ -28,7 +28,11 @@ $(document).ready(function(){
 	
 	function wsOrder()
 	{
-		return $("#sortorder").val();
+		//return $("#sortorder").val();
+		var sortOrderId = $(".sortlisthidden").attr('id');
+		var sortOrder = sortOrderId.substring(4);
+		
+		return sortOrder;
 	}
 	
 	function wsRank()
@@ -349,7 +353,7 @@ $(document).ready(function(){
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_users").append('<tr><td>'+row.emp_ssn+'</td><td>'+row.emp_cmp_id+'</td><td>'+row.emp_name+'</td><td>'+row.emp_lname+'</td><td>'+row.emp_ph_nb+'</td><td>'+row.emp_address+'</td><td>'+row.emp_join_date+'</td><td>'+row.emp_wrkst_id+'</td><td>'+row.emp_rank_id+'</td><td>'+row.emp_fouls+'</td><td>'+row.emp_rfid+'</td><td value="'+row.emp_status+'">'+convertStatusToText(row.emp_status)+'</td><td id="emp'+row.emp_id+'"><button type="button" class="btn btn-primary btn_edit_employee" data-toggle="modal" data-target="#exampleModalCenter">Edit</button><button class="btn btn-primary btn_toogle_active">Toggle</button></td></tr>');
+                    $("#tbody_users").append('<tr><td>'+row.emp_ssn+'</td><td value="'+row.emp_cmp_id+'">'+row.cmp_name+'</td><td>'+row.emp_name+'</td><td>'+row.emp_lname+'</td><td>'+row.emp_ph_nb+'</td><td>'+row.emp_address+'</td><td>'+row.emp_join_date+'</td><td value="'+row.emp_wrkst_id+'">'+row.wrkst_name+'</td><td value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</td><td>'+row.emp_fouls+'</td><td>'+row.emp_rfid+'</td><td value="'+row.emp_status+'">'+convertStatusToText(row.emp_status)+'</td><td id="emp'+row.emp_id+'"><button type="button" class="btn btn-primary btn_edit_employee" data-toggle="modal" data-target="#exampleModalCenter">Edit</button><button class="btn btn-primary btn_toogle_active">Toggle</button></td></tr>');
                 });
             }
 		
@@ -376,11 +380,65 @@ $(document).ready(function(){
     $("#sortorder").change(function () {
         window.location.replace("employees.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
     });
+	
+	///////////////////////////////////////////dortint header///////////////////////////
+	$("#namesortheader").click(function(){
+		var sortorder = $(this).attr('value');
+
+		if(sortorder == 1)
+			{
+				window.location.replace("employees.php?key=" + wsKeyword() + "&sort=1" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
+			}
+		else
+			{
+				window.location.replace("employees.php?key=" + wsKeyword() + "&sort=2" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
+			}
+	});
+	
+	$("#lastnamesortheader").click(function(){
+		var sortorder = $(this).attr('value');
+		if(sortorder == 1)
+			{
+				window.location.replace("employees.php?key=" + wsKeyword() + "&sort=3" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
+			}
+		else
+			{
+				window.location.replace("employees.php?key=" + wsKeyword() + "&sort=4" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
+			}
+	});
+	
+	$("#datesortheader").click(function(){
+		var sortorder = $(this).attr('value');
+		if(sortorder == 1)
+			{
+				window.location.replace("employees.php?key=" + wsKeyword() + "&sort=5" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
+			}
+		else
+			{
+				window.location.replace("employees.php?key=" + wsKeyword() + "&sort=6" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
+			}
+	});
+	
+	$("#foulssortheader").click(function(){
+		var sortorder = $(this).attr('value');
+		if(sortorder == 1)
+			{
+				window.location.replace("employees.php?key=" + wsKeyword() + "&sort=7" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
+			}
+		else
+			{
+				window.location.replace("employees.php?key=" + wsKeyword() + "&sort=8" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
+			}
+	});
+	
+	
+	
 
     $("#showbystatus").change(function () {
         window.location.replace("employees.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
     });
-
+	
+	
     $("#rankorder").change(function () {
         window.location.replace("employees.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&wrks=" + wsWorkstation() + "&page=1");
     });
@@ -447,18 +505,18 @@ $(document).ready(function(){
 		$("#editadd").text("Edit");
 		
 		var empSSN = $(this).parent().siblings().eq(0).text();
-		var empCompany = $(this).parent().siblings().eq(1).text();
+		var empCompany = $(this).parent().siblings().eq(1).attr("value");
 		var empName = $(this).parent().siblings().eq(2).text();
 		var empLname = $(this).parent().siblings().eq(3).text();
 		var empNumber = $(this).parent().siblings().eq(4).text();
 		var empAddress = $(this).parent().siblings().eq(5).text();
-		var empWorkstation = $(this).parent().siblings().eq(7).text();
-		var empRank = $(this).parent().siblings().eq(8).text();
+		var empWorkstation = $(this).parent().siblings().eq(7).attr("value");
+		var empRank = $(this).parent().siblings().eq(8).attr("value");
 		var empFouls = $(this).parent().siblings().eq(9).text();
 		var empRFID = $(this).parent().siblings().eq(10).text();
 		var empID =  $(this).parent().attr("id").substr(3);
 		var actionValue = 0;
-		
+
 		$("#emp_ssn").val(empSSN);
 		$("#emp_company").val(empCompany);
 		$("#emp_name").val(empName);

@@ -27,7 +27,7 @@ class employees
 		try
 		{
 			//create sql query
-            $sqlQuery = "SELECT * FROM employee".$this->ShowStatus($show);
+            $sqlQuery = "SELECT * FROM employee, workstation, company, employee_rank".$this->ShowStatus($show)."AND workstation.wrkst_id = employee.emp_wrkst_id AND employee.emp_cmp_id = company.cmp_id AND employee_rank.emp_rank_id = employee.emp_rank_id ";
 
             if($rank != -1)
 			{
