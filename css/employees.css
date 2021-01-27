@@ -109,8 +109,8 @@ th:active
 
 .emp_address_td {
   white-space: nowrap;
-  width: 1px !important;
+  width: 150px !important;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: red;
+	display: inline-block;
 }

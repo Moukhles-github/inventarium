@@ -13,7 +13,7 @@ $(document).ready(function () {
 		var sortOrderId = $(".sortlisthidden").attr('id');
 		var sortOrder = sortOrderId.substring(4);
 		//set selected
-		$("#sortorder option[value=" + sortOrder + "]").attr('selected', 'selected');
+		//$("#sortorder option[value=" + sortOrder + "]").attr('selected', 'selected');
 
 
 		var showOrdersId = $(".showlisthidden").attr('id');
@@ -31,7 +31,11 @@ $(document).ready(function () {
 	}
 
 	function wsOrder() {
-		return $("#sortorder").val();
+		//return $("#sortorder").val();
+		var sortOrderId = $(".sortlisthidden").attr('id');
+		var sortOrder = sortOrderId.substring(4);
+		
+		return sortOrder;
 	}
 
 	function wsRank() {
@@ -118,7 +122,7 @@ $(document).ready(function () {
 
 	//display pages function
 	function displayPages(numberOfPages) {
-		var link = "admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&";
+		var link = "users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&";
 		//used for disabling item and set next and previous indexes
 		var disabledatstart = "";
 		var disabledatend = " ";
@@ -231,28 +235,57 @@ $(document).ready(function () {
 
 
 	$("#sortorder").change(function () {
-		window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		window.location.replace("users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
 	});
+	
+	///////////////////////////////////////////dortint header///////////////////////////
+	$("#usernamesortheader").click(function(){
+		var sortorder = $(this).attr('value');
+
+		if(sortorder == 1)
+			{
+				window.location.replace("users.php?key=" + wsKeyword() + "&sort=1" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+			}
+		else
+			{
+				window.location.replace("users.php?key=" + wsKeyword() + "&sort=2" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+			}
+	});
+	
+	$("#namesortheader").click(function(){
+		var sortorder = $(this).attr('value');
+		if(sortorder == 1)
+			{
+				window.location.replace("users.php?key=" + wsKeyword() + "&sort=3" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+			}
+		else
+			{
+				window.location.replace("users.php?key=" + wsKeyword() + "&sort=4" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+			}
+	});
+	
+	
+	
 
 	$("#showbystatus").change(function () {
-		window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		window.location.replace("users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
 	});
 
 	$("#rankorder").change(function () {
-		window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		window.location.replace("users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
 	});
 
 	$("#workstationorder").change(function () {
-		window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		window.location.replace("users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
 	});
 
 	$("#clearfilters").click(function () {
-		window.location.replace("admin.users.php?key=&sort=1&show=0&rank=-1&page=1");
+		window.location.replace("users.php?key=&sort=1&show=0&rank=-1&page=1");
 	});
 
 	//seachbutton click funtion
 	$("#searchbutton").click(function () {
-		window.location.replace("admin.users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		window.location.replace("users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
 	});
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

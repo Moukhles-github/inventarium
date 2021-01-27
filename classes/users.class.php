@@ -284,7 +284,7 @@ class users
 
             if(! is_null($key))
 			{
-				$sqlQuery.= " AND (employee.emp_name LIKE '%".$key."%' OR user_name = '".$key."')";
+				$sqlQuery.= " AND (employee.emp_name LIKE '%".$key."%' OR user.user_name LIKE '%".$key."%')";
             }
             
             $offset = ($page -1) * 20;
@@ -319,7 +319,7 @@ class users
 
             if(! is_null($key))
 			{
-				$sqlQuery.= " AND (employee.emp_name LIKE '%".$key."%' OR user_name = '".$key."')";
+				$sqlQuery.= " AND (employee.emp_name LIKE '%".$key."%' OR user.user_name LIKE '%".$key."%')";
             }
 			
 			//execute and put result in a variable

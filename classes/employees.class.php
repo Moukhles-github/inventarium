@@ -32,13 +32,13 @@ class employees
             if($rank != -1)
 			{
 				//check if all cat is selected
-				$sqlQuery .= " AND emp_rank_id =".$rank;
+				$sqlQuery .= " AND employee.emp_rank_id =".$rank;
 			}
             
             if($workstation != -1)
 			{
 				//check if all cat is selected
-				$sqlQuery .= " AND emp_wrkst_id =".$workstation;
+				$sqlQuery .= " AND employee.emp_wrkst_id =".$workstation;
 			}
 
             if(! is_null($key))
@@ -70,13 +70,13 @@ class employees
             if($rank != -1)
 			{
 				//check if all cat is selected
-				$sqlQuery .= " AND emp_rank_id =".$rank;
+				$sqlQuery .= " AND employee.emp_rank_id =".$rank;
 			}
             
             if($workstation != -1)
 			{
 				//check if all cat is selected
-				$sqlQuery .= " AND emp_wrkst_id =".$workstation;
+				$sqlQuery .= " AND employee.emp_wrkst_id =".$workstation;
 			}
 
             if(! is_null($key))

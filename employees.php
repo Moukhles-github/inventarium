@@ -104,7 +104,7 @@
 
         ?>
         
-        <div class="sortandfilterhead" style="height: 90px;" >
+        <div class="sortandfilterhead" style="height: 90px; margin-top: 30px;" >
 			<div style="float: left">
 				<div class='form-group' >
 					 <div class="form-group">
@@ -163,13 +163,24 @@
         
 			<div style="float: left">
 				<div class='form-group' >
-					<div class="form-group">
+					<div class="form-group" style="width: 200px;">
 					  <label for="order" style='margin-right: 10px'>Search:</label>
-						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
-						
+					  
+						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"></input>
+						         		
             		</div>
+            		
             	</div>
             </div>
+            
+            <div style="float: left; height: 74px; margin-left: 20px">
+            	<div class='form-group' >
+					 <div class="form-group">
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
+					</div>
+           		</div>
+			</div>
             
             
             
@@ -223,7 +234,7 @@
 
 
 
-        <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
+        <table class="table" style="margin-top: 20px; margin-left: 20px; margin-right: 20px; width: 100%">
             <caption>List of Employees</caption>
 
             <thead>

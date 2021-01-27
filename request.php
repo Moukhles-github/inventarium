@@ -164,7 +164,7 @@
             </div>
         </div>
 
-        <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
+        <table class="table" style="margin-top: 20px; margin-left: 20px; margin-right: 20px; width: 100%">
 
 
 
