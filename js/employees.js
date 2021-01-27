@@ -698,4 +698,8 @@ $(document).ready(function(){
     }
 
 
+	$("#btn_rank_page").click(function(){
+		window.location.href = "ranks.php";
+	});
+	
 });

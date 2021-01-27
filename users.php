@@ -240,11 +240,7 @@
 
 
 
-        <table class="table" style="margin-top: 20px; margin-left: 20px; margin-right: 20px; width: 100%">
-
-
-
-            <caption>List of Users</caption>
+        <table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">
 
             <thead>
                 <tr>

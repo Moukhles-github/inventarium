@@ -52,7 +52,7 @@ $(document).ready(function () {
 	function getRanks() {
 		$.ajax({
 			type: 'GET',
-			url: "ws/ws_ranks.php",
+			url: "ws/ws_user_type.php",
 			data: ({ op: 1 }),
 			dataType: 'json',
 			timeout: 5000,
@@ -73,8 +73,8 @@ $(document).ready(function () {
 	// fill the category functionl
 	function populateRanks(data) {
 		$.each(data, function (index, row) {
-			$("#rankorder").append('<option value="' + row.emp_rank_id + '">' + row.emp_rank_name + '</option>');
-			$("#emp_rank").append('<option value="' + row.emp_rank_id + '">' + row.emp_rank_name + '</option>');
+			$("#rankorder").append('<option value="' + row.user_type_id + '">' + row.user_type_name + '</option>');
+			$("#emp_rank").append('<option value="' + row.user_type_id + '">' + row.user_type_name + '</option>');
 		});
 
 		setRank();

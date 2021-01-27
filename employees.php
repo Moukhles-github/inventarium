@@ -58,6 +58,10 @@
         <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
             Create Employee
         </button>
+        
+        <button id="btn_rank_page" type="button" class="btn btn-primary" data-toggle="modal">
+            Rank
+        </button>
 
 
         <?php
@@ -234,8 +238,7 @@
 
 
 
-        <table class="table" style="margin-top: 20px; margin-left: 20px; margin-right: 20px; width: 100%">
-            <caption>List of Employees</caption>
+        <table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">
 
             <thead>
                 <tr>
