@@ -235,7 +235,7 @@
 					}
 							   
 					?>
-                    " id="namesortheader" scope="col">Name<img style="height: 12px; width: 10px; float: right; margin-top: 4px;" src="media/Images/arrows.png"></th>
+                    " id="namesortheader" scope="col">Name<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 4px" src="media/Images/arrows.png"></th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>

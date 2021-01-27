@@ -83,6 +83,10 @@ class ranks
 	}
 	
 	
+	
+	//////////////////////////item per page///////////////////////
+	public $itemPerPage = 8;
+	
 	public function getSearchedRanks($key, $sort, $show, $page)
 	{
 		try
@@ -95,9 +99,9 @@ class ranks
 				$sqlQuery.= " AND (emp_rank_name LIKE '%".$key."%')";
             }
             
-            $offset = ($page -1) * 20;
+            $offset = ($page -1) * $this->itemPerPage ;
 
-            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT 20 OFFSET ".$offset;
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemPerPage." OFFSET ".$offset;
 
 			//execute and put result in a variable
 			$result = $this->db->getData($sqlQuery);
@@ -126,7 +130,7 @@ class ranks
 			$data = $this->db->getData($sqlQuery);
 			
 			//return the values
-			return ceil($data[0]["COUNT(*)"] / 20);
+			return ceil($data[0]["COUNT(*)"] / $this->itemPerPage);
 		}
 		//catch the execption and throw it back to the ws
 		catch(Exception $e)
