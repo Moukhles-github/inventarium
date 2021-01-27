@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pyramid Login</title>
 
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/rank.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -63,41 +63,54 @@
 
 
         <?php
+			
+			//get initial values
+			$sort = "1";
+			$show = "0";
+			$rank = "-1";
+			$workstation = "-1";
+            $keyy = "";
+			//check if sort order is set
+			if(isset($_GET["sort"]) && ($_GET["sort"] != ""))
+			{
+				$sort = $_GET["sort"];
+            }
+            
+			//check if show option is set
+			if(isset($_GET["show"]) && ($_GET["show"] != ""))
+			{
+				$show = $_GET["show"];
+            }
+            
+			//check if rank option is set
+			if(isset($_GET["rank"]) && ($_GET["rank"] != ""))
+			{
+				$rank = $_GET["rank"];
+			}
+            
+			//check if workstation option is set
+			if(isset($_GET["wrks"]) && ($_GET["wrks"] != ""))
+			{
+				$workstation = $_GET["wrks"];
+            }
 
-        //get initial values
-        $sort = "1";
-        $show = "0";
-        $rank = "-1";
-        $keyy = "";
-        //check if sort order is set
-        if (isset($_GET["sort"]) && ($_GET["sort"] != "")) {
-            $sort = $_GET["sort"];
-        }
+                        
+			//check if workstation option is set
+			if(isset($_GET["key"]) && ($_GET["key"] != ""))
+			{
+				$keyy = $_GET["key"];
+            }
 
-        //check if show option is set
-        if (isset($_GET["show"]) && ($_GET["show"] != "")) {
-            $show = $_GET["show"];
-        }
-
-        //check if rank option is set
-        if (isset($_GET["rank"]) && ($_GET["rank"] != "")) {
-            $rank = $_GET["rank"];
-        }
-
-        //check if workstation option is set
-        if (isset($_GET["key"]) && ($_GET["key"] != "")) {
-            $keyy = $_GET["key"];
-        }
-
-        //create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
-        echo ('<input type="hidden" class="sortlisthidden" id="sort' . $sort . '"><input type="hidden" class="showlisthidden" id="show' . $show . '"><input type="hidden" class="rankhidden" id="rank' . $rank . '">');
+			//create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
+			echo('<input type="hidden" class="sortlisthidden" id="sort'.$sort.'"><input type="hidden" class="showlisthidden" id="show'.$show.'">');
 
         ?>
 
-        <div class="sortandfilterhead" style="height: 90px;">
+        <div class="sortandfilterhead" style="height: 90px; margin-top: 30px;">
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
+<!--
                         <label for="order" style='margin-right: 10px'>Sort By:</label>
                         <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
                             <option value="1">UserName Asc</option>
@@ -105,6 +118,7 @@
                             <option value="3">Name Asc</option>
                             <option value="4">Name Desc</option>
                         </select>
+-->
                     </div>
                 </div>
             </div>
@@ -112,7 +126,7 @@
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Show Employees:</label>
+                        <label for="order" style='margin-right: 10px'>Show Ranks:</label>
                         <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
                             <option value="0">All</option>
                             <option value="1">Active</option>
@@ -123,26 +137,25 @@
             </div>
 
             <div style="float: left">
-                <div class='form-group'>
-                    <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Rank:</label>
-                        <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
-                            <option value="-1">All</option>
-                        </select>
-                    </div>
-                </div>
+				<div class='form-group' >
+					<div class="form-group" style="width: 200px;">
+					  <label for="order" style='margin-right: 10px'>Search:</label>
+					  
+						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"></input>
+						         		
+            		</div>
+            		
+            	</div>
             </div>
-
-
-            <div style="float: left">
-                <div class='form-group'>
-                    <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Search:</label>
-                        <input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
-
-                    </div>
-                </div>
-            </div>
+            
+            <div style="float: left; height: 74px; margin-left: 20px">
+            	<div class='form-group' >
+					 <div class="form-group">
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
+					</div>
+           		</div>
+			</div>
         </div>
 
 
@@ -202,15 +215,27 @@
 
 
 
-        <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
-
-
-
-            <caption>List of Companies</caption>
+        <table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">
 
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
+                    <th value="
+                    <?php 
+					if($sort == 1)
+					{
+						echo 0;
+					}
+					else if ($sort == 2)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+							   
+					?>
+                    " id="namesortheader" scope="col">Name<img style="height: 12px; width: 10px; float: right; margin-top: 4px;" src="media/Images/arrows.png"></th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -220,27 +245,34 @@
             </tbody>
 
         </table>
-        <?php
-        /////////////////////pagination//////////////////////
-
-        //check if the on the first page
-        if (isset($_GET["page"])) {
-            $page = $_GET["page"];
-        } else {
-            $page = 1;
-        }
-        //display the pages
-        echo ("<br/><br/>
+        
+        
+		<?php
+			/////////////////////pagination//////////////////////
+			
+			//check if the on the first page
+			if(isset($_GET["page"]))
+			{
+				$page = $_GET["page"];
+			}
+			else
+			{
+				$page = 1;
+			}
+			//display the pages
+			echo("<br/><br/>
 				<div class='pages' style='width: 100%;text-align: center;'>
 					 <div style='display: inline-block;'>
 						<ul class='pagination'>
-							<li class='page-item' style='display: none;' id='" . $page . "'></li>
+							<li class='page-item' style='display: none;' id='".$page."'></li>
 						</ul>
 					</div>
 				</div>
 			");
-        /////////////////////pagination//////////////////////
+			/////////////////////pagination//////////////////////
         ?>
+        
+        
     </div>
 
 </body>

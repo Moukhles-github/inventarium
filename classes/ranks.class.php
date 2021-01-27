@@ -8,6 +8,7 @@ class ranks
 	function __construct()
 	{
 		$this->db = new DAL();
+		
 	}
 
 	public
@@ -16,7 +17,8 @@ class ranks
 
 		$this->db = null;
 	}
-
+	
+	
 	//
 
 	/////////////////////////////////////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -79,4 +81,96 @@ class ranks
 			throw $e;
 		}
 	}
+	
+	
+	public function getSearchedRanks($key, $sort, $show, $page)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT * FROM employee_rank".$this->ShowStatus($show);
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (emp_rank_name LIKE '%".$key."%')";
+            }
+            
+            $offset = ($page -1) * 20;
+
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT 20 OFFSET ".$offset;
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	public function CountSearchedRanks($key, $sort, $show)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) FROM employee_rank".$this->ShowStatus($show);
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (emp_rank_name LIKE '%".$key."%')";
+            }
+
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / 20);
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+    
+    //set option
+	private function ShowStatus($status)
+	{
+		switch($status)
+		{
+			case 0:
+				return " WHERE (1=1)";
+				break;
+			case 1:
+				return " WHERE (emp_rank_status = 1)";
+				break;
+			case 2:
+				return " WHERE (emp_rank_status = 0)";
+				break;
+			default:
+				return " WHERE (1=1)";
+				break;
+		}
+	}
+    
+    //set sort order
+	private function orderStatus($order)
+	{
+		switch($order)
+		{
+			case 1:
+				return " ORDER BY emp_rank_name ASC";
+				break;
+			case 2:
+				return " ORDER BY emp_rank_name DESC";
+				break;
+			default:
+				return " ORDER BY emp_name ASC";
+				break;
+		}
+	}
+	
+	
 }

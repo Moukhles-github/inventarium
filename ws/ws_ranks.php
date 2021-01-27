@@ -48,6 +48,30 @@ try {
 						
 					}
 					break;
+				case 5: {
+                    //count all items for admin 
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $ranks->CountSearchedRanks($key, $_GET["sort"], $_GET["show"]);
+                }
+                break;
+            	case 6: {
+                    //get all items for admin 
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $ranks->getSearchedRanks($key, $_GET["sort"], $_GET["show"], $_GET["page"]);
+                }
+                break;
             default:
                 return 0;
                 break;
