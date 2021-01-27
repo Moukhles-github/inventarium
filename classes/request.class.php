@@ -43,7 +43,7 @@ class request
 
 	public function getmorerqst($rqst_id)
 	{
-		$sql = "SELECT request.rqst_res, request.rqsr_ret, request.rqst_acc_date, request.rqst_handled_date, request.rqst_denied_date, request.rqst_returned_date, request.rqst_handler_id, request.rqst_returner_id FROM request WHERE request.rqst_id = $rqst_id";
+		$sql = "SELECT request.rqst_id, request.rqst_res, request.rqst_ret, request.rqst_status, request.rqst_date, request.rqst_acc_date, request.rqst_handled_date, request.rqst_denied_date, request.rqst_returned_date, request.rqst_handler_id, request.rqst_returner_id, item.item_label, warehouse.whs_label, employee.emp_name, employee.emp_lname, workstation.wrkst_name FROM request INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN warehouse on item.item_whs_id = warehouse.whs_id INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN employee on user.user_emp_id = employee.emp_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id where request.rqst_id = $rqst_id ";
 
 		try {
 
