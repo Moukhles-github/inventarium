@@ -175,7 +175,7 @@ $(document).ready(function () {
     }
 
     function dndval(val) {
-        if (val == "") {
+        if (!val) {
             return "Not Denied";
         }
         else {
@@ -184,7 +184,7 @@ $(document).ready(function () {
     }
 
     function retdateval(val, retval) {
-        if (val == "" && retval == 1) {
+        if (!val && retval == 1) {
             return "Not returned Yet"
         }
         else if (val == "" && retval == 0) {
@@ -197,7 +197,7 @@ $(document).ready(function () {
     }
 
     function handlerval(val) {
-        if (val == "") {
+        if (!val) {
             return "Not Handled Yet";
         }
         else {
@@ -206,11 +206,13 @@ $(document).ready(function () {
     }
 
     function returnerval(val) {
-        if (val == "") {
+        if (!val) {
             return "Not Returned Yet";
         }
         else {
             return val;
         }
     }
+
+    
 })

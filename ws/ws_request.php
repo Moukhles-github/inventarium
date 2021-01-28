@@ -24,35 +24,33 @@ $result = 0;
 
 
 try {
-    if (isset($_GET["op"])) //check if op exists
-    {
-        $op = $_GET["op"];
+	if (isset($_GET["op"])) //check if op exists
+	{
+		$op = $_GET["op"];
 
 
-        switch ($op) { //get all ranks
-            case 1: {
-                    $result = $request->getrqst();
-                }
-				break;
-				case 2:{
-					$result = $request->getmorerqst($_GET["rqst_id"]);
-				} 
-				break;
-				case 3: {
-					$result = $ranks->createranks($_GET["rank_name"]);
+		switch ($op) { //get all ranks
+			case 1: {
+					$result = $request->getrqst();
 				}
 				break;
-				case 4: 
-					{
-						$result = $ranks->updateranks($_GET["rank_id"], $_GET["rank_name"]);
-						
-					}
-					break;
-            default:
-                return 0;
-                break;
-        }
-    }
+			case 2: {
+					$result = $request->getmorerqst($_GET["rqst_id"]);
+				}
+				break;
+			case 3: {
+					$result = $request->getmgr_rqst($_GET["whs_id"]);
+				}
+				break;
+			case 4: {
+					$result = $request->allrqstinfo_mgr($_GET[]);
+				}
+				break;
+			default:
+				return 0;
+				break;
+		}
+	}
 
 	header("Content-type:application/json");
 	echo json_encode($result);
