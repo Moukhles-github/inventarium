@@ -38,7 +38,31 @@ try {
                 {
                     $result =$workstation->popwrkstmgr();
                 }
-                break; 
+                break;
+			case 7: {
+                    //count all items for admin 
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $workstation->CountSearchedWorkstations($key, $_GET["sort"], $_GET["show"]);
+                }
+                break;
+            case 8: {
+                    //get all items for admin 
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $workstation->getSearchedWorkstations($key, $_GET["sort"], $_GET["show"], $_GET["page"]);
+                }
+                break;
             default:
                 return 0;
                 break;

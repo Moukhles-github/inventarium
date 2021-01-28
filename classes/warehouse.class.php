@@ -106,4 +106,106 @@ class warehouse
             throw $e;
         }
     }
+	
+	
+	///////////////////////////////////////////////////////
+	
+	public $itemsPerPage = 20;
+	
+	public function getSearchedWarehouses($key, $sort, $show, $page)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT warehouse.whs_id, warehouse.whs_label, warehouse.whs_mgr_id, warehouse.whs_address, warehouse.whs_date, warehouse.whs_status, employee.emp_name, employee.emp_lname FROM `warehouse` INNER JOIN user on warehouse.whs_mgr_id = user.user_id INNER JOIN employee ON employee.emp_id = user.user_emp_id ".$this->ShowStatus($show);
+			
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (warehouse.whs_label LIKE '%".$key."%' OR employee.emp_name LIKE '%".$key."%' OR employee.emp_lname LIKE '%".$key."%' )";
+            }
+            
+            $offset = ($page -1) * $this->itemsPerPage;
+
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemsPerPage." OFFSET ".$offset;
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+    public function CountSearchedWarehouses($key, $sort, $show)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) FROM `warehouse` INNER JOIN user on warehouse.whs_mgr_id = user.user_id INNER JOIN employee ON employee.emp_id = user.user_emp_id".$this->ShowStatus($show);
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (warehouse.whs_label LIKE '%".$key."%' OR employee.emp_name LIKE '%".$key."%' OR employee.emp_lname LIKE '%".$key."%' )";
+            }
+
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+    
+    //set option
+	private function ShowStatus($status)
+	{
+		switch($status)
+		{
+			case 0:
+				return " WHERE (1=1)";
+				break;
+			case 1:
+				return " WHERE (warehouse.whs_status = 1)";
+				break;
+			case 2:
+				return " WHERE (warehouse.whs_status = 0)";
+				break;
+			default:
+				return " WHERE (1=1)";
+				break;
+		}
+	}
+    
+    //set sort order
+	private function orderStatus($order)
+	{
+		switch($order)
+		{
+			case 1:
+				return " ORDER BY warehouse.whs_label ASC";
+				break;
+			case 2:
+				return " ORDER BY warehouse.whs_label DESC";
+				break;
+			case 3:
+				return " ORDER BY warehouse.whs_date ASC";
+				break;
+			case 4:
+				return " ORDER BY warehouse.whs_date DESC";
+				break;
+			default:
+				return " ORDER BY warehouse.whs_label ASC";
+				break;
+		}
+	}
+	
+	
 }

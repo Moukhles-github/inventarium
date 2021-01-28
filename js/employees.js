@@ -353,7 +353,7 @@ $(document).ready(function(){
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_users").append('<tr><td>'+row.emp_ssn+'</td><td value="'+row.emp_cmp_id+'">'+row.cmp_name+'</td><td>'+row.emp_name+'</td><td>'+row.emp_lname+'</td><td>'+row.emp_ph_nb+'</td><td class="emp_address_td">'+row.emp_address+'</td><td>'+row.emp_join_date+'</td><td value="'+row.emp_wrkst_id+'">'+row.wrkst_name+'</td><td value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</td><td>'+row.emp_fouls+'</td><td>'+row.emp_rfid+'</td><td value="'+row.emp_status+'">'+convertStatusToText(row.emp_status)+'</td><td id="emp'+row.emp_id+'"><button type="button" class="btn btn-primary btn_edit_employee" data-toggle="modal" data-target="#exampleModalCenter">Edit</button><button class="btn btn-primary btn_toogle_active">Toggle</button></td></tr>');
+                    $("#tbody_users").append('<tr><td>'+row.emp_ssn+'</td><td value="'+row.emp_cmp_id+'">'+row.cmp_name+'</td><td>'+row.emp_name+'</td><td>'+row.emp_lname+'</td><td>'+row.emp_ph_nb+'</td><td class="emp_address_td">'+row.emp_address+'</td><td>'+row.emp_join_date+'</td><td value="'+row.emp_wrkst_id+'">'+row.wrkst_name+'</td><td value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</td><td>'+row.emp_fouls+'</td><td>'+row.emp_rfid+'</td><td value="'+row.emp_status+'">'+convertStatusToText(row.emp_status)+'</td><td id="emp'+row.emp_id+'"><button type="button"  style="margin-right: 4px;" class="btn btn-primary btn_edit_employee" data-toggle="modal" data-target="#exampleModalCenter">Edit</button><button class="btn btn-primary btn_toogle_active">Toggle</button></td></tr>');
                 });
             }
 		

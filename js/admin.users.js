@@ -338,7 +338,7 @@ $(document).ready(function () {
 				else
 					btn_status_text = "Disable";
 
-				$("#tbody_users").append("<tr><td>" + row.user_name + "</td><td>" + row.emp_name + "</td><td id='" + row.user_type_id + "'>" + row.user_type_name + "</td><td>" + check_status(row.user_status) + "</td><td><button id='updt" + row.user_id + "'  class='btn_modal_edituser' type='button' class='btn btn-primary' data-toggle='modal' data-target='#editusermodal'>Edit User</button><button value='" + row.user_status + "' id='tog" + row.user_id + "' class='btntoggleact'> " + btn_status_text + " </button></td></tr>");
+				$("#tbody_users").append("<tr><td>" + row.user_name + "</td><td>" + row.emp_name + "</td><td id='" + row.user_type_id + "'>" + row.user_type_name + "</td><td>" + check_status(row.user_status) + "</td><td><button id='updt" + row.user_id + "'  class='btn_modal_edituser btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editusermodal'>Edit User</button><button value='" + row.user_status + "' id='tog" + row.user_id + "' class='btntoggleact btn btn-primary'> " + btn_status_text + " </button></td></tr>");
 
 			});
 

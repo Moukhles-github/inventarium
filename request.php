@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pyramid Login</title>
 
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/request.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -58,34 +58,49 @@
 
 
         <?php
+			
+			//get initial values
+			$sort = "1";
+			$show = "0";
+			$rank = "-1";
+			$workstation = "-1";
+            $keyy = "";
+			//check if sort order is set
+			if(isset($_GET["sort"]) && ($_GET["sort"] != ""))
+			{
+				$sort = $_GET["sort"];
+            }
+            
+			//check if show option is set
+			if(isset($_GET["show"]) && ($_GET["show"] != ""))
+			{
+				$show = $_GET["show"];
+            }
+		
+			//initial date values
+			$startdate = "";
+			$enddate = "";
 
-        //get initial values
-        $sort = "1";
-        $show = "0";
-        $rank = "-1";
-        $keyy = "";
-        //check if sort order is set
-        if (isset($_GET["sort"]) && ($_GET["sort"] != "")) {
-            $sort = $_GET["sort"];
-        }
+			//check if start date is set
+			if(isset($_GET["sdate"]) && ($_GET["sdate"] != ""))
+			{
+				$startdate = $_GET["sdate"];
+			}
+			//check if end date is set
+			if(isset($_GET["edate"]) && ($_GET["edate"] != ""))
+			{
+				$enddate = $_GET["edate"];
+			}
 
-        //check if show option is set
-        if (isset($_GET["show"]) && ($_GET["show"] != "")) {
-            $show = $_GET["show"];
-        }
+                        
+			//check if workstation option is set
+			if(isset($_GET["key"]) && ($_GET["key"] != ""))
+			{
+				$keyy = $_GET["key"];
+            }
 
-        //check if rank option is set
-        if (isset($_GET["rank"]) && ($_GET["rank"] != "")) {
-            $rank = $_GET["rank"];
-        }
-
-        //check if workstation option is set
-        if (isset($_GET["key"]) && ($_GET["key"] != "")) {
-            $keyy = $_GET["key"];
-        }
-
-        //create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
-        echo ('<input type="hidden" class="sortlisthidden" id="sort' . $sort . '"><input type="hidden" class="showlisthidden" id="show' . $show . '"><input type="hidden" class="rankhidden" id="rank' . $rank . '">');
+			//create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
+			echo('<input type="hidden" class="sortlisthidden" id="sort'.$sort.'"><input type="hidden" class="showlisthidden" id="show'.$show.'"><input type="hidden" class="rankhidden" id="rank'.$rank.'"><input type="hidden" class="workstationlisthidden" id="workstation'.$workstation.'">');
 
         ?>
 
@@ -93,6 +108,7 @@
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
+<!--
                         <label for="order" style='margin-right: 10px'>Sort By:</label>
                         <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
                             <option value="1">UserName Asc</option>
@@ -100,6 +116,7 @@
                             <option value="3">Name Asc</option>
                             <option value="4">Name Desc</option>
                         </select>
+-->
                     </div>
                 </div>
             </div>
@@ -107,22 +124,13 @@
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Show Employees:</label>
+                        <label for="order" style='margin-right: 10px'>Show Requests:</label>
                         <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
                             <option value="0">All</option>
-                            <option value="1">Active</option>
-                            <option value="2">Not Active</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div style="float: left">
-                <div class='form-group'>
-                    <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Rank:</label>
-                        <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
-                            <option value="-1">All</option>
+                            <option value="1">Waiting</option>
+                            <option value="2">Accepted</option>
+                            <option value="3">Handled</option>
+                            <option value="4">Returned</option>
                         </select>
                     </div>
                 </div>
@@ -130,14 +138,41 @@
 
 
             <div style="float: left">
-                <div class='form-group'>
-                    <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Search:</label>
-                        <input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
-
-                    </div>
-                </div>
+				<div class='form-group' >
+					<div class="form-group" style="width: 200px;">
+					  <label for="order" style='margin-right: 10px'>Search:</label>
+					  
+						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"></input>
+						         		
+            		</div>
+            		
+            	</div>
             </div>
+            
+            <div style="float: left; margin-left: 20px">
+				<div class='form-group' style="float: left; margin-right: 5px;">
+					<label for="order" style='margin-right: 10px'>From:</label>		
+					<?php
+						echo('<input class="form-control datepicker" type="date" id="startdate" value="'.$startdate.'">');
+					?>
+				</div>
+				<div class='form-group' style="float: left">
+					<label for="order" style='margin-right: 10px'>To:</label>
+					<?php
+						echo('<input class="form-control datepicker" type="date" id="enddate" value="'.$enddate.'">');
+					?>
+				</div>
+			</div>
+            
+            <div style="float: left; height: 74px; margin-left: 20px">
+            	<div class='form-group' >
+					 <div class="form-group">
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
+					</div>
+           		</div>
+			</div>
+       
         </div>
 
 
@@ -164,11 +199,8 @@
             </div>
         </div>
 
-        <table class="table" style="margin-top: 20px; margin-left: 20px; margin-right: 20px; width: 100%">
+        <table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">
 
-
-
-            <caption>List of request</caption>
 
             <thead>
                 <tr>
@@ -176,7 +208,22 @@
                     <th scope="col">User</th>
                     <th scope="col">item</th>
                     <th scope="col">Facility</th>
-                    <th scope="col">Date</th>
+                    <th  value="
+                    <?php 
+					if($sort == 1)
+					{
+						echo 0;
+					}
+					else if ($sort == 2)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+					?>
+                    " id="datesortheader" scope="col">Date<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 4px;" src="media/Images/arrows.png"></th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
 

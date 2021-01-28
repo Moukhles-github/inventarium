@@ -89,4 +89,123 @@ class request
 			throw $e;
 		}
 	}
+	
+	
+	/////////////////////////////////////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+	public $itemsPerPage = 20;
+
+	public function getSearchedResquests($key, $sort, $show, $startdate, $enddate, $page)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT request.rqst_id, user.user_name, item.item_label, workstation.wrkst_name, request.rqst_status, request.rqst_date FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id ".$this->ShowStatus($show);
+			
+			//check if start and end date exist
+			if($startdate != "")
+			{
+				$sqlQuery .= " AND (request.rqst_date > '".$startdate."')";
+			}
+			if($enddate != "")
+			{
+				$sqlQuery.= " AND (request.rqst_date < '".$enddate."')";
+			}
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (user.user_name LIKE '%".$key."%' OR request.rqst_id = '".$key."')";
+            }
+            
+            $offset = ($page -1) * $this->itemsPerPage;
+
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemsPerPage." OFFSET ".$offset;
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+    public function CountSearchedResquests($key, $sort, $show, $startdate, $enddate)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id ".$this->ShowStatus($show);
+
+            //check if start and end date exist
+			if($startdate != "")
+			{
+				$sqlQuery .= " AND (request.rqst_date > '".$startdate."')";
+			}
+			if($enddate != "")
+			{
+				$sqlQuery.= " AND (request.rqst_date < '".$enddate."')";
+			}
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (user.user_name LIKE '%".$key."%' OR request.rqst_id = '".$key."')";
+            }
+
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+    
+    //set option
+	private function ShowStatus($status)
+	{
+		switch($status)
+		{
+			case 0:
+				return " WHERE (1=1)";
+				break;
+			case 1:
+				return " WHERE (request.rqst_status = 0)";
+				break;
+			case 2:
+				return " WHERE (request.rqst_status = 1)";
+				break;
+			case 3:
+				return " WHERE (request.rqst_status = 2)";
+				break;
+			case 4:
+				return " WHERE (request.rqst_status = 3)";
+				break;
+			default:
+				return " WHERE (1=1)";
+				break;
+		}
+	}
+    
+    //set sort order
+	private function orderStatus($order)
+	{
+		switch($order)
+		{
+			case 1:
+				return " ORDER BY request.rqst_date ASC";
+				break;
+			case 2:
+				return " ORDER BY request.rqst_date DESC";
+				break;
+			default:
+				return " ORDER BY request.rqst_date DESC";
+				break;
+		}
+	}
 }

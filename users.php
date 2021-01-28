@@ -54,7 +54,7 @@
         </ul>
     </nav>
     <div class="main-content">
-        <h1> users </h1>
+        <h1> Users </h1>
 
         <!-- Create users button -->
         <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createusermodal">

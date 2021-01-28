@@ -33,6 +33,30 @@ try {
 				// update company
 				$result = $company->updatecmp($_GET["cmp_id"],$_GET["cmp_name"],$_GET["cmp_address"],$_GET["cmp_subsidiary"]);
 				break;
+			case 5: {
+                    //count all items for admin 
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $company->CountSearchedCompanies($key, $_GET["sort"], $_GET["show"]);
+                }
+                break;
+            case 6: {
+                    //get all items for admin 
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $company->getSearchedCompanies($key, $_GET["sort"], $_GET["show"], $_GET["page"]);
+                }
+                break;
 			default:
 				return 0;
 				break;

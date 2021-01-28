@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pyramid Login</title>
 
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/warehouse.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -79,11 +79,6 @@
             $show = $_GET["show"];
         }
 
-        //check if rank option is set
-        if (isset($_GET["rank"]) && ($_GET["rank"] != "")) {
-            $rank = $_GET["rank"];
-        }
-
         //check if workstation option is set
         if (isset($_GET["key"]) && ($_GET["key"] != "")) {
             $keyy = $_GET["key"];
@@ -94,10 +89,11 @@
 
         ?>
 
-        <div class="sortandfilterhead" style="height: 90px;">
+        <div class="sortandfilterhead" style="height: 90px; margin-top: 30px;" >
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
+<!--
                         <label for="order" style='margin-right: 10px'>Sort By:</label>
                         <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
                             <option value="1">UserName Asc</option>
@@ -105,6 +101,7 @@
                             <option value="3">Name Asc</option>
                             <option value="4">Name Desc</option>
                         </select>
+-->
                     </div>
                 </div>
             </div>
@@ -112,7 +109,7 @@
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Show Employees:</label>
+                        <label for="order" style='margin-right: 10px'>Show Warehouses:</label>
                         <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
                             <option value="0">All</option>
                             <option value="1">Active</option>
@@ -122,27 +119,27 @@
                 </div>
             </div>
 
-            <div style="float: left">
-                <div class='form-group'>
-                    <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Rank:</label>
-                        <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
-                            <option value="-1">All</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
 
             <div style="float: left">
-                <div class='form-group'>
-                    <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Search:</label>
-                        <input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
-
-                    </div>
-                </div>
+				<div class='form-group' >
+					<div class="form-group" style="width: 200px;">
+					  <label for="order" style='margin-right: 10px'>Search:</label>
+					  
+						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"></input>
+						         		
+            		</div>
+            		
+            	</div>
             </div>
+            
+            <div style="float: left; height: 74px; margin-left: 20px">
+            	<div class='form-group' >
+					 <div class="form-group">
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
+					</div>
+           		</div>
+			</div>
         </div>
 
 
@@ -219,19 +216,50 @@
 
 
 
-        <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
+        <table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">
 
-
-
-            <caption>List of warehouses</caption>
 
             <thead>
-                <tr>
-                    <th scope="col">Label</th>
+
+                    <tr>
+                    <th value="
+                    <?php 
+					if($sort == 1)
+					{
+						echo 0;
+					}
+					else if ($sort == 2)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+							   
+					?>
+                    " id="namesortheader" scope="col">Label<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 4px;" src="media/Images/arrows.png"></th>
 
                     <th scope="col">Manager</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Creation Date</th>
+                    
+                    <th value="
+                    <?php 
+					if($sort == 3)
+					{
+						echo 0;
+					}
+					else if ($sort == 4)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+							   
+					?>
+                    " id="datesortheader" scope="col">Creation Date<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 4px;" src="media/Images/arrows.png"></th>
                     <th scope="col">status</th>
                     <th scope="col">actions</th>
                 </tr>

@@ -21,6 +21,7 @@ class employees
 
 	/////////////////////////////////////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+	public $itemsPerPage = 20;
 
 	public function getSearchedEmployees($key, $sort, $show, $rank, $workstation, $page)
 	{
@@ -46,9 +47,9 @@ class employees
 				$sqlQuery.= " AND (emp_ssn LIKE '%".$key."%' OR emp_cmp_id = '".$key."' OR emp_name LIKE '%".$key."%' OR emp_lname LIKE '%".$key."%' OR emp_ph_nb LIKE '%".$key."%' OR emp_address LIKE '%".$key."%' OR  emp_join_date LIKE '%".$key."%' OR emp_rfid LIKE '%".$key."%')";
             }
             
-            $offset = ($page -1) * 20;
+            $offset = ($page -1) * $this->itemsPerPage;
 
-            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT 20 OFFSET ".$offset;
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemsPerPage." OFFSET ".$offset;
 
 			//execute and put result in a variable
 			$result = $this->db->getData($sqlQuery);
@@ -88,7 +89,7 @@ class employees
 			$data = $this->db->getData($sqlQuery);
 			
 			//return the values
-			return ceil($data[0]["COUNT(*)"] / 20);
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
 		}
 		//catch the execption and throw it back to the ws
 		catch(Exception $e)

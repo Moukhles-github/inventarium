@@ -268,6 +268,7 @@ class users
 		}
 	}
 	
+	public $itemsPerPage = 20;
 	
 		public function getSearchedUsers($key, $sort, $show, $rank, $page)
 	{
@@ -287,9 +288,9 @@ class users
 				$sqlQuery.= " AND (employee.emp_name LIKE '%".$key."%' OR user.user_name LIKE '%".$key."%')";
             }
             
-            $offset = ($page -1) * 20;
+            $offset = ($page -1) * $this->itemsPerPage;
 
-            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT 20 OFFSET ".$offset;
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemsPerPage." OFFSET ".$offset;
 			UTILITIES::writeToLog($sqlQuery);
 			//execute and put result in a variable
 			$result = $this->db->getData($sqlQuery);
@@ -326,7 +327,7 @@ class users
 			$data = $this->db->getData($sqlQuery);
 			
 			//return the values
-			return ceil($data[0]["COUNT(*)"] / 20);
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
 		}
 		//catch the execption and throw it back to the ws
 		catch(Exception $e)

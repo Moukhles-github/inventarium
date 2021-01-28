@@ -128,4 +128,99 @@ class workstaions
 		}
 	}
 	
+	
+	///////////////////////////////////////////////////////
+	
+	public $itemsPerPage = 20;
+	
+	public function getSearchedWorkstations($key, $sort, $show, $page)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT wrkst_id, wrkst_name, wrkst_location, wrkst_mgr_id, wrkst_status, employee.emp_name, employee.emp_lname FROM workstation INNER JOIN user ON workstation.wrkst_mgr_id = user.user_id INNER JOIN employee ON user.user_emp_id = employee.emp_id".$this->ShowStatus($show);
+			
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (wrkst_name LIKE '%".$key."%' OR employee.emp_name LIKE '%".$key."%' OR employee.emp_lname LIKE '%".$key."%' )";
+            }
+            
+            $offset = ($page -1) * $this->itemsPerPage;
+
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemsPerPage." OFFSET ".$offset;
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+    public function CountSearchedWorkstations($key, $sort, $show)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) FROM workstation INNER JOIN user ON workstation.wrkst_mgr_id = user.user_id INNER JOIN employee ON user.user_emp_id = employee.emp_id".$this->ShowStatus($show);
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (wrkst_name LIKE '%".$key."%' OR employee.emp_name LIKE '%".$key."%' OR employee.emp_lname LIKE '%".$key."%' )";
+            }
+
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+    
+    //set option
+	private function ShowStatus($status)
+	{
+		switch($status)
+		{
+			case 0:
+				return " WHERE (1=1)";
+				break;
+			case 1:
+				return " WHERE (workstation.wrkst_status = 1)";
+				break;
+			case 2:
+				return " WHERE (workstation.wrkst_status = 0)";
+				break;
+			default:
+				return " WHERE (1=1)";
+				break;
+		}
+	}
+    
+    //set sort order
+	private function orderStatus($order)
+	{
+		switch($order)
+		{
+			case 1:
+				return " ORDER BY workstation.wrkst_name ASC";
+				break;
+			case 2:
+				return " ORDER BY workstation.wrkst_name DESC";
+				break;
+			default:
+				return " ORDER BY workstation.wrkst_name ASC";
+				break;
+		}
+	}
+	
+	
 }
