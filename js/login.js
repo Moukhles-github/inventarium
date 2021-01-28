@@ -44,7 +44,7 @@ $(document).ready(function () {
 				window.location.href="./admin.php";
 				break;
 			case "1":
-				alert ("sexes");
+				window.location.href="./whsmgr.dash.php";
 				break;
 			case "2":
 				alert("sexes");
