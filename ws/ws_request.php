@@ -39,11 +39,11 @@ try {
 				}
 				break;
 			case 3: {
-					$result = $request->getmgr_rqst($_GET["whs_id"]);
+					$result = $request->getmgr_rqst($_GET["mgr_id"]);
 				}
 				break;
 			case 4: {
-					$result = $request->allrqstinfo_mgr($_GET[]);
+					// $result = $request->allrqstinfo_mgr($_GET[]);
 				}
 				break;
 			case 5: {
@@ -68,8 +68,12 @@ try {
                         $key = $_GET["key"];
                     }
                     $result = $request->getSearchedResquests($key, $_GET["sort"], $_GET["show"], $_GET[ "sdate" ], $_GET[ "edate" ], $_GET["page"]);
-                }
-                break;
+				}
+				break;
+			case 7: {
+				$result=$request->handlerqstitem($_GET["rqst_id"], $_GET["emp_id"]);
+			}
+			break;
 			default:
 				return 0;
 				break;

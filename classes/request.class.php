@@ -59,9 +59,9 @@ class request
 
 ////////////////////////////////////////////////// WAREHOUSE MANAGER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-	public function  getmgr_rqst($whs_id)
+	public function  getmgr_rqst($mgrid)
 	{
-		$sql = "SELECT request.rqst_id, employee.emp_name, employee.emp_lname,warehouse.whs_label, workstation.wrkst_name, item.item_label, request.rqst_status, request.rqst_date FROM request INNER JOIN user ON request.rqst_user_id = user.user_id INNER JOIN employee ON user.user_emp_id = employee.emp_id INNER JOIN workstation ON request.rqst_wrkst_id = workstation.wrkst_id INNER JOIN item ON request.rqst_item_id = item.item_id INNER JOIN warehouse on item.item_whs_id = warehouse.whs_id WHERE warehouse.whs_id = $whs_id ";
+		$sql = "SELECT request.rqst_id, employee.emp_name, employee.emp_lname,warehouse.whs_label, workstation.wrkst_name, item.item_label, request.rqst_status, request.rqst_date FROM request INNER JOIN user ON request.rqst_user_id = user.user_id INNER JOIN employee ON user.user_emp_id = employee.emp_id INNER JOIN workstation ON request.rqst_wrkst_id = workstation.wrkst_id INNER JOIN item ON request.rqst_item_id = item.item_id INNER JOIN warehouse on item.item_whs_id = warehouse.whs_id where item.item_id IN (SELECT item.item_id FROM item INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id WHERE warehouse.whs_mgr_id = $mgrid)";
 		try {
 
 			//execute and put result in a variable
@@ -75,20 +75,6 @@ class request
 	
 	}
 
-	public function allrqstinfo_mgr($rqst_id)
-	{
-		$sql="SELECT request.rqst_id, request.rqst_res, request.rqst_ret, request.rqst_status, request.rqst_date, request.rqst_acc_date, request.rqst_handled_date, request.rqst_denied_date, request.rqst_returned_date, request.rqst_handler_id, request.rqst_returner_id, item.item_label, employee.emp_name, employee.emp_lname, warehouse.whs_label, workstation.wrkst_name FROM request INNER JOIN user ON request.rqst_user_id = user.user_id INNER JOIN employee ON user.user_emp_id = employee.emp_id INNER JOIN workstation ON request.rqst_wrkst_id = workstation.wrkst_id INNER JOIN item ON request.rqst_item_id = item.item_id INNER JOIN warehouse on item.item_whs_id = warehouse.whs_id WHERE request.rqst_id = $rqst_id";
-		try {
-
-			//execute and put result in a variable
-			$result = $this->db->getData($sql);
-
-			//return the values
-			return ($result);
-		} catch (Exception $e) {
-			throw $e;
-		}
-	}
 	
 	
 	/////////////////////////////////////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -207,5 +193,52 @@ class request
 				return " ORDER BY request.rqst_date DESC";
 				break;
 		}
+	}
+/////////////////////////////////////////////// Request manager \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	public function acceptrqstitem($rqstid)
+	{
+		$sql = "UPDATE request SET request.rqst_status = 1, request.rqst_acc_date = CURRENT_DATE WHERE rqst_id = $rqstid";
+		try {
+
+			//execute and put result in a variable
+			$result = $this->db->ExecuteQuery($sql);
+
+			//return the values
+			return ($result);
+		} catch (Exception $e) {
+			throw $e;
+		}
+	
+	}
+
+	public function handlerqstitem($rqst_id, $emp_id)
+	{
+		$sql = "UPDATE request SET request.rqst_status = 2, request.rqst_handled_date = CURRENT_DATE, request.rqst_handler_id = $emp_id WHERE rqst_id = $rqst_id";
+		try {
+
+			//execute and put result in a variable
+			$result = $this->db->ExecuteQuery($sql);
+
+			//return the values
+			return ($result);
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+
+	public function returnrqstitem($rqst_id, $emp_id)
+	{
+		$sql = "UPDATE request SET request.rqst_status = 3, request.rqst_handled_date = CURRENT_DATE, request.rqst_handler_id = $emp_id WHERE rqst_id = $rqst_id";
+		try {
+
+			//execute and put result in a variable
+			$result = $this->db->ExecuteQuery($sql);
+
+			//return the values
+			return ($result);
+		} catch (Exception $e) {
+			throw $e;
+		}
+	
 	}
 }

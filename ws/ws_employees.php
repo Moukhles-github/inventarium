@@ -69,6 +69,10 @@ try {
                     $result = $employees->toggleEmploye($_GET["empID"], $_GET["empStatus"]);
                 }
                 break;
+            case 6: {
+                $result = $employees->getemprfid($_GET["emp_rfid"]);
+            }
+            break;
 			default:
 				return 0;
 				break;

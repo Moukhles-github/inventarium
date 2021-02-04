@@ -79,17 +79,6 @@ $("#emp_ranks").click(function(){
     }
 
 
-    //Check status to deactivate or activate users
-    function check_status(statusval) {
-        if (statusval == 1) {
-
-            return "Active";
-        }
-        else {
-            return "Inactive";
-        }
-    }
-
     function item_re(resval) {
         if (resval == 1) {
             return "Yes"

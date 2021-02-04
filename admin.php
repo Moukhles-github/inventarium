@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
 
+$pageUserType = 0;
+require_once ("security.php");
+
+
+?>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +23,7 @@
 
 
 <body>
+
   <nav class="navbar navbar-inverse navbar-global navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -53,6 +60,7 @@
     </ul>
   </nav>
   <div class="main-content">
+
     <h1> admin </h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem sint assumenda quae aliquid voluptatibus quia, ea, ad natus magni repellat earum, culpa iure tempore. Enim dolor eaque minima voluptas ducimus?</p>
   </div>

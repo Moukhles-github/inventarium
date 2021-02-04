@@ -51,8 +51,9 @@ try {
 				}
 				break;
 			case 6: {
-				$result = $warehouse->updatewhs($_GET["whs_id"], $_GET["whs_label"],$_GET["whs_type"],$_GET["whs_mngr"],$_GET["whs_address"]);
+				$result = $item->getwhsmgritems($_GET["mgr_id"]);
 			}
+			break;
 			case 7: {
 				
 			}

@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+
+$pageUserType = 1;
+require_once ("security.php");
+
+
+
+?>
 
 <head>
   <meta charset="utf-8">
@@ -11,13 +19,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="./js/mgr.rqst.js"></script>
+  <script src="./js/mgr.whs.js"></script>
 
 </head>
 
 
 
 <body>
+
+
   <nav class="navbar navbar-inverse navbar-global navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -43,7 +53,7 @@
     <ul class="navbar-primary-menu">
       <li>
       <a href="whsmgr.dash.php"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
-        <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
+        <a href="whsmgr.rqst.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
         <a href="whsmgr.warehouse.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">My Warehouse</span></a>
         
     
@@ -54,8 +64,7 @@
 
   <div class="main-content">
         <h1> My warehouse</h1>
-
-        <a>New request</a> <span> || </span> <a> accepted request </a> <span> || </span> <a>Handled request</a> <span> || </span> <a>denied request</a> <span> || </span> <a>returned request</a>
+        <input type="text" id="tbmgrid" value="<?php echo $_SESSION['uid'] ?>" ></input>
         <?php
 
         //get initial values
@@ -140,55 +149,27 @@
         </div>
 
 
-
-        <!-- edit users Modal -->
-        <div class="modal fade" id="editrankmodal" tabindex="-1" role="dialog" aria-labelledby="edit_rank_modalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit_rank_modalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <label for="cmpname"> Rank name:</label>
-                        <input type="text" id="updt_rank_name" placeholder="e.g. Shell Company"></input></br>
-
-                        <input type="text" id="updt_rank_id" placeholder="cmp_rank">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_edit_rank" type="button" class="btn btn-primary">Edit User</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
         <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
 
 
+        
 
             <caption>List of my request</caption>
 
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Requester Name</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Warehouse</th>
-                    <th scope="col">Workstation</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Label</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Reservation</th>
+                    <th scope="col">Returnable</th>
+                    <th scope="col">lifespan</th>
+                    <th scope="col">Entry Date</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Date</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody id="tbody_mgr_rqst">
+            <tbody id="tbody_mgr_whs">
 
             </tbody>
 

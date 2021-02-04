@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php 
+
+$pageUserType = 0;
+require_once ("security.php");
+
+
+?>
 <html lang="en">
 
 <head>
@@ -173,6 +180,7 @@
                     <div class="modal-body">
                         <p>Create a new User</p> </br>
                         <label>Select An Employee</label>
+                        
                         <Select id="emp_id">
 
                         </Select></br>

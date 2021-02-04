@@ -73,4 +73,20 @@ class item
             throw $e;
         }
     }
+
+    public function getwhsmgritems($mgrid)
+    {
+        $sql = "SELECT item.item_id, item.item_name, item.item_label, item.item_reserve, item.item_returnable, item.item_lifespan, item.item_entry_date, item.item_status, item_type.item_type_name FROM item INNER JOIN item_type ON item.item_type_id = item_type.item_type_id INNER JOIN warehouse ON warehouse.whs_id = item.item_whs_id WHERE warehouse.whs_mgr_id = $mgrid";
+        try {
+            $data = $this->db->getData($sql);
+			//No data
+			if (is_null($data))
+				return 0;
+			else
+				return $data;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
 }

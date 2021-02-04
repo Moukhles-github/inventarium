@@ -37,13 +37,11 @@ try {
 						session_start();
 
 						//store id, uname, type in session, so it can be accessible in any php file
-						// $_SESSION[ "uid" ] = $result[ "u_id" ];
-						// $_SESSION[ "uname" ] = $result[ "u_name" ];
-						// $_SESSION[ "utype" ] = $result[ "u_type" ];
-						// $_SESSION[ "u_uname" ] = $result[ "u_uname" ];
+						$_SESSION[ "uid" ] = $result[ "user_id" ];
+						$_SESSION[ "uname" ] = $result[ "user_name" ];
+						$_SESSION[ "utype" ] = $result[ "user_type" ];
 
 						//store the type in result so to return it
-						//$result=$result->getType();
 						$result = $result["user_type"];
 					}
 				}
