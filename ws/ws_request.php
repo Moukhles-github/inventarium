@@ -47,33 +47,45 @@ try {
 				}
 				break;
 			case 5: {
-                    //count all items for admin 
-                    //GET items for admin
-                    //check if keyword exist
-                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
-                        $key = NULL;
-                    } else {
-                        $key = $_GET["key"];
-                    }
-                    $result = $request->CountSearchedResquests($key, $_GET["sort"], $_GET["show"], $_GET[ "sdate" ], $_GET[ "edate" ]);
-                }
-                break;
-            case 6: {
-                    //get all items for admin 
-                    //GET items for admin
-                    //check if keyword exist
-                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
-                        $key = NULL;
-                    } else {
-                        $key = $_GET["key"];
-                    }
-                    $result = $request->getSearchedResquests($key, $_GET["sort"], $_GET["show"], $_GET[ "sdate" ], $_GET[ "edate" ], $_GET["page"]);
+					//count all items for admin 
+					//GET items for admin
+					//check if keyword exist
+					if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+						$key = NULL;
+					} else {
+						$key = $_GET["key"];
+					}
+					$result = $request->CountSearchedResquests($key, $_GET["sort"], $_GET["show"], $_GET["sdate"], $_GET["edate"]);
+				}
+				break;
+			case 6: {
+					//get all items for admin 
+					//GET items for admin
+					//check if keyword exist
+					if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+						$key = NULL;
+					} else {
+						$key = $_GET["key"];
+					}
+					$result = $request->getSearchedResquests($key, $_GET["sort"], $_GET["show"], $_GET["sdate"], $_GET["edate"], $_GET["page"]);
 				}
 				break;
 			case 7: {
-				$result=$request->handlerqstitem($_GET["rqst_id"], $_GET["emp_id"]);
-			}
-			break;
+					$result = $request->handlerqstitem($_GET["rqst_id"], $_GET["emp_id"]);
+				}
+				break;
+			case 8: {
+					$result = $request->acceptrqstitem($_GET["rqst_id"]);
+				}
+				break;
+			case 9: {
+					$result = $request->cancelrqstitem($_GET["rqst_id"]);
+				}
+				break;
+			case 10: {
+					$result = $request->returnrqstitem($_GET["rqst_id"], $_GET["emp_id"]);
+				}
+				break;
 			default:
 				return 0;
 				break;

@@ -70,6 +70,9 @@ require_once("security.php");
     <div class="main-content">
         <h1> My warehouse</h1>
         <input type="text" id="rqstmgrid" value="<?php echo $_SESSION['uid'] ?>"></input>
+
+        <button type="button" id='exprqst' class='btn_modal_exprqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#exprqstmodal'>Express Request</button>
+
         <?php
 
 
@@ -162,6 +165,52 @@ require_once("security.php");
 
 
 
+
+        <div class="modal fade" id="exprqstmodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="requestmodalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Item</label></br>
+                        <Select id='crt_exp_item'></Select></br>
+                        <label>Facility</label></br>
+                        <select id='crt_exp_wrkst'></select></br>
+                        </br> 
+                        </br> 
+
+
+                        
+                        <input type="text" id="exp_item" placeholder="item_id"></input></br>
+                        <input type="text" id="exp_wrkst" placeholder="wrkst_id"></input></br>
+                        <input type="text" id="exp_res" placeholder="reservation"></input></br>
+                        <input type="text" id="exp_ret" placeholder="returnable"></input>
+                        <input type="text" id="exp_status" placeholder="status"></input>
+                        <input type="text" id="exp_date" placeholder="date"></input>
+
+                        
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_edit_user" type="button" class="btn btn-primary">Create Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
         <!-- edit users Modal -->
         <div class="modal fade" id="rqstinfomodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -182,11 +231,13 @@ require_once("security.php");
                                 <div class='mycontent'><label>RFID:</label><input type="text" id='rfidval' placeholder="Scanning"></input>
 
                                     <div><button id='Getinfoscan'>Get Employee</button></div></br>
-                                    <div id='empcontainer'>
+                                    <div class='empcontainer'>
+                                    
                                         <ul id='empinfo'></ul>
                                         <input type="text" id="valrqst_id" placeholder="rqst_id"></input>
+                                        <input type="text" id="valrqst_status" placeholder="rqst_status"></input>
+                                        
                                     </div>
-                                    
 
                                 </div>
                                 <div id="masteralert" hidden>

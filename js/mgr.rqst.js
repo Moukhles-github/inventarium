@@ -7,10 +7,10 @@ $(document).ready(function () {
         $.ajax({
             type: 'GET',
             url: "ws/ws_request.php",
-            data: ({ 
-            op: 3, 
-            mgr_id:mgrid
-            
+            data: ({
+                op: 3,
+                mgr_id: mgrid
+
             }),
 
             dataType: 'json',
@@ -52,7 +52,7 @@ $(document).ready(function () {
                 else
                     btn_status_text = "Disable";
 
-                $("#tbody_mgr_rqst").append("<tr><td>" + row.rqst_id + "</td><td> " + row.emp_name + " "+ row.emp_lname + "</td><td> " + row.item_label + " </td><td>" + row.wrkst_name + "</td><td>" + row.rqst_date + " </td><td id='"+ row.rqst_status + "'>" + check_status(row.rqst_status) + "</td><td><button id='info" + row.rqst_id + "'  class='btn_modal_inforqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#rqstinfomodal'>More info</button></td></tr>");
+                $("#tbody_mgr_rqst").append("<tr><td>" + row.rqst_id + "</td><td> " + row.emp_name + " " + row.emp_lname + "</td><td> " + row.item_label + " </td><td>" + row.wrkst_name + "</td><td>" + row.rqst_date + " </td><td id='" + row.rqst_status + "'>" + check_status(row.rqst_status) + "</td><td><button id='info" + row.rqst_id + "'  class='btn_modal_inforqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#rqstinfomodal'>More info</button></td></tr>");
 
             });
 
@@ -63,14 +63,18 @@ $(document).ready(function () {
     //Check status to deactivate or activate users
     function check_status(statusval) {
         switch (statusval) {
+            case '-1': 
+            {
+                return "Canceled"
+            }
             case '0':
                 {
                     return "Waiting";
                 }
 
             case '1':
-                {   
-                    
+                {
+
                     return "accepted";
                 }
 
@@ -119,11 +123,11 @@ $(document).ready(function () {
 
     function parsemorerqst(data) {
         if (data.length > 0) {
-           
+
 
             $.each(data, function (index, row) {
                 btnstatus(row.rqst_status);
-                $("#rqstinfoul").append("<li>"+ row.rqst_id +"</li><li>"+ row.emp_name +" "+ row.emp_lname +"</li><li>"+ row.item_label +"</li><li>"+ row.wrkst_name +"</li><li>"+ row.whs_label +"</li><li>"+ row.rqst_date +"</li><li>"+ check_status(row.rqst_status) +"</li><li>"+ resval(row.rqst_res) +"</li><li>"+ retval(row.rqst_ret) +"</li><li>"+ accval(row.rqst_res, row.rqst_acc_date) +"</li><li>"+ hndlval(row.rqst_handled_date) +"</li><li>"+ dndval(row.rqst_denied_date) +"</li><li>"+ retdateval(row.rqst_ret, row.rqst_returned_date) +"</li>");
+                $("#rqstinfoul").append("<li class='lirqst_id'>" + row.rqst_id + "</li><li>" + row.emp_name + " " + row.emp_lname + "</li><li>" + row.item_label + "</li><li>" + row.wrkst_name + "</li><li>" + row.whs_label + "</li><li>" + row.rqst_date + "</li><li>" + check_status(row.rqst_status) + "</li><li>" + resval(row.rqst_res) + "</li><li>" + retval(row.rqst_ret) + "</li><li>" + accval(row.rqst_res, row.rqst_acc_date) + "</li><li>" + hndlval(row.rqst_handled_date) + "</li><li>" + dndval(row.rqst_denied_date) + "</li><li>" + retdateval(row.rqst_ret, row.rqst_returned_date) + "</li>");
 
             });
 
@@ -134,10 +138,12 @@ $(document).ready(function () {
     $(document).on('click', '.btn_modal_inforqst', function () {
         $("#rqstinfoul").empty();
         btn_id = $(this).attr('id');
-        rqst_id = btn_id.substr(4, btn_id.length)
+        rqst_id = btn_id.substr(4, btn_id.length);
+        var status = $(this).parent().siblings().eq(5);
+
         getmorerqst(rqst_id);
         $("#valrqst_id").val(rqst_id);
-
+        $("#valrqst_status").val(status.attr('id'));
 
     })
 
@@ -220,50 +226,65 @@ $(document).ready(function () {
         }
     }
 
-    function btnstatus(status)
-    {
-     switch(status)
-     {
-         case '0':
-             {
-                $("#btnaccept").show();
-                $("#btnhandle").hide();
-                $("#btnreturn").hide();
-             }
-             break;
-         case '1':
-             {
-                $("#btnhandle").show();
-                $("#btncancel").show();
-                $("#btnaccept").hide();
-                $("#btnreturn").hide();
-             }
-            break;
-        case '2':
+    function btnstatus(status) {
+        switch (status) {
+            case '-1':
             {
                 $("#btnaccept").hide();
                 $("#btnhandle").hide();
+                $("#btnreturn").hide();
                 $("#btncancel").hide();
             }
             break;
-        
-        default:
-            {
-                return "no status available";
-            }
-     }
+            case '0':
+                {
+                    $("#btnaccept").show();
+                    $("#btnhandle").hide();
+                    $("#btnreturn").hide();
+                    $("#btncancel").show();
+
+                }
+                break;
+            case '1':
+                {
+                    $("#btnhandle").show();
+                    $("#btncancel").show();
+                    $("#btnaccept").hide();
+                    $("#btnreturn").hide();
+                }
+                break;
+            case '2':
+                {
+                    $("#btnaccept").hide();
+                    $("#btnhandle").hide();
+                    $("#btncancel").hide();
+                }
+                break;
+            case '3':
+                {
+                    $("#btnaccept").hide();
+                    $("#btnhandle").hide();
+                    $("#btnreturn").hide();
+                    $("#btncancel").hide();
+                }
+
+            default:
+                {
+                    return "no status available";
+                }
+        }
     }
-    
-////////// RFID REading //////////////////////////////////////////////////
+
+    ////////// RFID REading //////////////////////////////////////////////////
     interval = null;
     // setInterval(ArduinoCall, 1000);
-    
-   
+
+
     function ArduinoCall() {
         $.ajax({
             type: 'GET',
             url: "./ws/arduino_interface.php",
-            data: ({ op : 1}),
+            data: ({ op: 1 }),
             dataType: 'json',
             timeout: 800,
             success: function (data, textStatus, xhr) {
@@ -279,25 +300,32 @@ $(document).ready(function () {
     }
 
     //add review alert
-	function alertfadein()
-	{
-		var alert = $("#masteralert");
-		alert.fadeIn(500);
-    	alert.delay(300);
-    	alert.fadeOut(500);
+    function alertfadein() {
+        var alert = $("#masteralert");
+        alert.fadeIn(500);
+        alert.delay(300);
+        alert.fadeOut(500);
     }
 
-    $("#btnhandle").click(function(){
+    $("#btnhandle").click(function () {
         $(".backgroundhd").css('display', 'block');
         interval = 1;
-       if(interval == !null)
-       {
-           interval = setInterval(ArduinoCall, 1000);
-       }
-        
+        if (interval == !null) {
+            interval = setInterval(ArduinoCall, 1000);
+        }
+
     })
 
-    $('.closereader').click(function(){
+    $("#btnreturn").click(function () {
+        $(".backgroundhd").css('display', 'block');
+        interval = 1;
+        if (interval == !null) {
+            interval = setInterval(ArduinoCall, 1000);
+        }
+
+    })
+
+    $('.closereader').click(function () {
         $('.backgroundhd').css('display', 'none');
         window.clearInterval(interval);
         interval = null;
@@ -310,10 +338,10 @@ $(document).ready(function () {
         $.ajax({
             type: 'GET',
             url: "ws/ws_employees.php",
-            data: ({ 
-            op: 6, 
-            emp_rfid:rfid
-            
+            data: ({
+                op: 6,
+                emp_rfid: rfid
+
             }),
 
             dataType: 'json',
@@ -334,18 +362,18 @@ $(document).ready(function () {
 
     }
 
-    function populateempinfo(data){
+    function populateempinfo(data) {
         if (data.length > 0) {
 
             $.each(data, function (index, row) {
 
-                $("#empinfo").append("<li>"+ row.emp_name +" "+ row.emp_lname +"</li><li>"+ row.cmp_name +"</li><li>"+ row.wrkst_name +"</li><li>"+ row.emp_rank_name +"</li><button id='emp"+ row.emp_id +"' class='btnconfirm'>Confirm</button>");        
-               });
+                $("#empinfo").append("<li>" + row.emp_name + " " + row.emp_lname + "</li><li>" + row.cmp_name + "</li><li>" + row.wrkst_name + "</li><li>" + row.emp_rank_name + "</li><button id='emp" + row.emp_id + "' class='btnconfirm'>Confirm</button>");
+            });
 
         }
     }
- 
-    $("#Getinfoscan").click(function(){
+
+    $("#Getinfoscan").click(function () {
 
         var rfid = $("#rfidval").val();
         window.clearInterval(interval);
@@ -355,22 +383,28 @@ $(document).ready(function () {
     })
 
     $(document).on('click', '.btnconfirm', function () {
-        
+
         var btn = $(this).attr('id');
         var emp_id = btn.substr(3, btn.length);
         var rqst_id = $("#valrqst_id").val();
-        handleitem(rqst_id,emp_id);
+        var status = $("#valrqst_status").val();
+        if (status == 1) {
+            handleitem(rqst_id, emp_id);
+        }else if(status == 2)
+        {
+            returnitem(rqst_id, emp_id);
+        }
     })
 
     function handleitem(rqstid, empid) {
         $.ajax({
             type: 'GET',
             url: "ws/ws_request.php",
-            data: ({ 
-            op: 7, 
-            rqst_id: rqstid,
-            emp_id: empid
-            
+            data: ({
+                op: 7,
+                rqst_id: rqstid,
+                emp_id: empid
+
             }),
 
             dataType: 'json',
@@ -391,8 +425,128 @@ $(document).ready(function () {
         });
 
     }
+
+    function returnitem(rqstid, empid) {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_request.php",
+            data: ({
+                op: 10,
+                rqst_id: rqstid,
+                emp_id: empid
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    alert("item returned");
+                    window.location.reload();
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+
+    }
+
+
+    /////// accept item \\\\\\\\\
+
+    $("#btnaccept").click(function(){
+        var rqstid = $(this).siblings('ul').children().siblings().eq(0).text();
+        acceptitem(rqstid);
+        
+    });
+
+
+    function acceptitem(rqstid) {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_request.php",
+            data: ({
+                op: 8,
+                rqst_id: rqstid
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    alert("item accepted");
+                    window.location.reload();
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+
+    }
+
+    /////// cancel item \\\\\\\\\\\\\
+
+    $("#btncancel").click(function(){
+        var rqstid = $(this).siblings('ul').children().siblings().eq(0).text();
+        cancelitem(rqstid);
+
+    })
+
     
+    
+    function cancelitem(rqstid) {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_request.php",
+            data: ({
+                op: 9,
+                rqst_id: rqstid
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    alert("item canceled");
+                    window.location.reload();
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+
+    }
+
+
+
+    ////////////////////////////   Express Request \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    $("#exprqst").click(function(){
+        
+
+        \
+        ?
+
+
+    })
+
 
 })
 
-    

@@ -24,8 +24,8 @@ class request
 
 	public function getrqst()
 	{
-        $sql = "SELECT request.rqst_id, user.user_name, item.item_label, workstation.wrkst_name, request.rqst_status, request.rqst_date FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id";
-        
+		$sql = "SELECT request.rqst_id, user.user_name, item.item_label, workstation.wrkst_name, request.rqst_status, request.rqst_date FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id";
+
 
 		try {
 			$data = $this->db->getData($sql);
@@ -57,7 +57,7 @@ class request
 		}
 	}
 
-////////////////////////////////////////////////// WAREHOUSE MANAGER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	////////////////////////////////////////////////// WAREHOUSE MANAGER METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 	public function  getmgr_rqst($mgrid)
 	{
@@ -72,91 +72,79 @@ class request
 		} catch (Exception $e) {
 			throw $e;
 		}
-	
 	}
 
-	
-	
+
+
 	/////////////////////////////////////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 	public $itemsPerPage = 20;
 
 	public function getSearchedResquests($key, $sort, $show, $startdate, $enddate, $page)
 	{
-		try
-		{
+		try {
 			//create sql query
-            $sqlQuery = "SELECT request.rqst_id, user.user_name, item.item_label, workstation.wrkst_name, request.rqst_status, request.rqst_date FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id ".$this->ShowStatus($show);
-			
+			$sqlQuery = "SELECT request.rqst_id, user.user_name, item.item_label, workstation.wrkst_name, request.rqst_status, request.rqst_date FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id " . $this->ShowStatus($show);
+
 			//check if start and end date exist
-			if($startdate != "")
-			{
-				$sqlQuery .= " AND (request.rqst_date > '".$startdate."')";
+			if ($startdate != "") {
+				$sqlQuery .= " AND (request.rqst_date > '" . $startdate . "')";
 			}
-			if($enddate != "")
-			{
-				$sqlQuery.= " AND (request.rqst_date < '".$enddate."')";
+			if ($enddate != "") {
+				$sqlQuery .= " AND (request.rqst_date < '" . $enddate . "')";
 			}
 
-            if(! is_null($key))
-			{
-				$sqlQuery.= " AND (user.user_name LIKE '%".$key."%' OR request.rqst_id = '".$key."')";
-            }
-            
-            $offset = ($page -1) * $this->itemsPerPage;
+			if (!is_null($key)) {
+				$sqlQuery .= " AND (user.user_name LIKE '%" . $key . "%' OR request.rqst_id = '" . $key . "')";
+			}
 
-            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemsPerPage." OFFSET ".$offset;
+			$offset = ($page - 1) * $this->itemsPerPage;
+
+			$sqlQuery .= " " . $this->orderStatus($sort) . " LIMIT " . $this->itemsPerPage . " OFFSET " . $offset;
 
 			//execute and put result in a variable
 			$result = $this->db->getData($sqlQuery);
-			
+
 			//return the values
-            return($result);
-            
+			return ($result);
 		} catch (Exception $e) {
 			throw $e;
 		}
 	}
-    public function CountSearchedResquests($key, $sort, $show, $startdate, $enddate)
+	public function CountSearchedResquests($key, $sort, $show, $startdate, $enddate)
 	{
-		try
-		{
+		try {
 			//create sql query
-            $sqlQuery = "SELECT COUNT(*) FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id ".$this->ShowStatus($show);
+			$sqlQuery = "SELECT COUNT(*) FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id " . $this->ShowStatus($show);
 
-            //check if start and end date exist
-			if($startdate != "")
-			{
-				$sqlQuery .= " AND (request.rqst_date > '".$startdate."')";
+			//check if start and end date exist
+			if ($startdate != "") {
+				$sqlQuery .= " AND (request.rqst_date > '" . $startdate . "')";
 			}
-			if($enddate != "")
-			{
-				$sqlQuery.= " AND (request.rqst_date < '".$enddate."')";
+			if ($enddate != "") {
+				$sqlQuery .= " AND (request.rqst_date < '" . $enddate . "')";
 			}
 
-            if(! is_null($key))
-			{
-				$sqlQuery.= " AND (user.user_name LIKE '%".$key."%' OR request.rqst_id = '".$key."')";
-            }
+			if (!is_null($key)) {
+				$sqlQuery .= " AND (user.user_name LIKE '%" . $key . "%' OR request.rqst_id = '" . $key . "')";
+			}
 
 			//execute and put result in a variable
 			$data = $this->db->getData($sqlQuery);
-			
+
 			//return the values
 			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
 		}
 		//catch the execption and throw it back to the ws
-		catch(Exception $e)
-		{
+		catch (Exception $e) {
 			throw $e;
 		}
-    }
-    
-    //set option
+	}
+
+	//set option
 	private function ShowStatus($status)
 	{
-		switch($status)
-		{
+		switch ($status) {
 			case 0:
 				return " WHERE (1=1)";
 				break;
@@ -177,12 +165,11 @@ class request
 				break;
 		}
 	}
-    
-    //set sort order
+
+	//set sort order
 	private function orderStatus($order)
 	{
-		switch($order)
-		{
+		switch ($order) {
 			case 1:
 				return " ORDER BY request.rqst_date ASC";
 				break;
@@ -194,7 +181,24 @@ class request
 				break;
 		}
 	}
-/////////////////////////////////////////////// Request manager \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	/////////////////////////////////////////////// Request manager \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	public function expressrqst($rqst_user, $rqst_item, $rqst_wrkst, $rqst_res, $rqst_ret, $rqst_status, $rqst_emp)
+	{	 
+			$sql="INSERT INTO `request` (`rqst_id`, `rqst_user_id`, `rqst_item_id`, `rqst_wrkst_id`, `rqst_res`, `rqst_ret`, `rqst_status`, `rqst_date`, `rqst_acc_date`, `rqst_handled_date`, `rqst_denied_date`, `rqst_returned_date`, `rqst_handler_id`, `rqst_returner_id`) VALUES (NULL, '$rqst_user', '$rqst_item', '$rqst_wrkst', '$rqst_res', '$rqst_ret', '$rqst_status', CURRENT_DATE, CURRENT_DATE, NULL, NULL, NULL, $rqst_emp, NULL)";
+			try {
+
+				//execute and put result in a variable
+				$result = $this->db->ExecuteQuery($sql);
+	
+				//return the values
+				return ($result);
+			} catch (Exception $e) {
+				throw $e;
+			}
+	}
+
+
+
 	public function acceptrqstitem($rqstid)
 	{
 		$sql = "UPDATE request SET request.rqst_status = 1, request.rqst_acc_date = CURRENT_DATE WHERE rqst_id = $rqstid";
@@ -208,7 +212,6 @@ class request
 		} catch (Exception $e) {
 			throw $e;
 		}
-	
 	}
 
 	public function handlerqstitem($rqst_id, $emp_id)
@@ -228,7 +231,7 @@ class request
 
 	public function returnrqstitem($rqst_id, $emp_id)
 	{
-		$sql = "UPDATE request SET request.rqst_status = 3, request.rqst_handled_date = CURRENT_DATE, request.rqst_handler_id = $emp_id WHERE rqst_id = $rqst_id";
+		$sql = "UPDATE request SET request.rqst_status = 3, rqst_returned_date = CURRENT_DATE, rqst_returner_id = $emp_id WHERE rqst_id = $rqst_id";
 		try {
 
 			//execute and put result in a variable
@@ -239,6 +242,20 @@ class request
 		} catch (Exception $e) {
 			throw $e;
 		}
-	
+	}
+
+	public function cancelrqstitem($rqst_id)
+	{
+		$sql = "UPDATE request SET rqst_status = -1 , rqst_denied_date = CURRENT_DATE WHERE rqst_id = $rqst_id";
+		try {
+
+			//execute and put result in a variable
+			$result = $this->db->ExecuteQuery($sql);
+
+			//return the values
+			return ($result);
+		} catch (Exception $e) {
+			throw $e;
+		}
 	}
 }

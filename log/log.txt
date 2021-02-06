@@ -45,3 +45,6 @@
 03/02/2021 > 04:01:51 AM: SQL (UPDATE request SET request.rqst_status = 2, request.rqst_handled_date = CURRENT_DATE, request.rqst_handler_id = 1 WHERE rqst_id = 2))
 03/02/2021 > 04:02:15 AM: SQL (UPDATE request SET request.rqst_status = 2, request.rqst_handled_date = CURRENT_DATE, request.rqst_handler_id = 1 WHERE rqst_id = 2))
 03/02/2021 > 04:02:22 AM: SQL (UPDATE request SET request.rqst_status = 2, request.rqst_handled_date = CURRENT_DATE, request.rqst_handler_id = 1 WHERE rqst_id = 2))
+05/02/2021 > 20:49:25 PM: SQL (UPDATE request SET rqst_denied_date = -1 , rqst_returned_date = CURRENT_DATE WHERE rqst_id = 5)
+05/02/2021 > 20:49:36 PM: SQL (UPDATE request SET rqst_denied_date = -1 , rqst_returned_date = CURRENT_DATE WHERE rqst_id = 5)
+05/02/2021 > 20:49:42 PM: SQL (UPDATE request SET rqst_denied_date = -1 , rqst_returned_date = CURRENT_DATE WHERE rqst_id = 5)

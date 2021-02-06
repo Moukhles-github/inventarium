@@ -89,4 +89,19 @@ class item
         }
     }
 
+    public function getexpitem($mgrid)
+    {
+        $sql = "SELECT item.item_name, item.item_id, item.item_reserve, item.item_returnable FROM item INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id WHERE warehouse.whs_mgr_id = $mgrid";
+        try {
+            $data = $this->db->getData($sql);
+			//No data
+			if (is_null($data))
+				return 0;
+			else
+				return $data;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
 }

@@ -55,7 +55,7 @@ try {
 			}
 			break;
 			case 7: {
-				
+				$result = $item->getexpitem($_GET["mgr_id"]);
 			}
 			break;
 			default:
