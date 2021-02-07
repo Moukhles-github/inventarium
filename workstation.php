@@ -64,7 +64,7 @@ require_once ("security.php");
 
         <!-- Create users button -->
         <button id="btn_modal_crt_wrkst" type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_wrkst_modal">
-            Create workstation
+            Create Workstation
         </button>
 
 

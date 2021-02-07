@@ -57,6 +57,10 @@ try {
                     $result = $company->getSearchedCompanies($key, $_GET["sort"], $_GET["show"], $_GET["page"]);
                 }
                 break;
+            case 7: {
+                    $result = $company->countCompanies();
+                }
+                break;
 			default:
 				return 0;
 				break;

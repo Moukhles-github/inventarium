@@ -73,6 +73,22 @@ try {
                 $result = $employees->getemprfid($_GET["emp_rfid"]);
             }
             break;
+            case 7: {
+                $result = $employees->countEmployeesForStats();
+            }
+            break;
+            case 8: {
+                $result = $employees->countJoinedEmployeesPerMonth();
+            }
+            break;
+            case 9: {
+                $result = $employees->countEmployeesPerCompany();
+            }
+            break;
+            case 10: {
+                $result = $employees->countEmployeesPerYear();
+            }
+            break;
 			default:
 				return 0;
 				break;

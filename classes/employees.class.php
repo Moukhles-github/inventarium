@@ -229,4 +229,80 @@ class employees
 			throw $e;
 		}
 	}
+	
+	public function countEmployeesForStats()
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT IFNULL(LFT.empNB,0) AS empNB, LFT.empStat FROM (SELECT COUNT(*) AS empNB, employee.emp_status AS empStat FROM employee GROUP BY employee.emp_status) AS LFT RIGHT JOIN (SELECT 0 AS sts UNION SELECT 1 AS sts) AS RT ON LFT.empStat = RT.sts";
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return $data;
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+	}
+	
+	public function countJoinedEmployeesPerMonth()
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT month.month_name AS MNTH, month.month_id AS MnthID, IFNULL(lft.cnt,0) AS total FROM (SELECT COUNT(*) AS cnt, MONTH(employee.emp_join_date) AS mnth FROM employee WHERE YEAR(employee.emp_join_date) = YEAR(CURRENT_DATE) GROUP BY MONTH(employee.emp_join_date)) AS lft RIGHT JOIN month ON month.month_id = lft.mnth";
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return $data;
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+	}
+	
+	public function countEmployeesPerCompany()
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT IFNULL(lft.cnt,0) AS total, company.cmp_name FROM (SELECT COUNT(*) AS cnt, employee.emp_cmp_id AS cmpID FROM employee GROUP BY employee.emp_cmp_id) AS lft RIGHT JOIN company ON company.cmp_id = lft.cmpID";
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return $data;
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+	}
+	
+	public function countEmployeesPerYear()
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) AS total, YEAR(employee.emp_join_date) AS joinyear  FROM employee GROUP BY YEAR(employee.emp_join_date)";
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return $data;
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+	}
 }

@@ -126,6 +126,17 @@ try {
                     $result = $user->getSearchedUsers($key, $_GET["sort"], $_GET["show"], $_GET["rank"], $_GET["page"]);
                 }
                 break;
+				
+
+			case 13:
+				$result = $user->countUsersForStats();
+			break;
+				
+
+			case 14:
+				$result = $user->getManagerWithMostRequests();
+			break;
+				
 			default:
 				return 0;
 				break;

@@ -702,4 +702,68 @@ $(document).ready(function(){
 		window.location.href = "ranks.php";
 	});
 	
+	
+	
+	
+	
+	//rfid scan functionality///////////////////////////////////////////////////////////////////////
+	var canScan = false;
+	
+	$("#btn_modal_cusers").click(function(){
+		if(!canScan)
+			{
+				canScan = true;
+			}
+	});
+	
+	$(document).on("click", ".btn_edit_employee", function(){
+		alert();
+		if(!canScan)
+			{
+				canScan = true;
+			}
+	});
+	
+	$("#close_add_form").click(function(){
+		if(canScan)
+			{
+				canScan = false;
+			}
+	});
+	
+	$("#modalXbutt").click(function(){
+		if(canScan)
+			{
+				canScan = false;
+			}
+	});
+	
+	
+	
+	
+	setInterval(ArduinoCall, 1000);
+    
+    function ArduinoCall() {
+		if(canScan)
+			{
+			$.ajax({
+				type: 'GET',
+				url: "./ws/arduino_interface.php",
+				data: ({ op : 1}),
+				dataType: 'json',
+				timeout: 800,
+				success: function (data, textStatus, xhr) {
+					if (data != 0 && data != "0" && data != "") {
+						$("#emp_rfid").val(data);
+					}
+				},
+				error: function (xhr, status, errorThrown) {
+					// Do nothing
+				}
+			});
+		}
+	}
+	
+	
+	
 });

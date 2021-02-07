@@ -86,6 +86,26 @@ try {
 					$result = $request->returnrqstitem($_GET["rqst_id"], $_GET["emp_id"]);
 				}
 				break;
+			case 11: {
+					$result = $request->countActiveRequests();
+				}
+				break;
+			case 12: {
+					$result = $request->getDailyRequestsAVG();
+				}
+				break;
+			case 13: {
+					$result = $request->getMonthlyApprovedRequestsAVG();
+				}
+				break;
+			case 14: {
+					$result = $request->getMonthlyDeniedRequestsAVG();
+				}
+				break;
+			case 15: {
+					$result = $request->getMonthlyRequests();
+				}
+				break;
 			default:
 				return 0;
 				break;

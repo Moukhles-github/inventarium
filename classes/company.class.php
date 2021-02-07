@@ -189,6 +189,24 @@ class company
 				break;
 		}
 	}
+	
+	
+	public function countCompanies()
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT IFNULL(LFT.cmpNB,0) AS cmpNB, LFT.cmpStat FROM (SELECT COUNT(*) AS cmpNB, company.cmp_status AS cmpStat FROM company GROUP BY company.cmp_status) AS LFT RIGHT JOIN (SELECT 0 AS sts UNION SELECT 1 AS sts) AS RT ON LFT.cmpStat = RT.sts";
 
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
 
 }

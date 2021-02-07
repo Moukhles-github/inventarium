@@ -79,6 +79,11 @@ try {
                     $result = $warehouse->getSearchedWarehouses($key, $_GET["sort"], $_GET["show"], $_GET["page"]);
                 }
                 break;
+            case 10: {
+                    
+                    $result = $warehouse->countWarehousesForStats();
+                }
+                break;
 			default:
 				return 0;
 				break;

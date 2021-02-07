@@ -223,4 +223,39 @@ class workstaions
 	}
 	
 	
+	public function countWorkstationsForStats()
+    {
+        $sql = "SELECT IFNULL(LFT.wrksNB,0) AS wrksNB, LFT.wrksStat FROM (SELECT COUNT(*) AS wrksNB, workstation.wrkst_status AS wrksStat FROM workstation GROUP BY workstation.wrkst_status) AS LFT RIGHT JOIN (SELECT 0 AS sts UNION SELECT 1 AS sts) AS RT ON LFT.wrksStat = RT.sts";
+
+        try {
+			$data = $this->db->getData($sql);
+
+
+			//No data
+			if (is_null($data))
+				return 0;
+			else
+				return $data;
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+		public function countWorkstationWithMostRequests()
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) AS cnt, workstation.wrkst_id, workstation.wrkst_name FROM workstation, request WHERE workstation.wrkst_id = request.rqst_wrkst_id GROUP BY workstation.wrkst_id ORDER BY cnt DESC LIMIT 1";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
 }

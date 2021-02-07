@@ -10,11 +10,20 @@
         {
             case 1:
                 {
-                    $valueFile = fopen("./value.txt", "r") or die("Unable to open file!");
-                    $output = fread($valueFile,filesize("./value.txt"));
-                    fclose($valueFile);
-                    
-                    $result = trim($output);      
+					try
+					{
+//						$valueFile = fopen("./value.txt", "r") or die("Unable to open file!");
+//						$output = fread($valueFile,filesize("./value.txt"));
+//						fclose($valueFile);
+						
+						$output = file_get_contents("./value.txt");
+
+						$result = str_replace(" ", "", $output);
+					}
+					catch(Exception $e)
+					{
+						$result = 0;
+					}
                 }
             break;
             default:

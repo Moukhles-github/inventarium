@@ -378,4 +378,42 @@ class users
 				break;
 		}
 	}
+	
+	
+	
+	public function countUsersForStats()
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT IFNULL(LFT.usrNB,0) AS usrNB, LFT.usrStat FROM (SELECT COUNT(*) AS usrNB, user.user_status AS usrStat FROM user GROUP BY user.user_status) AS LFT RIGHT JOIN (SELECT 0 AS sts UNION SELECT 1 AS sts) AS RT ON LFT.usrStat = RT.sts";
+			
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	public function getManagerWithMostRequests()
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT final.Fname FROM (SELECT * FROM (SELECT COUNT(*) AS cnt, request.rqst_user_id AS uid FROM request GROUP BY request.rqst_user_id ORDER BY cnt DESC LIMIT 1) AS topUSR, (SELECT user.user_name, user.user_id AS uidd, CONCAT(employee.emp_name, ' ', employee.emp_lname) AS Fname FROM user, employee WHERE user.user_emp_id = employee.emp_id) AS emps WHERE emps.uidd = topUSR.uid) AS final";
+			
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
 }

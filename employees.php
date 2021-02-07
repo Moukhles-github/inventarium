@@ -226,7 +226,7 @@ require_once ("security.php");
 						<label>Fouls:</label>
 						<input type="number" id="emp_fouls" value="0"></input></br>
 						<label>RFID:</label>
-						<input type="number" id="emp_rfid" ></input></br>
+						<input type="text" id="emp_rfid" ></input></br>
 						<input type="number" hidden="" id="emp_id">
 						<input type="number" hidden="" id="editaddval">
 						

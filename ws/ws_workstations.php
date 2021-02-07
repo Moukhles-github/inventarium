@@ -63,6 +63,14 @@ try {
                     $result = $workstation->getSearchedWorkstations($key, $_GET["sort"], $_GET["show"], $_GET["page"]);
                 }
                 break;
+			case 9: {
+                    $result = $workstation->countWorkstationsForStats();
+            	}
+				break;
+			case 10: {
+                    $result = $workstation->countWorkstationWithMostRequests();
+            	}
+				break;
             default:
                 return 0;
                 break;

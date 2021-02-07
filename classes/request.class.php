@@ -101,6 +101,7 @@ class request
 			$offset = ($page - 1) * $this->itemsPerPage;
 
 			$sqlQuery .= " " . $this->orderStatus($sort) . " LIMIT " . $this->itemsPerPage . " OFFSET " . $offset;
+			
 
 			//execute and put result in a variable
 			$result = $this->db->getData($sqlQuery);
@@ -255,6 +256,94 @@ class request
 			//return the values
 			return ($result);
 		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+	public function countActiveRequests()
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT COUNT(*) AS cnt FROM request GROUP BY request.rqst_status HAVING request.rqst_status = 1";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+	public function getDailyRequestsAVG()
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT AVG(counts.cnt) AS avgCnt FROM (SELECT COUNT(*) AS cnt FROM request GROUP BY DAY(request.rqst_date)) AS counts";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+	public function getMonthlyApprovedRequestsAVG()
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT AVG(counts.cnt) AS avgCnt FROM (SELECT COUNT(*) AS cnt FROM request WHERE request.rqst_status = 1 GROUP BY MONTH(request.rqst_date)) AS counts";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	public function getMonthlyDeniedRequestsAVG()
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT AVG(counts.cnt) AS avgCnt FROM (SELECT COUNT(*) AS cnt FROM request WHERE request.rqst_status = -1 GROUP BY MONTH(request.rqst_date)) AS counts";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	public function getMonthlyRequests()
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT lftt.mnthName, lftt.mnthID, lftt.totallft AS totalReturned, rtt.totallft AS totalDenied  FROM (SELECT month.month_name AS mnthName, month.month_id AS mnthID, IFNULL(lft.cnt,0) AS totallft FROM (SELECT COUNT(*) AS cnt, MONTH(request.rqst_date) mnth FROM request WHERE YEAR(request.rqst_date) = YEAR(CURRENT_DATE) AND request.rqst_status = 3 GROUP BY MONTH(request.rqst_date)) AS lft RIGHT JOIN month ON month.month_id = lft.mnth) AS lftt, (SELECT month.month_name AS mnthName, month.month_id AS mnthID, IFNULL(lft.cnt,0) AS totallft FROM (SELECT COUNT(*) AS cnt, MONTH(request.rqst_date) mnth FROM request WHERE YEAR(request.rqst_date) = YEAR(CURRENT_DATE) AND request.rqst_status = -1 GROUP BY MONTH(request.rqst_date)) AS lft RIGHT JOIN month ON month.month_id = lft.mnth) AS rtt WHERE lftt.mnthID = rtt.mnthID ORDER BY lftt.mnthID";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
 			throw $e;
 		}
 	}

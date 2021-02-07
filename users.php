@@ -195,8 +195,8 @@ require_once ("security.php");
 
                         </Select></br>
 
-                        <input type="text" id="cuser_emp_id" placeholder="u_emp_id"></input>
-                        <input type="text" id="cuser_type" placeholder="user_type"></input>
+                        <input type="text" hidden="" id="cuser_emp_id" placeholder="u_emp_id"></input>
+                        <input type="text" hidden="" id="cuser_type" placeholder="user_type"></input>
 
                     </div>
                     <div class="modal-footer">
@@ -233,8 +233,8 @@ require_once ("security.php");
 
                         </Select></br>
 
-                        <input type="text" id="updt_user_id" placeholder="user_type"></input>
-                        <input type="text" id="updt_user_type_tb" placeholder="user_type"></input>
+                        <input type="text" hidden="" id="updt_user_id" placeholder="user_type"></input>
+                        <input type="text" hidden="" id="updt_user_type_tb" placeholder="user_type"></input>
 
                     </div>
                     <div class="modal-footer">

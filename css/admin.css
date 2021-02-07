@@ -97,3 +97,36 @@
   .collapsed + .main-content {
     margin-left: 60px;
   }
+
+.grid-container
+{
+	display: grid;
+  	grid-column-gap: 50px;
+  	grid-row-gap: 50px;
+	grid-template-columns: 48% 48%;
+	padding: 10px;
+}
+
+.grid-item
+{
+	background-color: #ecf2f9;
+	padding: 20px;
+}
+
+.item3
+{
+	grid-column-start: 1;
+	grid-column-end: 3;
+}
+
+.item4
+{
+	grid-column-start: 1;
+	grid-column-end: 3;
+}
+
+
+.grid-item:hover
+{
+	background-color: #d8e5f3;
+}

@@ -243,7 +243,7 @@ $(document).ready(function () {
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_whouse").append("<tr><td>" + row.whs_label + "</td><td id='" + row.whs_mgr_id + "'>" + row.emp_name + " " + row.emp_lname + "</td><td>" + row.whs_address + "<td> " + row.whs_date + "</td><td>" + check_status(row.whs_status) + "</td><td><button id='updt" + row.whs_id + "'  class='btn_modal_editwhs btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editwhousemodal'>Edit User</button><button value='" + row.whs_status + "' id='tog" + row.whs_id + "'  style='margin-right: 4px;' class='btntoggleact btn btn-primary'> toggle </button><button style='margin-right: 4px;' id='item"+ row.whs_id+"' class='itembtn btn btn-primary'> items </button></td><</tr>");
+                    $("#tbody_whouse").append("<tr><td>" + row.whs_label + "</td><td id='" + row.whs_mgr_id + "'>" + row.emp_name + " " + row.emp_lname + "</td><td>" + row.whs_address + "<td> " + row.whs_date + "</td><td>" + check_status(row.whs_status) + "</td><td><button id='updt" + row.whs_id + "'  class='btn_modal_editwhs btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editwhousemodal'>Edit User</button><button value='" + row.whs_status + "' id='tog" + row.whs_id + "'  style='margin-right: 4px;' class='btntoggleact btn btn-primary'> Toggle </button><button style='margin-right: 4px;' id='item"+ row.whs_id+"' class='itembtn btn btn-primary'> items </button></td><</tr>");
                 });
 				
 				
