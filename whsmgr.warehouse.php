@@ -42,7 +42,7 @@ require_once ("security.php");
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-user navbar-right">
           <li><a href=""><span class="glyphicon glyphicon-user"></span> Manager user name</a></li>
-          <li><a href="#about"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          <li><a href="./ws/ws_users.php?op=6"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         </ul>
       </div>
       <!--/.nav-collapse -->

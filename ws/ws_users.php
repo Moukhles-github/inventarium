@@ -86,6 +86,8 @@ try {
 
 				// destroy the session 
 				session_destroy();
+				
+				header("location:../login.php");
 
 				$result = 1;
 				break;
