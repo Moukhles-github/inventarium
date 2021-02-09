@@ -183,9 +183,9 @@ class request
 		}
 	}
 	/////////////////////////////////////////////// Request manager \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	public function expressrqst($rqst_user, $rqst_item, $rqst_wrkst, $rqst_res, $rqst_ret, $rqst_status, $rqst_emp)
+	public function expresrqst($rqst_user, $rqst_item, $rqst_wrkst, $rqst_ret, $rqst_emp)
 	{	 
-			$sql="INSERT INTO `request` (`rqst_id`, `rqst_user_id`, `rqst_item_id`, `rqst_wrkst_id`, `rqst_res`, `rqst_ret`, `rqst_status`, `rqst_date`, `rqst_acc_date`, `rqst_handled_date`, `rqst_denied_date`, `rqst_returned_date`, `rqst_handler_id`, `rqst_returner_id`) VALUES (NULL, '$rqst_user', '$rqst_item', '$rqst_wrkst', '$rqst_res', '$rqst_ret', '$rqst_status', CURRENT_DATE, CURRENT_DATE, NULL, NULL, NULL, $rqst_emp, NULL)";
+			$sql="INSERT INTO `request` (`rqst_id`, `rqst_user_id`, `rqst_item_id`, `rqst_wrkst_id`, `rqst_res`, `rqst_ret`, `rqst_status`, `rqst_date`, `rqst_acc_date`, `rqst_handled_date`, `rqst_denied_date`, `rqst_returned_date`, `rqst_handler_id`, `rqst_returner_id`) VALUES (NULL, '$rqst_user', '$rqst_item', '$rqst_wrkst', '0', '$rqst_ret', '2', CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, NULL, NULL, $rqst_emp, NULL)";
 			try {
 
 				//execute and put result in a variable
@@ -260,7 +260,7 @@ class request
 		}
 	}
 	
-	
+	//////////////////////////////////////////////////////////////////////// stats \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	public function countActiveRequests()
 	{
 		try {

@@ -71,6 +71,11 @@ try {
                     $result = $workstation->countWorkstationWithMostRequests();
             	}
 				break;
+            case 11: 
+                {
+                    $result = $workstation->getexpwrkst();
+                }
+                break;
             default:
                 return 0;
                 break;

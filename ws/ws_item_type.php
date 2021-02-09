@@ -34,20 +34,20 @@ try {
                     $result = $itemtype->getitemtype();
                 }
 				break;
-				case 2:{
-					$result = $ranks->toggleRanks($_GET["rank_id"], $_GET["liveval"]);
-				} 
-				break;
-				case 3: {
-					$result = $ranks->createranks($_GET["rank_name"]);
-				}
-				break;
-				case 4: 
-					{
-						$result = $ranks->updateranks($_GET["rank_id"], $_GET["rank_name"]);
+				// case 2:{
+				// 	$result = $ranks->toggleRanks($_GET["rank_id"], $_GET["liveval"]);
+				// } 
+				// break;
+				// case 3: {
+				// 	$result = $ranks->createranks($_GET["rank_name"]);
+				// }
+				// break;
+				// case 4: 
+				// 	{
+				// 		$result = $ranks->updateranks($_GET["rank_id"], $_GET["rank_name"]);
 						
-					}
-					break;
+				// 	}
+				// 	break;
             default:
                 return 0;
                 break;

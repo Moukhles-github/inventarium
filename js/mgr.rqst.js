@@ -537,15 +537,209 @@ $(document).ready(function () {
 
 
     ////////////////////////////   Express Request \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    function getwrkst()
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_workstations.php",
+            data: ({
+                op: 11
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    parsexpwrkst(data);
+                    
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+
+    }
+
+    function parsexpwrkst(data) {
+		$("#crt_exp_wrkst").append('<option value="" disabled selected>Select a workstation</option>')
+		$.each(data, function (index, row) {
+			$("#crt_exp_wrkst").append('<option value="' + row.wrkst_id + '">' + row.wrkst_name + '</option>');
+		})
+    }
+
+    $("#crt_exp_wrkst").change(function(){
+        $("#exp_wrkst").val($("#crt_exp_wrkst").val());
+    })
+
+    function getitemtype()
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_item_type.php",
+            data: ({
+                op: 1
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    parsexpitemtype(data);
+                    
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+    }
+
+
+    function parsexpitemtype(data){
+        
+            $("#crt_exp_itemtype").append('<option value="" disabled selected>Select an item type</option>')
+            $.each(data, function (index, row) {
+                $("#crt_exp_itemtype").append('<option value="' + row.item_type_id + '">' + row.item_type_name + '</option>');
+            })
+    }
+
+
+    function getitem(mgr, itemtype)
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_item.php",
+            data: ({
+                op: 7,
+                mgr_id: mgr, 
+                type_id: itemtype
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    parsexpitem(data);
+                    
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+    }
+
+    function parsexpitem(data)
+    {   
+        $.each(data, function (index, row) {
+           
+            $("#crt_exp_item").append('<option id="'+row.item_returnable+'" value="' + row.item_id + '">' + row.item_name +" "+ row.item_label + '</option>');
+        })
+    }
+
+    $("#crt_exp_item").change(function(){
+        var change_user = $(this).children("option:selected").val();
+		$("#exp_item").val(change_user);
+        var ret = $(this).children("option:selected").attr('id');
+        $("#exp_ret").val(ret);
+        
+    })
+
+    $("#crt_exp_itemtype").change(function(){
+        var change_user = $(this).children("option:selected").val();
+		$("#exp_itemtype").val(change_user);
+        var mgrid = $("#rqstmgrid").val();
+        getitem(mgrid, change_user);
+
+    })
+
+    $("#btn_exp_rqst").click(function(){
+        var user = $("#rqstmgrid").val();
+        var itemtype = $("#exp_itemtype").val();
+        var item = $("#exp_item").val();
+        var wrkst = $("#exp_wrkst").val();
+        var ret = $("#exp_ret").val();
+
+
+        if(checkfieldsexp(user, itemtype, item, wrkst, ret))
+        {
+            
+        }
+        else 
+        {
+            alert("error");
+        }
+
+    })
+
+    function crtexprqst(userid, itemtype, item, wrkst, ret)
+    {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_request.php",
+            data: ({
+                op: 16,
+                user_id: userid, 
+                item_id: item,
+                wrkst_id: wrkst, 
+                ret:ret 
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    parsexpitem(data);
+                    
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+    }
+
+
+
 
     $("#exprqst").click(function(){
-        
-
-        \
-        ?
+        getitemtype();
+        getwrkst();
 
 
     })
+
+    function checkfieldsexp(userid, itemtype, item, wrkst, ret)
+    {
+        if(userid == "" || itemtype == "" || item == "" || wrkst == "" || ret == "")
+        {
+            return false; 
+        }
+        else 
+        {
+            return true; 
+        }
+    }
 
 
 })

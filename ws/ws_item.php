@@ -55,7 +55,7 @@ try {
 			}
 			break;
 			case 7: {
-				$result = $item->getexpitem($_GET["mgr_id"]);
+				$result = $item->getexpitem($_GET["mgr_id"], $_GET["type_id"]);
 			}
 			break;
 			default:

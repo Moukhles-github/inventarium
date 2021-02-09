@@ -71,7 +71,7 @@ require_once("security.php");
         <h1> My warehouse</h1>
         <input type="text" id="rqstmgrid" value="<?php echo $_SESSION['uid'] ?>"></input>
 
-        <button type="button" id='exprqst' class='btn_modal_exprqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#exprqstmodal'>Express Request</button>
+        <button type="button" id='exprqst' class='btn_modal_exprqst btn btn-primary' type='button' style='margin-right: 4px;' data-toggle='modal' data-target='#exprqstmodal'>Express Request</button>
 
         <?php
 
@@ -176,26 +176,28 @@ require_once("security.php");
                         </button>
                     </div>
                     <div class="modal-body">
+                        <label>Item type</label></br>
+                        <select id='crt_exp_itemtype'></select></br>
                         <label>Item</label></br>
-                        <Select id='crt_exp_item'></Select></br>
+                        <Select id='crt_exp_item'>
+                            <option disabled selected>Items</option>
+
+                        </Select></br>
+
                         <label>Facility</label></br>
                         <select id='crt_exp_wrkst'></select></br>
-                        </br> 
-                        </br> 
+                        </br>
 
 
-                        
+
+                        <input type="text" id="exp_itemtype" placeholder="itemtype_id"></input></br>
                         <input type="text" id="exp_item" placeholder="item_id"></input></br>
                         <input type="text" id="exp_wrkst" placeholder="wrkst_id"></input></br>
-                        <input type="text" id="exp_res" placeholder="reservation"></input></br>
                         <input type="text" id="exp_ret" placeholder="returnable"></input>
-                        <input type="text" id="exp_status" placeholder="status"></input>
-                        <input type="text" id="exp_date" placeholder="date"></input>
+                        
 
                         
 
-
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -232,11 +234,11 @@ require_once("security.php");
 
                                     <div><button id='Getinfoscan'>Get Employee</button></div></br>
                                     <div class='empcontainer'>
-                                    
+
                                         <ul id='empinfo'></ul>
                                         <input type="text" id="valrqst_id" placeholder="rqst_id"></input>
                                         <input type="text" id="valrqst_status" placeholder="rqst_status"></input>
-                                        
+
                                     </div>
 
                                 </div>
@@ -254,7 +256,7 @@ require_once("security.php");
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_edit_user" type="button" class="btn btn-primary">Edit User</button>
+                        <button id="btn_exp_rqst" type="button" class="btn btn-primary">Send</button>
                     </div>
                 </div>
             </div>

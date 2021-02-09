@@ -106,6 +106,12 @@ try {
 					$result = $request->getMonthlyRequests();
 				}
 				break;
+
+			case 16:
+				{
+					$result = $request->expresrqst($_GET["user_id"], $_GET["rqst_item"], $_GET["wrkst_id"], $_GET["ret"], $_GET["rqst_emp"]);
+				}	
+				break;
 			default:
 				return 0;
 				break;

@@ -89,9 +89,25 @@ class item
         }
     }
 
-    public function getexpitem($mgrid)
+    public function getexpitemtype()
     {
-        $sql = "SELECT item.item_name, item.item_id, item.item_reserve, item.item_returnable FROM item INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id WHERE warehouse.whs_mgr_id = $mgrid";
+        $sql = "SELECT item_type.item_type_id, item_type.item_type_name FROM item_type WHERE item_type.item_type_status = 1";
+        try {
+            $data = $this->db->getData($sql);
+			//No data
+			if (is_null($data))
+				return 0;
+			else
+				return $data;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+
+    public function getexpitem($mgrid, $type)
+    {
+        $sql = "SELECT item.item_id, item.item_name, item.item_label, item.item_returnable FROM item INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id INNER JOIN item_type ON item.item_type_id = item_type.item_type_id WHERE warehouse.whs_mgr_id = '$mgrid' AND item_type.item_type_id = '$type' AND item.item_status = 1 AND item.item_reserve = 0";
         try {
             $data = $this->db->getData($sql);
 			//No data

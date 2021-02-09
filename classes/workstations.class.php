@@ -128,7 +128,22 @@ class workstaions
 		}
 	}
 	
-	
+	public function getexpwrkst()
+	{
+		$sql = "SELECT workstation.wrkst_id, workstation.wrkst_name FROM workstation WHERE workstation.wrkst_status = 1";
+		try {
+			$data = $this->db->getData($sql);
+
+
+			//No data
+			if (is_null($data))
+				return 0;
+			else
+				return $data;
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
 	///////////////////////////////////////////////////////
 	
 	public $itemsPerPage = 20;
