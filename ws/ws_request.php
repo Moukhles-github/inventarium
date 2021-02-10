@@ -112,6 +112,62 @@ try {
 					$result = $request->expresrqst($_GET["user_id"], $_GET["rqst_item"], $_GET["wrkst_id"], $_GET["ret"], $_GET["rqst_emp"]);
 				}	
 				break;
+				
+			case 17: {
+					$result = $request->countHandledRequestsByWarehoue($_GET["mgr_id"]);
+				}
+				break;
+				
+			case 18: {
+					$result = $request->countHandledRequestsByWorkstation($_GET["mgr_id"]);
+				}
+				break;
+				
+			case 19: {
+					$result = $request->getDailyRequestsAVGByWarehouse($_GET["mgr_id"]);
+				}
+				break;
+				
+			case 20: {
+					$result = $request->getMonthlyApprovedRequestsAVGByWarehouse($_GET["mgr_id"]);
+				}
+				break;
+				
+			case 21: {
+					$result = $request->getMonthlyDeniedRequestsAVGByWarehouse($_GET["mgr_id"]);
+				}
+				break;
+				
+			case 22: {
+					$result = $request->getMonthlyRequestsByWorkstation($_GET["mgr_id"]);
+				}
+				break;
+				
+				
+			case 23: {
+					//count all items for admin 
+					//GET items for admin
+					//check if keyword exist
+					if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+						$key = NULL;
+					} else {
+						$key = $_GET["key"];
+					}
+					$result = $request->CountSearchedResquestsForManager($key, $_GET["sort"], $_GET["show"], $_GET["sdate"], $_GET["edate"], $_GET["mgrID"]);
+				}
+				break;
+			case 24: {
+					//get all items for admin 
+					//GET items for admin
+					//check if keyword exist
+					if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+						$key = NULL;
+					} else {
+						$key = $_GET["key"];
+					}
+					$result = $request->getSearchedResquestsForManager($key, $_GET["sort"], $_GET["show"], $_GET["sdate"], $_GET["edate"], $_GET["page"], $_GET["mgrID"]);
+				}
+				break;
 			default:
 				return 0;
 				break;

@@ -141,6 +141,73 @@ class request
 			throw $e;
 		}
 	}
+	
+	
+	public function getSearchedResquestsForManager($key, $sort, $show, $startdate, $enddate, $page, $whrManager)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT request.rqst_id, user.user_name, item.item_label, workstation.wrkst_name, request.rqst_status, request.rqst_date FROM  request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id AND request.rqst_item_id = item.item_id  INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id " . $this->ShowStatus($show);
+
+			//check if start and end date exist
+			if ($startdate != "") {
+				$sqlQuery .= " AND (request.rqst_date > '" . $startdate . "')";
+			}
+			if ($enddate != "") {
+				$sqlQuery .= " AND (request.rqst_date < '" . $enddate . "')";
+			}
+
+			if (!is_null($key)) {
+				$sqlQuery .= " AND (user.user_name LIKE '%" . $key . "%' OR request.rqst_id = '" . $key . "')";
+			}
+			
+			$sqlQuery .= " AND warehouse.whs_mgr_id = ".$whrManager;
+
+			$offset = ($page - 1) * $this->itemsPerPage;
+
+			$sqlQuery .= " " . $this->orderStatus($sort) . " LIMIT " . $this->itemsPerPage . " OFFSET " . $offset;
+			
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			//return the values
+			return ($result);
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	public function CountSearchedResquestsForManager($key, $sort, $show, $startdate, $enddate, $whrManager)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT COUNT(*) FROM  request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id AND request.rqst_item_id = item.item_id  INNER JOIN workstation on request.rqst_wrkst_id = workstation.wrkst_id INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id  " . $this->ShowStatus($show);
+
+			//check if start and end date exist
+			if ($startdate != "") {
+				$sqlQuery .= " AND (request.rqst_date > '" . $startdate . "')";
+			}
+			if ($enddate != "") {
+				$sqlQuery .= " AND (request.rqst_date < '" . $enddate . "')";
+			}
+
+			if (!is_null($key)) {
+				$sqlQuery .= " AND (user.user_name LIKE '%" . $key . "%' OR request.rqst_id = '" . $key . "')";
+			}
+			
+			$sqlQuery .= " AND warehouse.whs_mgr_id = ".$whrManager;
+
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
 
 	//set option
 	private function ShowStatus($status)
@@ -331,6 +398,23 @@ class request
 		}
 	}
 	
+	public function countHandledRequestsByWarehoue($mgrID)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT COUNT(*) AS cnt FROM request WHERE request.rqst_handler_id = ".$mgrID;
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
 	public function getMonthlyRequests()
 	{
 		try {
@@ -347,4 +431,99 @@ class request
 			throw $e;
 		}
 	}
+	
+	
+	
+	public function countHandledRequestsByWorkstation($mgrID)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT COUNT(*) AS cnt, request.rqst_wrkst_id, workstation.wrkst_name FROM request, workstation WHERE request.rqst_handler_id = ".$mgrID." GROUP BY request.rqst_wrkst_id ORDER BY cnt DESC LIMIT 1";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+	
+	
+		public function getDailyRequestsAVGByWarehouse($whrManager)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT AVG(counts.cnt) AS avgCnt FROM (SELECT COUNT(*) AS cnt FROM request, item, warehouse WHERE request.rqst_item_id = item.item_id AND item.item_whs_id = warehouse.whs_id AND warehouse.whs_mgr_id = ".$whrManager." GROUP BY DAY(request.rqst_date)) AS counts";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+	public function getMonthlyApprovedRequestsAVGByWarehouse($whrManager)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT AVG(counts.cnt) AS avgCnt FROM (SELECT COUNT(*) AS cnt FROM request, item, warehouse WHERE request.rqst_status = 1 AND request.rqst_item_id = item.item_id AND item.item_whs_id = warehouse.whs_id AND warehouse.whs_mgr_id = ".$whrManager." GROUP BY MONTH(request.rqst_date)) AS counts";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	public function getMonthlyDeniedRequestsAVGByWarehouse($whrManager)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT AVG(counts.cnt) AS avgCnt FROM (SELECT COUNT(*) AS cnt FROM request, item, warehouse WHERE request.rqst_status = -1 AND request.rqst_item_id = item.item_id AND item.item_whs_id = warehouse.whs_id AND warehouse.whs_mgr_id = ".$whrManager." GROUP BY MONTH(request.rqst_date)) AS counts";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+	public function getMonthlyRequestsByWorkstation($whrManager)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT lftt.mnthName, lftt.mnthID, lftt.totallft AS totalReturned, rtt.totallft AS totalDenied FROM ( SELECT MONTH.month_name AS mnthName, MONTH.month_id AS mnthID, IFNULL(lft.cnt, 0) AS totallft FROM ( SELECT COUNT(*) AS cnt, MONTH(request.rqst_date) mnth FROM request, item, warehouse WHERE YEAR(request.rqst_date) = YEAR(CURRENT_DATE) AND request.rqst_status = 3 AND request.rqst_item_id = item.item_id AND item.item_whs_id = warehouse.whs_id AND warehouse.whs_mgr_id = ".$whrManager." GROUP BY MONTH(request.rqst_date) ) AS lft RIGHT JOIN MONTH ON MONTH.month_id = lft.mnth ) AS lftt, ( SELECT MONTH.month_name AS mnthName, MONTH.month_id AS mnthID, IFNULL(lft.cnt, 0) AS totallft FROM ( SELECT COUNT(*) AS cnt, MONTH(request.rqst_date) mnth FROM request, item, warehouse WHERE YEAR(request.rqst_date) = YEAR(CURRENT_DATE) AND request.rqst_status = -1 AND request.rqst_item_id = item.item_id AND item.item_whs_id = warehouse.whs_id AND warehouse.whs_mgr_id = ".$whrManager." GROUP BY MONTH(request.rqst_date) ) AS lft RIGHT JOIN MONTH ON MONTH.month_id = lft.mnth ) AS rtt WHERE lftt.mnthID = rtt.mnthID ORDER BY lftt.mnthID";
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			return ($result);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
 }
+
+

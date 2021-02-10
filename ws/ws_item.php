@@ -58,6 +58,18 @@ try {
 				$result = $item->getexpitem($_GET["mgr_id"], $_GET["type_id"]);
 			}
 			break;
+			case 8: {
+				$result = $item->countWhsmgrItems($_GET["mgr_id"]);
+			}
+			break;
+			case 9: {
+				$result = $item->countWhsmgrItemsTaken($_GET["mgr_id"]);
+			}
+			break;
+			case 10: {
+				$result = $item->countWhsmgrItemsBroken($_GET["mgr_id"]);
+			}
+			break;
 			default:
 				return 0;
 				break;

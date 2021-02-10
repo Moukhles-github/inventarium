@@ -119,5 +119,53 @@ class item
             throw $e;
         }
     }
+	
+	
+    public function countWhsmgrItems($mgrid)
+    {
+        $sql = "SELECT COUNT(*) AS cnt FROM item INNER JOIN item_type ON item.item_type_id = item_type.item_type_id INNER JOIN warehouse ON warehouse.whs_id = item.item_whs_id WHERE warehouse.whs_mgr_id = $mgrid";
+        try {
+            $data = $this->db->getData($sql);
+			//No data
+			if (is_null($data))
+				return 0;
+			else
+				return $data;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+	
+	
+    public function countWhsmgrItemsTaken($mgrid)
+    {
+        $sql = "SELECT COUNT(*) AS cnt FROM item INNER JOIN item_type ON item.item_type_id = item_type.item_type_id INNER JOIN warehouse ON warehouse.whs_id = item.item_whs_id WHERE item_status=0 and warehouse.whs_mgr_id = $mgrid";
+        try {
+            $data = $this->db->getData($sql);
+			//No data
+			if (is_null($data))
+				return 0;
+			else
+				return $data;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+	
+	
+    public function countWhsmgrItemsBroken($mgrid)
+    {
+        $sql = "SELECT COUNT(*) AS cnt FROM item INNER JOIN item_type ON item.item_type_id = item_type.item_type_id INNER JOIN warehouse ON warehouse.whs_id = item.item_whs_id WHERE item_lifespan=0 and warehouse.whs_mgr_id = $mgrid";
+        try {
+            $data = $this->db->getData($sql);
+			//No data
+			if (is_null($data))
+				return 0;
+			else
+				return $data;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 
 }

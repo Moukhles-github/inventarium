@@ -6,7 +6,7 @@ CREATE TRIGGER requestItemUpdate AFTER UPDATE
 ON
     request FOR EACH ROW
 BEGIN
-        IF(NEW.rqst_status = 3) THEN
+        IF(NEW.rqst_status = 3 OR NEW.rqst_status = -1) THEN
     UPDATE
         item
     SET
