@@ -160,7 +160,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createwrkstmodalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="createwrkstmodalLongTitle">Add new workstation</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -179,7 +179,7 @@ require_once ("security.php");
 
 
                         </Select>
-                        <input type="text" id="crt_wrkst_mgrid" placeholder="mgr_id"></input></br>
+                        <input type="text" hidden="" id="crt_wrkst_mgrid" placeholder="mgr_id"></input></br>
 
                     </div>
                     <div class="modal-footer">
@@ -196,7 +196,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="edit_wrkst_modalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="edit_wrkst_modalLongTitle">Edit Workstation</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -209,8 +209,8 @@ require_once ("security.php");
                         <input type="text" id="edit_wrkst_Location" placeholder="e.g. industrial engineer"></input></br>
                         <label for="wrkstmgr">worsktation Manager: </label>
                         <Select id="updt_wrkst_act"></Select>
-                        <input type="text" id="updt_wrkst_id" placeholder="wrkst_id"></input></br>
-                        <input type="text" id="updt_wrkst_mgrid" placeholder="mgr_id"></input></br>
+                        <input type="text" hidden="" id="updt_wrkst_id" placeholder="wrkst_id"></input></br>
+                        <input type="text" hidden="" id="updt_wrkst_mgrid" placeholder="mgr_id"></br>
 
                     </div>
                     <div class="modal-footer">

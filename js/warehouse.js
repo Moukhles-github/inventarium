@@ -243,7 +243,7 @@ $(document).ready(function () {
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_whouse").append("<tr><td>" + row.whs_label + "</td><td id='" + row.whs_mgr_id + "'>" + row.emp_name + " " + row.emp_lname + "</td><td>" + row.whs_address + "<td> " + row.whs_date + "</td><td>" + check_status(row.whs_status) + "</td><td><button id='updt" + row.whs_id + "'  class='btn_modal_editwhs btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editwhousemodal'>Edit User</button><button value='" + row.whs_status + "' id='tog" + row.whs_id + "'  style='margin-right: 4px;' class='btntoggleact btn btn-primary'> Toggle </button><button style='margin-right: 4px;' id='item"+ row.whs_id+"' class='itembtn btn btn-primary'> items </button></td><</tr>");
+                    $("#tbody_whouse").append("<tr><td>" + row.whs_label + "</td><td id='" + row.whs_mgr_id + "'>" + row.emp_name + " " + row.emp_lname + "</td><td>" + row.whs_address + "<td> " + row.whs_date + "</td><td>" + check_status(row.whs_status) + "</td><td><button id='updt" + row.whs_id + "'  class='btn_modal_editwhs btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editwhousemodal'>Edit</button><button value='" + row.whs_status + "' id='tog" + row.whs_id + "'  style='margin-right: 4px;' class='btntoggleact btn btn-primary'> Toggle </button><button style='margin-right: 4px;' id='item"+ row.whs_id+"' class='itembtn btn btn-primary'> Items </button></td><</tr>");
                 });
 				
 				
@@ -352,7 +352,7 @@ $(document).ready(function () {
                 else
                     btn_status_text = "Disable";
 
-                $("#tbody_company").append("<tr><td>" + row.cmp_name + "</td><td>" + row.cmp_address + "</td><td>" + row.cmp_subsidiary + "</td><td>" + check_status(row.cmp_status) + "</td><td><button id='updt" + row.cmp_id + "'  class='btn_modal_editcmp' type='button' class='btn btn-primary' data-toggle='modal' data-target='#editcmpmodal'>Edit User</button><button value='" + row.cmp_status + "' id='tog" + row.cmp_id + "' class='btntoggleact'> " + btn_status_text + " </button></td><</tr>");
+                $("#tbody_company").append("<tr><td>" + row.cmp_name + "</td><td>" + row.cmp_address + "</td><td>" + row.cmp_subsidiary + "</td><td>" + check_status(row.cmp_status) + "</td><td><button id='updt" + row.cmp_id + "'  class='btn_modal_editcmp' type='button' class='btn btn-primary' data-toggle='modal' data-target='#editcmpmodal'>Edit Warehouse</button><button value='" + row.cmp_status + "' id='tog" + row.cmp_id + "' class='btntoggleact'> " + btn_status_text + " </button></td><</tr>");
 
             });
 
@@ -606,7 +606,7 @@ $(document).ready(function () {
         var btn_id = $(this).attr('id');
         var whs_id = btn_id.substr(4, btn_id.length);
         $("#edt_whouse_Label").val($(this).parent().siblings().eq(0).text());
-        $("#edt_whouse_address").val($(this).parent().siblings().eq(3).text());
+        $("#edt_whouse_address").val($(this).parent().siblings().eq(2).text());
         var whs_mgr = $(this).parent().siblings().eq(2);
         $("#edt_whs_mgr_id").val(whs_mgr.attr('id'));
         $("#edt_whs_id").val(whs_id);

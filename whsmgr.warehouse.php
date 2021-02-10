@@ -15,7 +15,7 @@ require_once ("security.php");
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pyramid Login</title>
 
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/mgr.rqst.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -64,8 +64,8 @@ require_once ("security.php");
 
   <div class="main-content">
         <h1> My warehouse</h1>
-        <input type="text" id="tbmgrid" value="<?php echo $_SESSION['uid'] ?>" ></input>
-        <?php
+        <input hidden="" type="text" id="tbmgrid" value="<?php echo $_SESSION['uid'] ?>" ></input>
+<?php
 
         //get initial values
         $sort = "1";
@@ -83,8 +83,8 @@ require_once ("security.php");
         }
 
         //check if rank option is set
-        if (isset($_GET["rank"]) && ($_GET["rank"] != "")) {
-            $rank = $_GET["rank"];
+        if (isset($_GET["type"]) && ($_GET["type"] != "")) {
+            $rank = $_GET["type"];
         }
 
         //check if workstation option is set
@@ -97,10 +97,11 @@ require_once ("security.php");
 
         ?>
 
-        <div class="sortandfilterhead" style="height: 90px;">
+        <div class="sortandfilterhead" style="height: 90px; margin-top: 30px;">
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
+<!--
                         <label for="order" style='margin-right: 10px'>Sort By:</label>
                         <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
                             <option value="1">UserName Asc</option>
@@ -108,6 +109,7 @@ require_once ("security.php");
                             <option value="3">Name Asc</option>
                             <option value="4">Name Desc</option>
                         </select>
+-->
                     </div>
                 </div>
             </div>
@@ -115,7 +117,7 @@ require_once ("security.php");
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Show Employees:</label>
+                        <label for="order" style='margin-right: 10px'>Show Items:</label>
                         <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
                             <option value="0">All</option>
                             <option value="1">Active</option>
@@ -128,7 +130,7 @@ require_once ("security.php");
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Rank:</label>
+                        <label for="order" style='margin-right: 10px'>Type:</label>
                         <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
                             <option value="-1">All</option>
                         </select>
@@ -138,35 +140,72 @@ require_once ("security.php");
 
 
             <div style="float: left">
-                <div class='form-group'>
-                    <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Search:</label>
-                        <input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
-
-                    </div>
-                </div>
+				<div class='form-group' >
+					<div class="form-group" style="width: 200px;">
+					  <label for="order" style='margin-right: 10px'>Search:</label>
+					  
+						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"></input>
+						         		
+            		</div>
+            		
+            	</div>
             </div>
+            
+            <div style="float: left; height: 74px; margin-left: 20px">
+            	<div class='form-group' >
+					 <div class="form-group">
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
+					</div>
+           		</div>
+			</div>
         </div>
 
 
-        <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
-
-
-        
-
-            <caption>List of my request</caption>
+		<table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">
 
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Label</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Reservation</th>
-                    <th scope="col">Returnable</th>
+                    <th value="
+                    <?php 
+					if($sort == 1)
+					{
+						echo 0;
+					}
+					else if ($sort == 2)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+							   
+					?>
+                    " id="itemnamesortheader" scope="col">Name<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 5px;" src="media/Images/arrows.png"></th>
+                    <th value="
+                    <?php 
+					if($sort == 3)
+					{
+						echo 0;
+					}
+					else if ($sort == 4)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+					?>
+                    " id="labelsortheader" scope="col">Label<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 5px;" src="media/Images/arrows.png"></th>
+                    <th scope="col">type</th>
+                    <th scope="col">reservation</th>
+                    <th scope="col">warehouse</th>
+                    <th scope="col">returnable</th>
                     <th scope="col">lifespan</th>
-                    <th scope="col">Entry Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">entry date</th>
+                    <th scope="col">status</th>
                 </tr>
             </thead>
             <tbody id="tbody_mgr_whs">
@@ -196,6 +235,7 @@ require_once ("security.php");
         /////////////////////pagination//////////////////////
         ?>
     </div>
+
 
 
 </body>

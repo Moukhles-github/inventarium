@@ -243,7 +243,7 @@ $(document).ready(function () {
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_wrkst").append("<tr><td>" + row.wrkst_name + "</td><td>" + row.wrkst_location + "</td> <td id=" + row.wrkst_mgr_id + ">" + row.emp_name + " " + row.emp_lname + " </td>  <td>" + check_status(row.wrkst_status) + "</td><td><button id='updt" + row.wrkst_id + "'  class='btn_modal_editwrkst btn btn-primary'  style='margin-right: 4px;'  type='button' data-toggle='modal' data-target='#editwrkstmodal'>Edit Workstation</button><button value='" + row.wrkst_status + "' id='tog" + row.wrkst_id + "' class='btntoggleact btn btn-primary'  style='margin-right: 4px;' > Toggle </button></td><</tr>");
+                    $("#tbody_wrkst").append("<tr><td>" + row.wrkst_name + "</td><td>" + row.wrkst_location + "</td> <td id=" + row.wrkst_mgr_id + ">" + row.emp_name + " " + row.emp_lname + " </td>  <td>" + check_status(row.wrkst_status) + "</td><td><button id='updt" + row.wrkst_id + "'  class='btn_modal_editwrkst btn btn-primary'  style='margin-right: 4px;'  type='button' data-toggle='modal' data-target='#editwrkstmodal'>Edit</button><button value='" + row.wrkst_status + "' id='tog" + row.wrkst_id + "' class='btntoggleact btn btn-primary'  style='margin-right: 4px;' > Toggle </button></td><</tr>");
                 });
 				
 				
@@ -350,7 +350,7 @@ $(document).ready(function () {
                 else
                     btn_status_text = "Disable";
 
-                $("#tbody_wrkst").append("<tr><td>" + row.wrkst_name + "</td><td>" + row.wrkst_location + "</td> <td id=" + row.wrkst_mgr_id + ">" + row.emp_name + " " + row.emp_lname + " </td>  <td>" + check_status(row.wrkst_status) + "</td><td><button id='updt" + row.wrkst_id + "'  class='btn_modal_editwrkst btn btn-primary'  style='margin-right: 4px;'  type='button' data-toggle='modal' data-target='#editwrkstmodal'>Edit Workstation</button><button value='" + row.wrkst_status + "' id='tog" + row.wrkst_id + "' class='btntoggleact btn btn-primary'  style='margin-right: 4px;' > " + btn_status_text + " </button></td><</tr>");
+                $("#tbody_wrkst").append("<tr><td>" + row.wrkst_name + "</td><td>" + row.wrkst_location + "</td> <td id=" + row.wrkst_mgr_id + ">" + row.emp_name + " " + row.emp_lname + " </td>  <td>" + check_status(row.wrkst_status) + "</td><td><button id='updt" + row.wrkst_id + "'  class='btn_modal_editwrkst btn btn-primary'  style='margin-right: 4px;'  type='button' data-toggle='modal' data-target='#editwrkstmodal'>Edit</button><button value='" + row.wrkst_status + "' id='tog" + row.wrkst_id + "' class='btntoggleact btn btn-primary'  style='margin-right: 4px;' > " + btn_status_text + " </button></td><</tr>");
 
             });
 

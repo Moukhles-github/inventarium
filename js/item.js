@@ -1,6 +1,322 @@
 $(document).ready(function () {
 
-    var whs_id = $("#whs_id").val();
+	var whs_id = $("#whs_id").val();
+	
+	//call the set values function to automaticaly select values
+	setValues();
+
+	//set sort and sow values from pre set values
+	function setValues() {
+		var sortOrderId = $(".sortlisthidden").attr('id');
+		var sortOrder = sortOrderId.substring(4);
+		//set selected
+		//$("#sortorder option[value=" + sortOrder + "]").attr('selected', 'selected');
+
+
+		var showOrdersId = $(".showlisthidden").attr('id');
+		var showOrder = showOrdersId.substring(4);
+		//set selected option for showing order
+		$("#showbystatus option[value=" + showOrder + "]").attr('selected', 'selected');
+
+		gettypes();
+	}
+
+
+	////////////////////////////////////////////////////////////////////////////get all values/////////////////////////////////////////////////////////
+	function wsKeyword() {
+		return $(".searchbar").val();
+	}
+
+	function wsOrder() {
+		//return $("#sortorder").val();
+		var sortOrderId = $(".sortlisthidden").attr('id');
+		var sortOrder = sortOrderId.substring(4);
+		
+		return sortOrder;
+	}
+
+	function wstype() {
+		return $("#rankorder").val();
+	}
+
+	function wsShowOrders() {
+		return $("#showbystatus").val();
+	}
+	////////////////////////////////////////////////////////////////////////////get all values/////////////////////////////////////////////////////////
+
+
+	//get category function
+	function gettypes() {
+		$.ajax({
+			type: 'GET',
+			url: "ws/ws_item_type.php",
+			data: ({ op: 1 }),
+			dataType: 'json',
+			timeout: 5000,
+			success: function (data, textStatus, xhr) {
+				if (data < 1) {
+					alert("No types available");
+				}
+				else {
+					populatetypes(data);
+				}
+			},
+			error: function (xhr, status, errorThrown) {
+				alert("Error" + status + errorThrown);
+			}
+		});
+	}
+
+	// fill the category functionl
+	function populatetypes(data) {
+		$.each(data, function (index, row) {
+			$("#rankorder").append('<option value="' + row.item_type_id + '">' + row.item_type_name + '</option>');
+		});
+
+		settype();
+	}
+
+
+	//set sort and sow values from pre set values
+	function settype() {
+		var rankOrderId = $(".rankhidden").attr('id');
+		var rankOrder = rankOrderId.substring(4);
+		//set selected option for showing order
+		$("#rankorder option[value=" + rankOrder + "]").attr('selected', 'selected');
+
+		//automaticaly call the count page function for pagination
+		countpages(wsKeyword(), wsOrder(), wsShowOrders(), wstype(), whs_id);
+	}
+
+
+
+
+
+	//////////////////////////////////////////////////////////////////////////pagination///////////////////////////////////////////////////////////////
+
+
+
+	//count pages
+	function countpages(key, sort, show, type, whsid) {
+		$.ajax({
+			type: 'GET',
+			url: "ws/ws_item.php",
+			data: ({ op: 11, key: key, sort: sort, show: show, type: type , whsid: whsid}),
+			dataType: 'json',
+			timeout: 5000,
+			success: function (data, textStatus, xhr) {
+				if (data < 0) {
+					alert("Couldn't get your users");
+				}
+				else {
+					displayPages(data);
+				}
+			},
+			error: function (xhr, status, errorThrown) {
+				alert(status + " " + errorThrown);
+			}
+		});
+	}
+
+	//display pages function
+	function displayPages(numberOfPages) {
+		var link = "item.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&type=" + wstype() + "&whs_id="+ whs_id + "&";
+		//used for disabling item and set next and previous indexes
+		var disabledatstart = "";
+		var disabledatend = " ";
+
+		var disabledlinkstart = "";
+		var disabledlinkend = "";
+
+		//if there is no pages
+		if (numberOfPages < 1) {
+			$(".tbody_users").children().remove();
+			$(".tbody_users").append('<h5>No result found!</h5>');
+		}
+		//if there is pages
+		else {
+			var i;
+			var curentpage = $(".page-item").attr('id');
+			var pagesToAppend = "";
+			//next and prev pages
+			var previousIndex = parseInt(curentpage) - 1;
+			var nextIndex = parseInt(curentpage) + 1;
+
+			//remove existing
+			$(".pagination").children().remove();
+			//check if the curent page is the first or the last page
+			if (curentpage == 1) {
+				disabledatstart = " disabled";
+				disabledlinkstart = "";
+			}
+			else {
+				disabledlinkstart = "href='" + link;
+			}
+			if (curentpage == numberOfPages) {
+				disabledatend = " disabled";
+				disabledlinkend = "";
+			}
+			else {
+				disabledlinkend = "href='" + link;
+			}
+
+			//append the first and the previous page 
+			pagesToAppend += "<li class='page-item" + disabledatstart + "' id='first'><a class='page-link' " + disabledlinkstart + "page=1'>First</a></li>";
+			pagesToAppend += "<li class='page-item" + disabledatstart + "' id='previous'><a class='page-link' " + disabledlinkstart + "page=" + previousIndex + "'>Previous</a></li>";
+
+			//check if the number of pages is smaller than the max that can be displayed
+			if (numberOfPages <= 3) {
+				for (i = 1; i <= numberOfPages; i++) {
+					if (i == curentpage) {
+						pagesToAppend += "<li class='page-item disabled' id='" + i + "'><a class='page-link' >" + i + "</a></li>";
+					}
+					else {
+						pagesToAppend += "<li class='page-ite' id='" + i + "'><a class='page-link' href='" + link + "page=" + i + "'>" + i + "</a></li>";
+					}
+				}
+			}
+			else //number of pages bigger than 3
+			{
+				//condition if current page is equal to 1 so it display only the first 3 pages
+				if (curentpage == 1) {
+					for (i = 1; i <= 3; i++) {
+						if (i == curentpage) {
+							pagesToAppend += "<li class='page-item disabled' id='" + i + "'><a class='page-link' >" + i + "</a></li>";
+						}
+						else {
+							pagesToAppend += "<li class='page-ite' id='" + i + "'><a class='page-link' href='" + link + "page=" + i + "'>" + i + "</a></li>";
+						}
+					}
+				}
+				//condition if current page is bigger or equal to last 3  pages
+				else if (curentpage == numberOfPages) {
+					for (i = numberOfPages - 2; i <= numberOfPages; i++) {
+						if (i == curentpage) {
+							pagesToAppend += "<li class='page-item disabled' id='" + i + "'><a class='page-link' >" + i + "</a></li>";
+						}
+						else {
+							pagesToAppend += "<li class='page-ite' id='" + i + "'><a class='page-link' href='" + link + "page=" + i + "'>" + i + "</a></li>";
+						}
+					}
+				}
+				//condition if current page is between last and first
+				else {
+					for (i = parseInt(curentpage) - 1; i <= parseInt(curentpage) + 1; i++) {
+						if (i == curentpage) {
+							pagesToAppend += "<li class='page-item disabled' id='" + i + "'><a class='page-link' >" + i + "</a></li>";
+						}
+						else {
+							pagesToAppend += "<li class='page-ite' id='" + i + "'><a class='page-link' href='" + link + "page=" + i + "'>" + i + "</a></li>";
+						}
+					}
+				}
+			}
+
+
+			//append the last and the next page
+			pagesToAppend += "<li class='page-item" + disabledatend + "' id='next'><a class='page-link' " + disabledlinkend + "page=" + nextIndex + "'>Next</a></li>";
+			pagesToAppend += "<li class='page-item" + disabledatend + "' id='last'><a class='page-link' " + disabledlinkend + "page=" + numberOfPages + "'>Last</a></li>";
+
+
+			//append to pages list
+			$(".pagination").append(pagesToAppend);
+			getUsers(wsKeyword(), wsOrder(), wsShowOrders(), wstype(), curentpage, whs_id);
+		}
+	}
+
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////////////pagination///////////////////////////////////////////////////////////////
+
+
+
+	$("#sortorder").change(function () {
+		window.location.replace("item.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&type=" + wstype() + "&whs_id="+ whs_id + "&page=1");
+	});
+	
+	///////////////////////////////////////////dortint header///////////////////////////
+	$("#itemnamesortheader").click(function(){
+		var sortorder = $(this).attr('value');
+
+		if(sortorder == 1)
+			{
+				window.location.replace("item.php?key=" + wsKeyword() + "&sort=1" + "&show=" + wsShowOrders() + "&type=" + wstype()  + "&whs_id="+ whs_id + "&page=1");
+			}
+		else
+			{
+				window.location.replace("item.php?key=" + wsKeyword() + "&sort=2" + "&show=" + wsShowOrders() + "&type=" + wstype()  + "&whs_id="+ whs_id + "&page=1");
+			}
+	});
+	
+	$("#labelsortheader").click(function(){
+		var sortorder = $(this).attr('value');
+		if(sortorder == 1)
+			{
+				window.location.replace("item.php?key=" + wsKeyword() + "&sort=3" + "&show=" + wsShowOrders() + "&type=" + wstype()  + "&whs_id="+ whs_id + "&page=1");
+			}
+		else
+			{
+				window.location.replace("item.php?key=" + wsKeyword() + "&sort=4" + "&show=" + wsShowOrders() + "&type=" + wstype() + "&whs_id="+ whs_id + "&page=1");
+			}
+	});
+	
+	
+	
+
+	$("#showbystatus").change(function () {
+		window.location.replace("item.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&type=" + wstype()  + "&whs_id="+ whs_id + "&page=1");
+	});
+
+	$("#rankorder").change(function () {
+		window.location.replace("item.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&type=" + wstype()  + "&whs_id="+ whs_id + "&page=1");
+	});
+
+	$("#workstationorder").change(function () {
+		window.location.replace("item.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&type=" + wstype()  + "&whs_id="+ whs_id + "&page=1");
+	});
+
+	$("#clearfilters").click(function () {
+		window.location.replace("item.php?key=&sort=1&show=0&type=-1&page=1&whs_id="+whs_id);
+	});
+
+	//seachbutton click funtion
+	$("#searchbutton").click(function () {
+		window.location.replace("item.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&type=" + wstype()  + "&whs_id="+ whs_id + "&page=1");
+	});
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//------------------------------   Methods ----------------------------------\\
+
+	// Populate Tables function to get users and specific data. 
+	function getUsers(key, sort, show, type, page, whsid) {
+		$.ajax({
+			type: 'GET',
+			url: "ws/ws_item.php",
+			data: ({ op: 12, key: key, sort: sort, show: show, type: type, page: page, whsid: whsid}),
+
+			dataType: 'json',
+			timeout: 5000,
+			success: function (data, textStatus, xhr) {
+
+				if (data == -1)
+					alert("Data couldn't be loaded!");
+				else {
+					data = JSON.parse(xhr.responseText);
+					populateitem(data);
+				}
+			},
+			error: function (xhr, status, errorThrown) {
+				alert(status + errorThrown);
+			}
+		});
+
+	}
+	
+	
+
 
     getitems(whs_id);
     //get category function
@@ -24,7 +340,7 @@ $(document).ready(function () {
                     alert("Data couldn't be loaded!");
                 else {
                     data = JSON.parse(xhr.responseText);
-                    populateitem(data);
+                    //populateitem(data);
                 }
             },
             error: function (xhr, status, errorThrown) {
@@ -36,8 +352,8 @@ $(document).ready(function () {
 // go to ranks
 $("#emp_ranks").click(function(){
 
-    window.location.replace("./ranks.php")
-})
+    window.location.replace("./types.php")
+});
 
     // function to insert data got by getusers(), to append it to a table. 
     function populateitem(data) {
@@ -59,7 +375,7 @@ $("#emp_ranks").click(function(){
                 else
                     btn_status_text = "Disable";
                 //item name                     //item label                   //item reservation                               //item warehouse                                 //item returnable                                       //item lifespan                    //item date                                 //item status                                           //item update                                                                                                                                       //item toggle status
-                $("#tbody_item").append("<tr><td>" + row.item_name + "</td><td>" + row.item_label + "</td ><td id='" + row.item_type_id + "'>"+ row.item_type_name +"</td></td><td id='" + row.item_reserve + "'> " + item_re(row.item_reserve) + " </td><td id='" + row.item_whs_id + "'>" + row.whs_label + "</td><td id='" + row.item_returnable + "'>" + item_re(row.item_returnable) + "</td><td id='"+ row.item_lifespan +"'>" + row.item_lifespan + " </td><td> " + row.item_entry_date + "</td><td id='" + row.item_status + "'>" + check_status(row.item_status) + "</td><td><button id='updt" + row.item_id + "'  class='btn_modal_editwhs' type='button' class='btn btn-primary' data-toggle='modal' data-target='#editwhousemodal'>Edit User</button><button value='" + row.item_status + "' id='tog" + row.item_id + "' class='btntoggleact'> " + btn_status_text + " </button></tr>");
+                $("#tbody_item").append("<tr><td>" + row.item_name + "</td><td>" + row.item_label + "</td ><td id='" + row.item_type_id + "'>"+ row.item_type_name +"</td></td><td id='" + row.item_reserve + "'> " + item_re(row.item_reserve) + " </td><td id='" + row.item_whs_id + "'>" + row.whs_label + "</td><td id='" + row.item_returnable + "'>" + item_re(row.item_returnable) + "</td><td id='"+ row.item_lifespan +"'>" + row.item_lifespan + " </td><td> " + row.item_entry_date + "</td><td id='" + row.item_status + "'>" + check_status(row.item_status) + "</td><td><button   style='margin-right: 4px;' id='updt" + row.item_id + "'  class='btn_modal_editwhs btn btn-primary' type='button' data-toggle='modal' data-target='#editwhousemodal'>Edit Item</button><button value='" + row.item_status + "' id='tog" + row.item_id + "' class='btntoggleact btn btn-primary'> " + btn_status_text + " </button></tr>");
 
             });
 
@@ -98,7 +414,7 @@ $("#emp_ranks").click(function(){
         var btn = $(this);
         toggle_item(status_val, btn_nid, btn);
 
-    })
+    });
 
     function toggle_item(status_value, item_id, btn) {
 
@@ -159,7 +475,7 @@ $("#emp_ranks").click(function(){
         getitemtype();
 
 
-    })
+    });
 
     function getwhs() {
         $.ajax({
@@ -199,17 +515,17 @@ $("#emp_ranks").click(function(){
 
         var change_type = $(this).children("option:selected").val();
         $("#crt_whs_id").val(change_type);
-    })
+    });
 
     $('input[name="reservation"]').change(function () {
         var val = $(this).val();
         $("#crt_res_id").val(val);
-    })
+    });
 
     $('input[name="returnable"]').change(function () {
         var val = $(this).val();
         $("#crt_ret_id").val(val);
-    })
+    });
 
     function crtcheckfields(itemname, itemlabel, itemtype, itemres, itemwhs, itemret, itemlife)
     {
@@ -260,7 +576,7 @@ $("#emp_ranks").click(function(){
 
         var change_type = $(this).children("option:selected").val();
         $("#crt_type_id").val(change_type);
-    })
+    });
 
 
     $("#btn_item_crt").click(function(){
@@ -279,7 +595,7 @@ $("#emp_ranks").click(function(){
         else {
             alert("error");
         }
-    })
+    });
 
 
     function createitem (itemname, itemlabel, itemtype, itemres, itemwhs, itemret, itemlife)
@@ -349,10 +665,12 @@ $("#emp_ranks").click(function(){
         $("#edt_type_id").val(itemtypeid);
         $("#edt_ret_id").val(itemretid);
         $("#edt_item_life").val(itemlifeid);
-        getedtwhs();
-        getedtitemtype();
-    })
+        
+    });
 
+	getedtwhs();
+    getedtitemtype();
+	
     function getedtitemtype() {
         $.ajax({
             type: 'GET',
@@ -379,19 +697,19 @@ $("#emp_ranks").click(function(){
         });
     }
 
-    function parseitemtype(data) {
-        $("#edt_item_type").append('<option value="" disabled selected>Select a type</option>')
-        $.each(data, function (index, row) {
-            $("#edt_item_type").append('<option value="' + row.item_type_id + '">' + row.item_type_name + '</option>');
-        });
-
-    }
+//    function parseitemtype(data) {
+//        $("#edt_item_type").append('<option value="" disabled selected>Select a type</option>')
+//        $.each(data, function (index, row) {
+//            $("#edt_item_type").append('<option value="' + row.item_type_id + '">' + row.item_type_name + '</option>');
+//        });
+//
+//    }
 
     $("#edt_item_type").change(function () {
 
         var change_type = $(this).children("option:selected").val();
         $("#edt_type_id").val(change_type);
-    })
+    });
 
     function getedtwhs() {
         $.ajax({
@@ -419,29 +737,29 @@ $("#emp_ranks").click(function(){
         });
     }
 
-    function parsewhs(data) {
-        $("#edt_item_whs").append('<option value="" disabled selected>Select a type</option>')
-        $.each(data, function (index, row) {
-            $("#edt_item_whs").append('<option value="' + row.whs_id + '">' + row.whs_label + '</option>');
-        });
-
-    }
+//    function parsewhs(data) {
+//        $("#edt_item_whs").append('<option value="" disabled selected>Select a type</option>')
+//        $.each(data, function (index, row) {
+//            $("#edt_item_whs").append('<option value="' + row.whs_id + '">' + row.whs_label + '</option>');
+//        });
+//
+//    }
 
     $("#edt_item_whs").change(function () {
 
         var change_type = $(this).children("option:selected").val();
         $("#edt_whs_id").val(change_type);
-    })
+    });
 
     $('input[name="edtreservation"]').change(function () {
         var val = $(this).val();
         $("#edt_res_id").val(val);
-    })
+    });
 
     $('input[name="edtreturnable"]').change(function () {
         var val = $(this).val();
         $("#edt_ret_id").val(val);
-    })
+    });
     
     $("#btn_item_edt").click(function(){
         itemid = $("#edt_item_id").val();
@@ -465,7 +783,7 @@ $("#emp_ranks").click(function(){
         
 
 
-    })
+    });
 
 
     function checkedtfields(itemid, itemname, itemlabel, itemtype, itemres, itemwhs, itemret, itemlife)

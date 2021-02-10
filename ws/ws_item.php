@@ -70,6 +70,48 @@ try {
 				$result = $item->countWhsmgrItemsBroken($_GET["mgr_id"]);
 			}
 			break;
+			case 11: {
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $item->CountSearchedItems($key, $_GET["sort"], $_GET["show"], $_GET["type"], $_GET["whsid"] );
+                }
+                break;
+			case 12: {
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $item->getSearchedItems($key, $_GET["sort"], $_GET["show"], $_GET["type"], $_GET["whsid"],  $_GET["page"] );
+                }
+                break;
+			case 13: {
+                    //GET items for admin
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $item->CountSearchedItemsByManager($key, $_GET["sort"], $_GET["show"], $_GET["type"], $_GET["mgrid"] );
+                }
+                break;
+			case 14: {
+                    //check if keyword exist
+                    if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+                        $key = NULL;
+                    } else {
+                        $key = $_GET["key"];
+                    }
+                    $result = $item->getSearchedItemsByManager($key, $_GET["sort"], $_GET["show"], $_GET["type"], $_GET["mgrid"],  $_GET["page"] );
+                }
+                break;
 			default:
 				return 0;
 				break;

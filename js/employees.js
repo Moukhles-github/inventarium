@@ -717,7 +717,6 @@ $(document).ready(function(){
 	});
 	
 	$(document).on("click", ".btn_edit_employee", function(){
-		alert();
 		if(!canScan)
 			{
 				canScan = true;
