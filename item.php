@@ -13,7 +13,7 @@ require_once ("security.php");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pyramid Login</title>
 
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/items.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -62,18 +62,18 @@ require_once ("security.php");
     <div class="main-content">
         <h1> Manage items</h1>
 
-        <input type="text" id="whs_id" value=" <?php
+        <input type="text" hidden="" id="whs_id" value="<?php
                                                 if (isset($_GET["whs_id"])) {
                                                     echo $_GET["whs_id"];
                                                 } else
-                                                    echo "alert('No warehouse selected')" ?>"></input>
+                                                    echo "-1" ?>"></input>
         <!-- Create users button -->
         <button id="btn_modal_item_whs" type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_item_modal">
             Create item
         </button>
 
 
-        <?php
+<?php
 
         //get initial values
         $sort = "1";
@@ -91,8 +91,8 @@ require_once ("security.php");
         }
 
         //check if rank option is set
-        if (isset($_GET["rank"]) && ($_GET["rank"] != "")) {
-            $rank = $_GET["rank"];
+        if (isset($_GET["type"]) && ($_GET["type"] != "")) {
+            $rank = $_GET["type"];
         }
 
         //check if workstation option is set
@@ -105,10 +105,11 @@ require_once ("security.php");
 
         ?>
 
-        <div class="sortandfilterhead" style="height: 90px;">
+        <div class="sortandfilterhead" style="height: 90px; margin-top: 30px;">
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
+<!--
                         <label for="order" style='margin-right: 10px'>Sort By:</label>
                         <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
                             <option value="1">UserName Asc</option>
@@ -116,6 +117,7 @@ require_once ("security.php");
                             <option value="3">Name Asc</option>
                             <option value="4">Name Desc</option>
                         </select>
+-->
                     </div>
                 </div>
             </div>
@@ -123,7 +125,7 @@ require_once ("security.php");
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Show Employees:</label>
+                        <label for="order" style='margin-right: 10px'>Show Items:</label>
                         <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
                             <option value="0">All</option>
                             <option value="1">Active</option>
@@ -136,7 +138,7 @@ require_once ("security.php");
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Rank:</label>
+                        <label for="order" style='margin-right: 10px'>Type:</label>
                         <select class="form-control" id="rankorder" style='width: 180px; margin-right: 20px;'>
                             <option value="-1">All</option>
                         </select>
@@ -146,14 +148,25 @@ require_once ("security.php");
 
 
             <div style="float: left">
-                <div class='form-group'>
-                    <div class="form-group">
-                        <label for="order" style='margin-right: 10px'>Search:</label>
-                        <input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"><button id="searchbutton" class="btn btn-primary" style="height: 30px; width:auto;">Search</button><button id="clearfilters" class="btn btn-primary" style="height: 30px; width:auto;">Clear</button>
-
-                    </div>
-                </div>
+				<div class='form-group' >
+					<div class="form-group" style="width: 200px;">
+					  <label for="order" style='margin-right: 10px'>Search:</label>
+					  
+						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"></input>
+						         		
+            		</div>
+            		
+            	</div>
             </div>
+            
+            <div style="float: left; height: 74px; margin-left: 20px">
+            	<div class='form-group' >
+					 <div class="form-group">
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
+					</div>
+           		</div>
+			</div>
         </div>
 
 
@@ -196,10 +209,10 @@ require_once ("security.php");
                         <label for="lifespan">lifespan</label>
                         <input type="number" id="crt_item_life"> </input> </br>
 
-                        <input type="text" id="crt_whs_id" placeholder="whs_id"></input></br>
-                        <input type="text" id="crt_res_id" placeholder="whs_res_id"></input></br>
-                        <input type="text" id="crt_ret_id" placeholder="whs_ret_id"></input></br>
-                        <input type="text" id="crt_type_id" placeholder="item_type_id"></input></br>
+                        <input type="text" hidden="" id="crt_whs_id" placeholder="whs_id"></input></br>
+                        <input type="text" hidden="" id="crt_res_id" placeholder="whs_res_id"></input></br>
+                        <input type="text" hidden="" id="crt_ret_id" placeholder="whs_ret_id"></input></br>
+                        <input type="text" hidden="" id="crt_type_id" placeholder="item_type_id"></input></br>
 
                     </div>
                     <div class="modal-footer">
@@ -250,11 +263,11 @@ require_once ("security.php");
                         <label for="lifespan">lifespan</label>
                         <input type="number" id="edt_item_life"> </input> </br>
 
-                        <input type="text" id="edt_item_id" placeholder="whs_id"></input></br>
-                        <input type="text" id="edt_whs_id" placeholder="whs_id"></input></br>
-                        <input type="text" id="edt_res_id" placeholder="whs_res_id"></input></br>
-                        <input type="text" id="edt_ret_id" placeholder="whs_ret_id"></input></br>
-                        <input type="text" id="edt_type_id" placeholder="item_type_id"></input></br>
+                        <input type="text" hidden="" id="edt_item_id" placeholder="whs_id"></input></br>
+                        <input type="text" hidden="" id="edt_whs_id" placeholder="whs_id"></input></br>
+                        <input type="text" hidden="" id="edt_res_id" placeholder="whs_res_id"></input></br>
+                        <input type="text" hidden="" id="edt_ret_id" placeholder="whs_ret_id"></input></br>
+                        <input type="text" hidden="" id="edt_type_id" placeholder="item_type_id"></input></br>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -268,16 +281,43 @@ require_once ("security.php");
 
 
 
-        <table class="table" style="margin-top: 100px; margin-left: 100px; margin-right: 100px; width: 90%">
-
-
-
-            <caption>List of items</caption>
+        <table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">
 
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">label</th>
+                    <th value="
+                    <?php 
+					if($sort == 1)
+					{
+						echo 0;
+					}
+					else if ($sort == 2)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+							   
+					?>
+                    " id="itemnamesortheader" scope="col">Name<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 5px;" src="media/Images/arrows.png"></th>
+                    <th value="
+                    <?php 
+					if($sort == 3)
+					{
+						echo 0;
+					}
+					else if ($sort == 4)
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 1;
+					}
+					?>
+                    " id="labelsortheader" scope="col">Label<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 5px;" src="media/Images/arrows.png"></th>
                     <th scope="col">type</th>
                     <th scope="col">reservation</th>
                     <th scope="col">warehouse</th>

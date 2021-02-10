@@ -1,74 +1,108 @@
-body {font-family: Arial, Helvetica, sans-serif;}
-
-/* The Modal (background) */
-.backgroundhd {
-    /* hidden by default  */
-  display: none; 
-  position: fixed; /* Stay in place */
-  z-index: 990; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-#handleitem {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
-.closereader {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.closereader:hover,
-.closereader:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* rfid  */
-#masteralert
-{
-    width: 100%;
-    position: fixed;
-    align-content: center;
-}
-
-#alertdiv {
-    width: 200px;
-    height: 40px;
-
+.navbar-global {
+    background-color: indigo;
+  }
+  
+  .navbar-global .navbar-brand {
     color: white;
-    background-color: rgba(51, 51, 51, 0.5);
-    border-radius: 3px;
+  }
+  
+  .navbar-global .navbar-user > li > a
+  {
+    color: white;
+  }
+  
+  .navbar-primary {
+    background-color: #333;
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    top: 51px;
+    width: 200px;
+    z-index: 8;
+    overflow: hidden;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+  
+  .navbar-primary.collapsed {
+    width: 60px;
+  }
+  
+  .navbar-primary.collapsed .glyphicon {
+    font-size: 22px;
+  }
+  
+  .navbar-primary.collapsed .nav-label {
+    display: none;
+  }
+  
+  .btn-expand-collapse {
+      position: absolute;
+      display: block;
+      left: 0px;
+      bottom:0;
+      width: 100%;
+      padding: 8px 0;
+      border-top:solid 1px #666;
+      color: grey;
+      font-size: 20px;
+      text-align: center;
+  }
+  
+  .btn-expand-collapse:hover,
+  .btn-expand-collapse:focus {
+      background-color: #222;
+      color: white;
+  }
+  
+  .btn-expand-collapse:active {
+      background-color: #111;
+  }
+  
+  .navbar-primary-menu,
+  .navbar-primary-menu li {
+    margin:0; padding:0;
+    list-style: none;
+  }
+  
+  .navbar-primary-menu li a {
+    display: block;
+    padding: 10px 18px;
+    text-align: left;
+    border-bottom:solid 1px #444;
+    color: #ccc;
+  }
+  
+  .navbar-primary-menu li a:hover {
+    background-color: #000;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .navbar-primary-menu li a .glyphicon {
+    margin-right: 6px;
+  }
+  
+  .navbar-primary-menu li a:hover .glyphicon {
+    color: orchid;
+  }
+  
+  .main-content {
+    margin-top: 60px;
+    margin-left: 200px;
+    padding: 20px;
+  }
+  
+  .collapsed + .main-content {
+    margin-left: 60px;
+  }
 
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-
-    display: table;
-
-    align-self: center;
-
-    z-index: 9999;
+th:hover{
+	background-color: #ebf3f9;
+	cursor: pointer;
 }
-
-.alerttext {
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle;
+th:active
+{
+	background-color: #d8e7f3;
 }

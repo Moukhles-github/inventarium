@@ -156,7 +156,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createcmpmodalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="createcmpmodalLongTitle">Add new company</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -187,7 +187,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="edit_cmp_modalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="edit_cmp_modalLongTitle">Edit Company</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -203,7 +203,7 @@ require_once ("security.php");
                         <label for="cmp_subsidiary"> Company Subsidiary </label>
                         <input type="text" id="updt_cmp_subsidiary" placeholder="e.g. Goe Michel"></input> </br>
 
-                        <input type="text" id="updt_cmp_id" placeholder="cmp_id">
+                        <input type="text" hidden="" id="updt_cmp_id" placeholder="cmp_id">
 
                     </div>
                     <div class="modal-footer">

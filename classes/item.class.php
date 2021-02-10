@@ -167,5 +167,184 @@ class item
             throw $e;
         }
     }
+	
+	
+	public $itemsPerPage = 20;
+	
+		public function getSearchedItems($key, $sort, $show, $type, $whsid, $page)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT item.item_id, item.item_name, item.item_label, item.item_type_id, item.item_reserve, item.item_whs_id, item.item_returnable, item.item_lifespan, item.item_entry_date, item.item_status, item_type.item_type_id, item_type.item_type_name, warehouse.whs_id, warehouse.whs_label FROM item INNER JOIN item_type ON item.item_type_id = item_type.item_type_id INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id WHERE warehouse.whs_id = ".$whsid." ".$this->ShowStatus($show);
+
+            if($type != -1)
+			{
+				//check if all cat is selected
+				$sqlQuery .= " AND item.item_type_id =".$type;
+			}
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = ".$key.")";
+            }
+            
+            $offset = ($page -1) * $this->itemsPerPage;
+
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemsPerPage." OFFSET ".$offset;
+			UTILITIES::writeToLog($sqlQuery);
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+    public function CountSearchedItems($key, $sort, $show, $type, $whsid)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) FROM item INNER JOIN item_type ON item.item_type_id = item_type.item_type_id INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id WHERE warehouse.whs_id = ".$whsid." ".$this->ShowStatus($show);
+
+			
+            if($type != -1)
+			{
+				//check if all cat is selected
+				$sqlQuery .= " AND item.item_type_id =".$type;
+			}
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = ".$key.")";
+            }
+			
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+	
+		public function getSearchedItemsByManager($key, $sort, $show, $type, $mgrid, $page)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT item.item_id, item.item_name, item.item_label, item.item_type_id, item.item_reserve, item.item_whs_id, item.item_returnable, item.item_lifespan, item.item_entry_date, item.item_status, item_type.item_type_id, item_type.item_type_name, warehouse.whs_id, warehouse.whs_label FROM item INNER JOIN item_type ON item.item_type_id = item_type.item_type_id INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id WHERE warehouse.whs_mgr_id = ".$mgrid." ".$this->ShowStatus($show);
+
+            if($type != -1)
+			{
+				//check if all cat is selected
+				$sqlQuery .= " AND item.item_type_id =".$type;
+			}
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = ".$key.")";
+            }
+            
+            $offset = ($page -1) * $this->itemsPerPage;
+
+            $sqlQuery.= " ".$this->orderStatus($sort)." LIMIT ".$this->itemsPerPage." OFFSET ".$offset;
+			UTILITIES::writeToLog($sqlQuery);
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+			
+			//return the values
+            return($result);
+            
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	
+    public function CountSearchedItemsByManager($key, $sort, $show, $type, $mgrid)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT COUNT(*) FROM item INNER JOIN item_type ON item.item_type_id = item_type.item_type_id INNER JOIN warehouse ON item.item_whs_id = warehouse.whs_id WHERE warehouse.whs_mgr_id = ".$mgrid." ".$this->ShowStatus($show);
+
+			
+            if($type != -1)
+			{
+				//check if all cat is selected
+				$sqlQuery .= " AND item.item_type_id =".$type;
+			}
+
+            if(! is_null($key))
+			{
+				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = ".$key.")";
+            }
+			
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+    }
+    
+    //set option
+	private function ShowStatus($status)
+	{
+		switch($status)
+		{
+			case 0:
+				return " AND (1=1)";
+				break;
+			case 1:
+				return " AND (item.item_status = 1)";
+				break;
+			case 2:
+				return " AND (item.item_status = 0)";
+				break;
+			default:
+				return " AND (1=1)";
+				break;
+		}
+	}
+    
+    //set sort order
+	private function orderStatus($order)
+	{
+		switch($order)
+		{
+			case 1:
+				return " ORDER BY item.item_name ASC";
+				break;
+			case 2:
+				return " ORDER BY item.item_name DESC";
+				break;
+			case 3:
+				return " ORDER BY item.item_label ASC";
+				break;
+			case 4:
+				return " ORDER BY item.item_label DESC";
+				break;
+			default:
+				return " ORDER BY user_name ASC";
+				break;
+		}
+	}
+	
 
 }

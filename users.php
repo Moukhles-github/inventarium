@@ -172,7 +172,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createusermodalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="createusermodalLongTitle">Add new user</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -217,7 +217,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editusermodalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="editusermodalLongTitle">Edit user</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

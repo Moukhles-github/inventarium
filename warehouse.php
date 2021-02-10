@@ -155,7 +155,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createwhousemodalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="createwhousemodalLongTitle">Crate Warehouse</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -172,7 +172,7 @@ require_once ("security.php");
                         <input type="text" id="crt_whouse_address" placeholder="any location"></input></br>
 
 
-                        <input type="text" id="crt_whs_mgr_id" placeholder="mgr_id"></input></br>
+                        <input type="text" hidden="" id="crt_whs_mgr_id" placeholder="mgr_id"></input></br>
 
 
                     </div>
@@ -190,7 +190,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="edit_whouse_modalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="edit_whouse_modalLongTitle">Edit Warehouse</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -206,9 +206,9 @@ require_once ("security.php");
                         <label for="warehouse_address"> Warehouse location: </label>
                         <input type="text" id="edt_whouse_address" placeholder="any location"></input></br>
 
-                        <input type="text" id="edt_whs_id" placeholder="whs_id"></input></br>
+                        <input type="text" hidden="" id="edt_whs_id" placeholder="whs_id"></input></br>
 
-                        <input type="text" id="edt_whs_mgr_id" placeholder="mgr_id"></input></br>
+                        <input type="text" hidden="" id="edt_whs_mgr_id" placeholder="mgr_id"></input></br>
 
                     </div>
                     <div class="modal-footer">
@@ -266,8 +266,8 @@ require_once ("security.php");
 							   
 					?>
                     " id="datesortheader" scope="col">Creation Date<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 4px;" src="media/Images/arrows.png"></th>
-                    <th scope="col">status</th>
-                    <th scope="col">actions</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody id="tbody_whouse">
