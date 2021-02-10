@@ -17,29 +17,21 @@
 
 
 <body>
-<!--  Request me for a signup form or any type of help  -->
-<div class="login-form">    
+<div class="login-box">
+        <h1>Login</h1>
+        <div class="textbox">
+            <input type="text" placeholder="username" name="" value=""></input>
+        </div>
 
-		<div class="avatar">
-            <!-- We need an icon --> 
-        </div>
-    	<h4 class="modal-title">Login to Your Account</h4>
-        <div class="form-group">
-            <input id="username" type="text" class="form-control" placeholder="Username" required="required">
-        </div>
-        <div class="form-group">
-            <input id="pwd" type="password" class="form-control" placeholder="Password" required="required">
-        </div>
-        <div class="form-group small clearfix">
-            <label class="checkbox-inline"><input type="checkbox"> Remember me </label>
-            <a href="#" class="forgot-link">Forgot Password?</a>
-        </div> 
-        <input id="btnlogin" type="submit" class="btn btn-primary btn-block btn-lg" value="Login">              
+        <div class="textbox">
+            <input type="password" placeholder="Password" name="" value=""></input>
 
-    <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
-</div>
+        </div>
+
+        <input class="btn" type="button" name="" value="Log In"></input>
+
+    </div>
 </body>
 </html>       
   
-  
-  
+</html>
