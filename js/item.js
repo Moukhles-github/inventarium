@@ -471,6 +471,8 @@ $("#emp_ranks").click(function(){
         $("#crt_item_life").val("");
         $('input[name="reservation"]').prop('checked', false);
         $('input[name="returnable"]').prop('checked', false);
+		$("#edt_item_whs").empty();
+		$("#edt_item_type").empty();
         getwhs();
         getitemtype();
 
@@ -493,6 +495,7 @@ $("#emp_ranks").click(function(){
                     alert("no result");
                 } else {
                     data = JSON.parse(xhr.responseText);
+					
                     parsewhs(data);
                 }
             },
@@ -504,9 +507,11 @@ $("#emp_ranks").click(function(){
     }
 
     function parsewhs(data) {
-        $("#crt_item_whs").append('<option value="" disabled selected>Select a type</option>')
+        $("#crt_item_whs").append('<option value="" disabled selected>Select a type</option>');
+        $("#edt_item_whs").append('<option value="" disabled selected>Select a type</option>');
         $.each(data, function (index, row) {
             $("#crt_item_whs").append('<option value="' + row.whs_id + '">' + row.whs_label + '</option>');
+			$("#edt_item_whs").append('<option value="' + row.whs_id + '">' + row.whs_label + '</option>');
         });
 
     }
@@ -565,14 +570,16 @@ $("#emp_ranks").click(function(){
     }
 
     function parseitemtype(data) {
-        $("#crt_item_type").append('<option value="" disabled selected>Select a type</option>')
+        $("#crt_item_type").append('<option value="" disabled selected>Select a type</option>');
+        $("#edt_item_type").append('<option value="" disabled selected>Select a type</option>');
         $.each(data, function (index, row) {
             $("#crt_item_type").append('<option value="' + row.item_type_id + '">' + row.item_type_name + '</option>');
+            $("#edt_item_type").append('<option value="' + row.item_type_id + '">' + row.item_type_name + '</option>');
         });
 
     }
 
-    $("#crt_item_type").change(function () {
+    $("#edt_item_type").change(function () {
 
         var change_type = $(this).children("option:selected").val();
         $("#crt_type_id").val(change_type);
@@ -639,7 +646,7 @@ $("#emp_ranks").click(function(){
     ///////////////update items ///////////////////////////////////
 
     $(document).on("click", ".btn_modal_editwhs", function () {
-        $("#edt_item_type").empty();
+//        $("#edt_item_type").empty();
         ////////////////
         var btnid = $(this).attr('id');
         var itemid = btnid.substr(4, btnid.length);

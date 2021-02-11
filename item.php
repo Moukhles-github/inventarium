@@ -178,7 +178,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createitemmodalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="createitemmodalLongTitle">Add new item</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -231,7 +231,7 @@ require_once ("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="edit_whouse_modalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="edit_whouse_modalLongTitle">Edit item</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -246,6 +246,7 @@ require_once ("security.php");
                         <input type="text" id="edt_item_label" placeholder="e.g dl-10"></input></br>
                         <label for='itemtype'> item type</label></br>
                         <select id='edt_item_type'></select></br>
+                        
                         <label for="item_reservation"> Reservation </label></br>
 
                         <input type="radio" id="edt_rb_resyes" name="edtreservation" value="1">
@@ -255,6 +256,7 @@ require_once ("security.php");
 
                         <label for="item_whs">item warehouse</label></br>
                         <select id="edt_item_whs"></select></br>
+                        
 
                         <label for="item_returnable">item returnable</label></br>
                         <input type="radio" id="edt_rt_yes" name="edtreturnable" value="1">
