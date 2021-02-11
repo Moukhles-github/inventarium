@@ -14,12 +14,14 @@ require_once ("security.php");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Users</title>
 
-    <link rel="stylesheet" href="css/users.css">
+<!-- CSS -->
+<link rel="stylesheet" href="css/users.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="js/admin.users.js"></script>
-
 
 </head>
 
@@ -67,7 +69,7 @@ require_once ("security.php");
 
         <!-- Create users button -->
         <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createusermodal">
-            Create User
+            Create User  <i id="crt_sign" class="fas fa-plus-square"></i>
         </button>
 
 
@@ -173,12 +175,7 @@ require_once ("security.php");
         <div class="modal fade" id="createusermodal" tabindex="-1" role="dialog" aria-labelledby="createusermodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createusermodalLongTitle">Add new user</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                 
                     <div class="modal-body">
                         <p>Create a new User</p> </br>
                         <label>Select An Employee</label>
@@ -209,23 +206,15 @@ require_once ("security.php");
             </div>
         </div>
 
-        <!-- edit users button -->
-        <!-- <button class="btn_modal_edituser" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editusermodal">
-            Edit User
-        </button> -->
+       
 
         <!-- edit users Modal -->
         <div class="modal fade" id="editusermodal" tabindex="-1" role="dialog" aria-labelledby="editusermodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editusermodalLongTitle">Edit user</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                  
                     <div class="modal-body">
-                        <p>employee name</p> </br>
+                        <p>Edit Employee</p> </br>
 
                         <label for="username">Update Username:</label>
                         <input type="text" id="updt_usrname" placeholder="e.g. Myusername"></input></br>

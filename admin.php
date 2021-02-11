@@ -73,7 +73,7 @@ require_once("security.php");
 										position: 'bottom'
 									},
 									colors: ['red', '#004411', 'Black'],
-									backgroundColor: '#ecf2f9',
+									backgroundColor: '#f6f7f9',
 									is3D: true
 								};
 
@@ -135,7 +135,7 @@ require_once("security.php");
 										title: 'Requests Statistics',
 										subtitle: 'Finished, and denied requests',
 									},
-									backgroundColor: '#ecf2f9'
+									backgroundColor: '#f6f7f9'
 
 								};
 
@@ -196,7 +196,7 @@ require_once("security.php");
 								var options = {
 									title: 'Company Employment',
 									pieHole: 0.4,
-									backgroundColor: '#ecf2f9'
+									backgroundColor: '#f6f7f9'
 								};
 
 								var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
@@ -253,9 +253,9 @@ require_once("security.php");
 
 								var options = {
 									title: 'Yearly Employment',
-									colors: ['red', '#000000', 'Black'],
+									colors: ['#004080', '#778899', 'Blue'],
 
-									backgroundColor: '#ecf2f9'
+									backgroundColor: '#f6f7f9'
 								};
 
 								var chart = new google.visualization.PieChart(document.getElementById('donutchart1'));
@@ -304,7 +304,7 @@ require_once("security.php");
 		
 		<ul class="navbar-primary-menu">
 			<li>
-				<a href="admin.php"><i class="fas fa-chart-line"></i><span class="nav-label">  Dashboard</span></a>
+				<a href="admin.php" class='active'><i class="fas fa-chart-line "></i><span class="nav-label">  Dashboard</span></a>
 				<a href="company.php"><i class="fas fa-industry"></i></span><span class="nav-label">  Company</span></a>
 				<a href="users.php"><i class="fas fa-users"></i></span><span class="nav-label">  Users</span></a>
 				<a href="employees.php"><i class="fas fa-people-carry"></i></i></span><span class="nav-label">  Employees</span></a>
@@ -323,22 +323,26 @@ require_once("security.php");
 			<div class="grid-item item1">
 				<h3>Quick Stats</h3>
 				<br />
-				<p id="qs1">Companies:</p>
-				<p id="qs2">Users:</p>
-				<p id="qs3">Employees:</p>
-				<p id="qs4">Workstations:</p>
-				<p id="qs5">Warehouses:</p>
+				<ul>
+				<li><p id="qs1">Company:</p></li>
+				<li><p id="qs2">Users:</p></li>
+				<li><p id="qs3">Employees:</p></li>
+				<li><p id="qs4">Workstations:</p></li>
+				<li><p id="qs5">Warehouses:</p></li>
+	</ul>
 			</div>
 
 			<div class="grid-item item2">
 				<h3>Activities</h3>
 				<br />
-				<p id="act1">Manager with most reqests:</p>
-				<p id="act2">Active Requests:</p>
-				<p id="act3">Workstation with most Requests: </p>
-				<p id="act4">Average Daily Requests:</p>
-				<p id="act5">Average Monthly Approved Request:</p>
-				<p id="act6">Average Monthly Denied Requests:</p>
+				<ul>
+				<li><p id="act1">Manager with most reqests:</p></li>
+				<li><p id="act2">Active Requests:</p></li>
+				<li><p id="act3">Workstation with most Requests: </p></li>
+				<li><p id="act4">Average Daily Requests:</p></li>
+				<li><p id="act5">Average Monthly Approved Request:</p></li>	
+				<li><p id="act6">Average Monthly Denied Requests:</p></li>
+				</ul>
 			</div>
 
 			<div class="grid-item item3">

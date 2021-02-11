@@ -18,6 +18,8 @@ require_once ("security.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="./js/employees.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
 </head>
 
 
@@ -45,7 +47,7 @@ require_once ("security.php");
 		</div>
 	</nav>
 	<nav class="navbar-primary">
-		<a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+		
 		<ul class="navbar-primary-menu">
 			<li>
 				<a href="admin.php"><i class="fas fa-chart-line"></i><span class="nav-label">  Dashboard</span></a>
@@ -238,7 +240,7 @@ require_once ("security.php");
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="close_add_form"  class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_create_emp" type="button" class="btn btn-primary">Create/Edit</button>
+                        <button id="btn_create_emp" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>
                     </div>
                 </div>
             </div>

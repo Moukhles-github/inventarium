@@ -31,7 +31,7 @@ require_once("security.php");
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only">Toggle navigation</span>  
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -65,9 +65,9 @@ require_once("security.php");
     <div class="main-content">
         <h1> Manage Companies</h1>
 
-        <!-- Create users button -->
+        <!-- Create button -->
         <button id="btn_modal_crt_cmp" type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_cmp_modal">
-            Create company
+            Create company <i id="crt_sign" class="fas fa-plus-square"></i>
         </button>
 
 
@@ -151,25 +151,20 @@ require_once("security.php");
 
 
 
-        <!-- create users Modal -->
+        <!-- create company Modal -->
         <div class="modal fade" id="create_cmp_modal" tabindex="-1" role="dialog" aria-labelledby="createcmpmodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createcmpmodalLongTitle">Add new company</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    
                     <div class="modal-body">
-                        <p>Create a new company</p> </br>
+                        <p>Add a New Company</p> </br>
 
                         <label for="username">Company name:</label>
                         <input type="text" id="crt_cmp_name" placeholder="e.g. Mycompany"></input></br>
                         <label>Company address:</label>
-                        <input type="text" id="crt_cmp_address" placeholder="e.g. Mycompany"></input></br>
-                        <label>Company Subsidiary</label>
-                        <input type="text" id="crt_cmp_sbusidiary" placeholder="e.g. Mycompany"></input></br>
+                        <input type="text" id="crt_cmp_address" placeholder="e.g. Miami"></input></br>
+                        <label>Company Subsidiary:</label>
+                        <input type="text" id="crt_cmp_sbusidiary" placeholder="e.g. Michael"></input></br>
 
 
                     </div>
@@ -182,18 +177,13 @@ require_once("security.php");
         </div>
 
 
-        <!-- edit users Modal -->
+        <!-- edit company Modal -->
         <div class="modal fade" id="editcmpmodal" tabindex="-1" role="dialog" aria-labelledby="edit_cmp_modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit_cmp_modalLongTitle">Edit Company</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    
                     <div class="modal-body">
-
+                    <p>Edit Company</p> </br>
                         <label for="cmpname"> Company name:</label>
                         <input type="text" id="updt_cmp_name" placeholder="e.g. Shell Company"></input></br>
 
@@ -217,7 +207,7 @@ require_once("security.php");
 
 
 
-        <table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">
+        <table class="table">
 
             <thead>
                 <tr>

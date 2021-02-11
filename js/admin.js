@@ -18,7 +18,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    $("#qs1").text("Companies: Active "+ data[1]["cmpNB"] + " / Inactive " + data[0]["cmpNB"]);
+                    $("#qs1").text("Companies: Active "+ data[1]["cmpNB"] + " | Inactive " + data[0]["cmpNB"]);
                 }  
             },
             error: function(xhr, status, errorThrown) 
@@ -48,7 +48,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    $("#qs3").text("Employees: Active "+ data[1]["empNB"] + " / Inactive " + data[0]["empNB"]);
+                    $("#qs3").text("Employees: Active "+ data[1]["empNB"] + " | Inactive " + data[0]["empNB"]);
                 }  
             },
             error: function(xhr, status, errorThrown) 
@@ -77,7 +77,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    $("#qs2").text("Users: Active "+ data[1]["usrNB"] + " / Inactive " + data[0]["usrNB"]);
+                    $("#qs2").text("Users: Active "+ data[1]["usrNB"] + " | Inactive " + data[0]["usrNB"]);
                 }  
             },
             error: function(xhr, status, errorThrown) 
@@ -106,7 +106,8 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    $("#qs4").text("Workstations: Active "+ data[1]["wrksNB"] + " / Inactive " + data[0]["wrksNB"]);
+                    $("#qs4").text("Workstations: Active "+ data[1]["wrksNB"] + " | Inactive " + data[0]["wrksNB"]);
+
                 }  
             },
             error: function(xhr, status, errorThrown) 
@@ -135,7 +136,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    $("#qs5").text("Warehouses: Active "+ data[1]["whrNB"] + " / Inactive " + data[0]["whrNB"]);
+                    $("#qs5").text("Warehouses: Active "+ data[1]["whrNB"] + " | Inactive " + data[0]["whrNB"]);
                 }  
             },
             error: function(xhr, status, errorThrown) 

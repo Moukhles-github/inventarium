@@ -235,6 +235,7 @@ $(document).ready(function () {
 
     function displayEmployees(data)
     {
+      
         if(data == 0)
             {
                 $('.tbody_users').children().remove();
@@ -242,8 +243,12 @@ $(document).ready(function () {
             }
         else
             {
+                
+        
                 $.each(data, function(index, row){
-                    $("#tbody_company").append("<tr><td>" + row.cmp_name + "</td><td>" + row.cmp_address + "</td><td>" + row.cmp_subsidiary + "</td><td>" + check_status(row.cmp_status) + "</td><td><button id='updt" + row.cmp_id + "'  class='btn_modal_editcmp btn btn-primary' style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editcmpmodal'>Edit</button><button value='" + row.cmp_status + "' id='tog" + row.cmp_id + "' class='btn btn-primary btntoggleact' style='margin-right: 4px;'> Toggle </button></td><</tr>");
+                
+
+                    $("#tbody_company").append("<tr><td>" + row.cmp_name + "</td><td>" + row.cmp_address + "</td><td>" + row.cmp_subsidiary + "</td><td>" + check_status(row.cmp_status) + "</td><td><button id='updt" + row.cmp_id + "'  class='btn_modal_editcmp btn btn-primary' style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editcmpmodal'><i class='fas fa-edit'></i></button><button value='" + row.cmp_status + "' id='tog" + row.cmp_id + "' class='btn btn-primary btntoggleact' style='margin-right: 4px;'> Toggle </button></td><</tr>");
                 });
 				
 				

@@ -159,7 +159,7 @@ class employees
 		{
 			//create sql query
             $sqlQuery = "INSERT INTO employee (emp_id, emp_ssn, emp_cmp_id, emp_name, emp_lname, emp_ph_nb, emp_address, emp_join_date, emp_wrkst_id, emp_rank_id, emp_fouls, emp_rfid, emp_status) ";
-			$sqlQuery .= " VALUES (NULL, '$empSSN', $empCompany, '$empName', '$empLname', '$empPnum', '$empAddress', '".date("Y-m-d")."', $empWorkstation, $empRank, $empFouls, $empRFID, 1)";
+			$sqlQuery .= " VALUES (NULL, '$empSSN', $empCompany, '$empName', '$empLname', '$empPnum', '$empAddress', '".date("Y-m-d")."', $empWorkstation, $empRank, $empFouls, '$empRFID', 1)";
 			//execute and put result in a variable
 			$data = $this->db->ExecuteidQuery($sqlQuery);
 			
@@ -178,7 +178,7 @@ class employees
 		try
 		{	
 			//create sql query
-            $sqlQuery = "UPDATE employee SET emp_ssn='$empSSN', emp_cmp_id=$empCompany, emp_name = '$empName', emp_lname = '$empLname', emp_ph_nb = '$empPnum', emp_address = '$empAddress', emp_wrkst_id = $empWorkstation, emp_rank_id = $empRank, emp_fouls = $empFouls, emp_rfid = $empRFID WHERE emp_id=$empID";
+            $sqlQuery = "UPDATE employee SET emp_ssn='$empSSN', emp_cmp_id=$empCompany, emp_name = '$empName', emp_lname = '$empLname', emp_ph_nb = '$empPnum', emp_address = '$empAddress', emp_wrkst_id = $empWorkstation, emp_rank_id = $empRank, emp_fouls = $empFouls, emp_rfid = '$empRFID' WHERE emp_id=$empID";
 			//execute and put result in a variable
 			$data = $this->db->ExecuteidQuery($sqlQuery);
 			
