@@ -66,7 +66,7 @@ require_once ("security.php");
 
         <!-- Button trigger modal -->
         <button id="btn_modal_cusers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-            Create Employee
+            Create Employee <i id="crt_sign" class="fas fa-plus-square"></i>
         </button>
         
         <button id="btn_rank_page" type="button" class="btn btn-primary" data-toggle="modal">
@@ -190,7 +190,7 @@ require_once ("security.php");
             <div style="float: left; height: 74px; margin-left: 20px">
             	<div class='form-group' >
 					 <div class="form-group">
-					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;"><i class="fas fa-search"></i></button>
 						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
 					</div>
            		</div>
@@ -203,12 +203,7 @@ require_once ("security.php");
          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Create/Edit employee</h5>
-                        <button type="button" id="modalXbutt" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    
                     <div class="modal-body">
 						<h4 id="editadd">Add</h4>
                         <label>Social Security Number:</label>
@@ -233,12 +228,15 @@ require_once ("security.php");
 						<input type="text" id="emp_rfid" ></input></br>
 						<input type="number" hidden="" id="emp_id">
 						<input type="number" hidden="" id="editaddval">
+						<p id="wrongmsg">Fill All Fields!</p>
 						
 
 
 
                     </div>
                     <div class="modal-footer">
+					<i id="success" class="fas fa-check-circle"></i>
+                   		<i id="wrong" class="fas fa-times-circle"></i>
                         <button type="button" id="close_add_form"  class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button id="btn_create_emp" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>
                     </div>

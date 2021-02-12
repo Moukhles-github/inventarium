@@ -168,10 +168,11 @@ tr{
 tr:nth-child(even) {
   background: #f6f7f9;
 }
+
 .table>tbody>tr>td
 {
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: medium;
+  font-size: 15px;
   border-right: #3f6184 !important;
   vertical-align: 0px !important;
   color: #363636
@@ -183,6 +184,13 @@ tr:nth-child(even) {
   font-size: medium;
   float: right ;
   margin-right: 75px !important;
+}
+
+#btn_rank_page
+{
+  font-size: medium;
+  float: right ;
+  margin-right: 20px;
 }
 
 #crt_sign
@@ -234,4 +242,75 @@ tr:nth-child(even) {
   border: none;
   border-bottom: 2px solid #3f6184;
 }
+
+#showbystatus 
+{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin: 5px;
+  padding: 5px;
+  width: 60%;
+  border: none;
+  border-bottom: 2px solid #3f6184;
+}
+
+.form-control
+{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin: 5px;
+  padding: 5px;
+  width: 60%;
+  border: none;
+  border-bottom: 2px solid #3f6184 !important;
+}
+
+#searchbutton
+{
+margin-top: 32px !important;
+}
+
+#clearfilters
+{
+  margin-top: 32px !important;
+}
+
+#btn_modal_cusers
+{
+  font-size: medium;
+  float: right ;
+  margin-right: 75px !important;
+}
+
+.modal-content p
+{
+  font-size: large;
+}
+
+
+.modal-footer #wrong
+{
+  color: red; 
+  /* font-size: medium; */
+  margin-right: 150px;
+  text-align: center; 
+   display: none;
+}
+
+.modal-footer #success{
+  color: green;
+  /* font-size: medium; */
+  margin-right: 150px;
+  /* text-align: center; */
+  display: none;
+}
+
+.modal-content #wrongmsg {
+  margin-top: 10px;
+  font-size: 15px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: red;
+  text-align: center ;
+  margin-bottom: 5px !important;
+display: none;
+}
+
 
