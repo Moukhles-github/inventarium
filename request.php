@@ -13,6 +13,8 @@ require_once ("security.php");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Requests</title>
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
     <link rel="stylesheet" href="css/request.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -175,7 +177,7 @@ require_once ("security.php");
             <div style="float: left; height: 74px; margin-left: 20px">
             	<div class='form-group' >
 					 <div class="form-group">
-					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;"><i class="fas fa-search"></i></button>
 						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
 					</div>
            		</div>
@@ -184,16 +186,11 @@ require_once ("security.php");
         </div>
 
 
-        <!-- edit users Modal -->
-        <div class="modal fade" id="rqstinfomodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
+        <!-- more info request modal  -->
+       <div class="modal fade" id="rqstinfomodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="requestmodalLongTitle">Request</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+			
                     <div class="modal-body">
                      <ul id="rqstinfoul"></ul>
                      
@@ -201,7 +198,7 @@ require_once ("security.php");
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<!--                        <button id="btn_edit_user" type="button" class="btn btn-primary">Edit User</button>-->
+
                     </div>
                 </div>
             </div>

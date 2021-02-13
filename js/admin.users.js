@@ -34,7 +34,7 @@ $(document).ready(function () {
 		//return $("#sortorder").val();
 		var sortOrderId = $(".sortlisthidden").attr('id');
 		var sortOrder = sortOrderId.substring(4);
-		
+
 		return sortOrder;
 	}
 
@@ -237,35 +237,31 @@ $(document).ready(function () {
 	$("#sortorder").change(function () {
 		window.location.replace("users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
 	});
-	
+
 	///////////////////////////////////////////dortint header///////////////////////////
-	$("#usernamesortheader").click(function(){
+	$("#usernamesortheader").click(function () {
 		var sortorder = $(this).attr('value');
 
-		if(sortorder == 1)
-			{
-				window.location.replace("users.php?key=" + wsKeyword() + "&sort=1" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
-			}
-		else
-			{
-				window.location.replace("users.php?key=" + wsKeyword() + "&sort=2" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
-			}
+		if (sortorder == 1) {
+			window.location.replace("users.php?key=" + wsKeyword() + "&sort=1" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		}
+		else {
+			window.location.replace("users.php?key=" + wsKeyword() + "&sort=2" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		}
 	});
-	
-	$("#namesortheader").click(function(){
+
+	$("#namesortheader").click(function () {
 		var sortorder = $(this).attr('value');
-		if(sortorder == 1)
-			{
-				window.location.replace("users.php?key=" + wsKeyword() + "&sort=3" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
-			}
-		else
-			{
-				window.location.replace("users.php?key=" + wsKeyword() + "&sort=4" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
-			}
+		if (sortorder == 1) {
+			window.location.replace("users.php?key=" + wsKeyword() + "&sort=3" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		}
+		else {
+			window.location.replace("users.php?key=" + wsKeyword() + "&sort=4" + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
+		}
 	});
-	
-	
-	
+
+
+
 
 	$("#showbystatus").change(function () {
 		window.location.replace("users.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&rank=" + wsRank() + "&page=1");
@@ -417,9 +413,14 @@ $(document).ready(function () {
 		var npwd = $("#confirm_password").val();
 		if (fieldval(u_emp_id, username, cpwd, npwd, cusers_type) && checkpwd(cpwd, npwd)) {
 
+
+
 			create_user(u_emp_id, username, cpwd, cusers_type);
 		}
-		else alert("error");
+		else {
+			$(".modal-content #wrongmsg").show();
+			$(".modal-footer #wrong").show();
+		}
 
 	})
 
@@ -446,8 +447,9 @@ $(document).ready(function () {
 				//		  		 $("#loadingImg").hide();				  
 
 				if (data != -1) {
-					alert("Successful");
-					window.location.reload();
+
+					$(".modal-footer #success").show()
+					setTimeout(function () { window.location.reload() }, 1000);
 				}
 				else {
 					data = JSON.parse(xhr.responseText);
@@ -461,7 +463,7 @@ $(document).ready(function () {
 		});
 	}
 
-	//Populate drop down employee
+	//CREATE USERS 
 
 	$(document).on("click", "#btn_modal_cusers", function () {
 		$("#emp_id").empty();
@@ -473,6 +475,8 @@ $(document).ready(function () {
 		popUsertype();
 		$("#cuser_type").val("");
 		$("#cuser_emp_id").val("");
+		$(".modal-content #wrongmsg").hide();
+			$(".modal-footer #wrong").hide();
 	});
 
 	$("#user_type").change(function () {
@@ -595,6 +599,8 @@ $(document).ready(function () {
 		var act_type = $(this).parent().siblings().eq(2);
 		$("#updt_user_type_tb").val(act_type.attr('id'));
 		edpopUsertype(act_type)
+		$(".modal-content #wrongmsg").hide();
+			$(".modal-footer #wrong").hide();
 	})
 	//Populate drop down user types
 	function edpopUsertype(user_act_type) {
@@ -649,60 +655,56 @@ $(document).ready(function () {
 		var u_name = $("#updt_usrname").val();
 
 		var u_type = $("#updt_user_type_tb").val();
-// alert("ss");
-		if (updt_fieldval(u_name, u_type))
-		{
+		// alert("ss");
+		if (updt_fieldval(u_name, u_type)) {
 			update_user(u_id, u_name, u_type)
 		}
-		else 
-		{
-			alert ("error");
+		else {
+			$(".modal-content #wrongmsg").show();
+			$(".modal-footer #wrong").show();
 		}
 	})
-	
-	function updt_fieldval (username, usertype)
-	{
-		if (username == "" || usertype == "")
-		{
-			return false; 
+
+	function updt_fieldval(username, usertype) {
+		if (username == "" || usertype == "") {
+			return false;
 		}
 
 		else {
-			return true; 
+			return true;
 		}
 
 	}
-	function update_user(user_id, username, usertype)
-{
-	$.ajax({
-		type: 'GET',
-		url: window.serverURL + "ws_users.php",
-		data: ({
-			op: 4, 
-			user_id: user_id,
-			user_name : username, 
-			user_type : usertype
-		}),
+	function update_user(user_id, username, usertype) {
+		$.ajax({
+			type: 'GET',
+			url: window.serverURL + "ws_users.php",
+			data: ({
+				op: 4,
+				user_id: user_id,
+				user_name: username,
+				user_type: usertype
+			}),
 
-		dataType: 'json',
-		timeout: 5000,
-		success: function (data, textStatus, xhr) {
+			dataType: 'json',
+			timeout: 5000,
+			success: function (data, textStatus, xhr) {
 
 
-			if (data != 0)
-				alert("No results");
+				if (data != 0)
+					alert("No results");
 
-			else {
-				data = JSON.parse(xhr.responseText);
-				// parseedUsertype(data, utypeact_id, utypeact_text);
-				window.location.reload();
-				
+				else {
+					$(".modal-footer #success").show()
+                    data = JSON.parse(xhr.responseText);
+                    setTimeout(function(){window.location.reload()}, 1000);
+
+				}
+			},
+			error: function (xhr, status, errorThrown) {
+
+				alert(status + errorThrown);
 			}
-		},
-		error: function (xhr, status, errorThrown) {
-
-			alert(status + errorThrown);
-		}
-	});
-}
+		});
+	}
 });

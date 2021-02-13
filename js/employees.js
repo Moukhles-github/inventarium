@@ -353,7 +353,7 @@ $(document).ready(function(){
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_users").append('<tr><td>'+row.emp_ssn+'</td><td value="'+row.emp_cmp_id+'">'+row.cmp_name+'</td><td>'+row.emp_name+'</td><td>'+row.emp_lname+'</td><td>'+row.emp_ph_nb+'</td><td class="emp_address_td">'+row.emp_address+'</td><td>'+row.emp_join_date+'</td><td value="'+row.emp_wrkst_id+'">'+row.wrkst_name+'</td><td value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</td><td>'+row.emp_fouls+'</td><td>'+row.emp_rfid+'</td><td value="'+row.emp_status+'">'+convertStatusToText(row.emp_status)+'</td><td id="emp'+row.emp_id+'"><button type="button"  style="margin-right: 4px;" class="btn btn-primary btn_edit_employee" data-toggle="modal" data-target="#exampleModalCenter">Edit</button><button class="btn btn-primary btn_toogle_active">Toggle</button></td></tr>');
+                    $("#tbody_users").append('<tr><td>'+row.emp_ssn+'</td><td value="'+row.emp_cmp_id+'">'+row.cmp_name+'</td><td>'+row.emp_name+'</td><td>'+row.emp_lname+'</td><td>'+row.emp_ph_nb+'</td><td class="emp_address_td">'+row.emp_address+'</td><td>'+row.emp_join_date+'</td><td value="'+row.emp_wrkst_id+'">'+row.wrkst_name+'</td><td value="'+row.emp_rank_id+'">'+row.emp_rank_name+'</td><td>'+row.emp_fouls+'</td><td>'+row.emp_rfid+'</td><td value="'+row.emp_status+'">'+convertStatusToText(row.emp_status)+'</td><td id="emp'+row.emp_id+'"><button type="button"  style="margin-right: 4px;" class="btn btn-primary btn_edit_employee" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button><button class="btn btn-primary btn_toogle_active">Toggle</button></td></tr>');
                 });
             }
 		
@@ -496,13 +496,13 @@ $(document).ready(function(){
 	
 	
 	$(document).on("click", "#btn_modal_cusers", function(){
-		$("#editadd").text("Add");
+		$("#editadd").text("Add Employee");
 		$("#editaddval").val(1);
 	});
 	
 	$(document).on("click", ".btn_edit_employee", function(){
 
-		$("#editadd").text("Edit");
+		$("#editadd").text("Edit Employee");
 		
 		var empSSN = $(this).parent().siblings().eq(0).text();
 		var empCompany = $(this).parent().siblings().eq(1).attr("value");
@@ -550,7 +550,8 @@ $(document).ready(function(){
 		
 		if(empSSN == "" || empCompany == "" || empName == "" || empLname == "" || empNumber == "" || empAddress == "" || empWorkstation == "" || empRank == "" || empFouls == "" || empRFID == "")
 			{
-				alert("Please Complete all fields");
+				$(".modal-footer #wrong").show();
+                $(".modal-content p").show();
 				return;
 			}
 		
@@ -607,7 +608,8 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    location.reload();
+                    $("#success").show();
+                    setTimeout(function(){location.reload()}, 1000);
                 }  
             },
             error: function(xhr, status, errorThrown) 
@@ -635,7 +637,8 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    location.reload();
+                    $("#success").show();
+                    setTimeout(function(){location.reload()}, 1000);
                 }  
             },
             error: function(xhr, status, errorThrown) 

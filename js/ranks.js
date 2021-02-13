@@ -244,7 +244,7 @@ $(document).ready(function () {
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_ranks").append("<tr><td>" + row.emp_rank_name + "</td><td>" + check_status(row.emp_rank_status) + "</td><td><button id='updt" + row.emp_rank_id + "'  class='btn_modal_editrank btn btn-primary' type='button' data-toggle='modal' data-target='#editrankmodal'>Edit Rank</button><button style='margin-left: 4px;' value='" + row.emp_rank_status + "' id='tog" + row.emp_rank_id + "' class='btntoggleact btn btn-primary'>Toggle Status </button></td><</tr>");
+                    $("#tbody_ranks").append("<tr><td>" + row.emp_rank_name + "</td><td>" + check_status(row.emp_rank_status) + "</td><td><button id='updt" + row.emp_rank_id + "'  class='btn_modal_editrank btn btn-primary' type='button' data-toggle='modal' data-target='#editrankmodal'><i class='fas fa-edit'></i></button><button style='margin-left: 4px;' value='" + row.emp_rank_status + "' id='tog" + row.emp_rank_id + "' class='btntoggleact btn btn-primary'>Toggle</button></td><</tr>");
                 });
             }
 		
@@ -358,7 +358,7 @@ $(document).ready(function () {
                 else
                     btn_status_text = "Disable";
 
-                $("#tbody_ranks").append("<tr><td>" + row.emp_rank_name + "</td><td>" + sscheck_status(row.emp_rank_status) + "</td><td><button id='updt" + row.emp_rank_id + "'  class='btn_modal_editrank btn btn-primary' type='button' data-toggle='modal' data-target='#editrankmodal'>Edit Rank</button><button value='" + row.emp_rank_status + "' id='tog" + row.emp_rank_id + "' class='btntoggleact'> " + btn_status_text + " </button></td><</tr>");
+                $("#tbody_ranks").append("<tr><td>" + row.emp_rank_name + "</td><td>" + sscheck_status(row.emp_rank_status) + "</td><td><button id='updt" + row.emp_rank_id + "'  class='btn_modal_editrank btn btn-primary' type='button' data-toggle='modal' data-target='#editrankmodal'><i class='fas fa-edit'></i></button><button value='" + row.emp_rank_status + "' id='tog" + row.emp_rank_id + "' class='btntoggleact'> " + btn_status_text + " </button></td><</tr>");
 
             });
 

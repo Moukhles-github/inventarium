@@ -263,11 +263,11 @@ $(document).ready(function () {
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_rqst").append("<tr><td>" + row.rqst_id + "</td><td> " + row.user_name + "</td><td> " + row.item_label + " </td><td>" + row.wrkst_name + "</td><td>" + row.rqst_date + " </td><td>" + check_status(row.rqst_status) + "</td><td><button id='info" + row.rqst_id + "'  class='btn_modal_inforqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#rqstinfomodal'>More info</button></td></tr>");
+                    $("#tbody_rqst").append("<tr><td>" + row.rqst_id + "</td><td> " + row.user_name + "</td><td> " + row.item_label + " </td><td>" + row.wrkst_name + "</td><td>" + row.rqst_date + " </td><td>" + check_status(row.rqst_status) + "</td><td><button id='info" + row.rqst_id + "'  class='btn_modal_inforqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#rqstinfomodal'><i class='fas fa-info-circle'></i></button></td></tr>");
                 });
             }
 		
-		getCompanies();
+		
     }
 	
 	function convertStatusToText(status)
@@ -333,62 +333,14 @@ $(document).ready(function () {
 
     //get category function
     // Populate Tables function to get users and specific data. 
-    function getrqst() {
-        $.ajax({
-            type: 'GET',
-            url: "ws/ws_request.php",
-            data: ({ op: 1 }),
-
-            dataType: 'json',
-            timeout: 5000,
-            success: function (data, textStatus, xhr) {
-
-                if (data == -1)
-                    alert("Data couldn't be loaded!");
-                else {
-                    data = JSON.parse(xhr.responseText);
-                    populaterqst(data);
-                }
-            },
-            error: function (xhr, status, errorThrown) {
-                alert(status + errorThrown);
-            }
-        });
-
-    }
-
-
-    // function to insert data got by getusers(), to append it to a table. 
-    function populaterqst(data) {
-
-        if (data.length > 0) {
-
-            $("#tbody_rqst").empty();
-
-
-
-            $.each(data, function (index, row) {
-
-                var btn_status_text = "";
-
-                if (row.rqst_status == 0) {
-
-                    btn_status_text = "Enable";
-                }
-                else
-                    btn_status_text = "Disable";
-
-                $("#tbody_rqst").append("<tr><td>" + row.rqst_id + "</td><td> " + row.user_name + "</td><td> " + row.item_label + " </td><td>" + row.wrkst_name + "</td><td>" + row.rqst_date + " </td><td>" + check_status(row.rqst_status) + "</td><td><button id='info" + row.rqst_id + "'  class='btn_modal_inforqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#rqstinfomodal'>More info</button></td></tr>");
-
-            });
-
-        }
-
-    }
-
+   
     //Check status to deactivate or activate users
     function check_status(statusval) {
         switch (statusval) {
+            case '-1':
+                {
+                    return "Cancelled";
+                }
             case '0':
                 {
                     return "Waiting";
@@ -396,21 +348,21 @@ $(document).ready(function () {
 
             case '1':
                 {
-                    return "accepted";
+                    return "Accepted";
                 }
 
             case '2':
                 {
-                    return "handled";
+                    return "Handled";
                 }
 
             case '3':
                 {
-                    return "returned";
+                    return "Returned";
                 }
 
             default:
-                return "error";
+                return "Error";
 
         }
     }
@@ -447,7 +399,7 @@ $(document).ready(function () {
 
             $.each(data, function (index, row) {
 
-                $("#rqstinfoul").append("<li>"+ row.rqst_id +"</li><li>"+ row.emp_name +" "+ row.emp_lname +"</li><li>"+ row.item_label +"</li><li>"+ row.wrkst_name +"</li><li>"+ row.whs_label +"</li><li>"+ row.rqst_date +"</li><li>"+ check_status(row.rqst_status) +"</li><li>"+ resval(row.rqst_res) +"</li><li>"+ retval(row.rqst_ret) +"</li><li>"+ accval(row.rqst_res, row.rqst_acc_date) +"</li><li>"+ hndlval(row.rqst_handled_date) +"</li><li>"+ dndval(row.rqst_denied_date) +"</li><li>"+ retdateval(row.rqst_ret, row.rqst_returned_date) +"</li>");
+                $("#rqstinfoul").append("<label>Request Number:</label><p>#"+ row.rqst_id +"</p><label>Employee Requesting: </label><p>"+ row.emp_name +" "+ row.emp_lname +"</p><label>Item Label</label><p>"+ row.item_label +"</p><label>Warehouse:</label><p>"+ row.whs_label +"</p><label>Facility:</label><p>"+ row.wrkst_name +"</p><label>Date Requested:</label><p>"+ row.rqst_date +"</p><label>Current Request Status:</label><p>"+ check_status(row.rqst_status) +"</p><label> Properties</label><p>"+ resval(row.rqst_res) +"</p><p>"+ retval(row.rqst_ret) +"</p><label>Accepted Date</label><p>"+ accval(row.rqst_res, row.rqst_acc_date) +"</p><label>Handled Date</label><p>"+ hndlval(row.rqst_handled_date) +"</p><label>Denied Date</label><p>"+ dndval(row.rqst_denied_date) +"</p><label>Returned Date</label><p>"+ retdateval(row.rqst_ret, row.rqst_returned_date) +"</p>");
 
             });
 
@@ -489,6 +441,10 @@ $(document).ready(function () {
         else if (val == 0) {
             return "No Reservation Needed";
         }
+        else if (val == 1 )
+        {
+            return "Accepted & Returned"
+        }
         else {
             return accdate;
         }
@@ -520,7 +476,7 @@ $(document).ready(function () {
             return "-"
         }
         else {
-            return val;
+            return retval;
         }
 
     }

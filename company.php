@@ -142,7 +142,7 @@ require_once("security.php");
             <div style="float: left; height: 74px; margin-left: 20px">
                 <div class='form-group'>
                     <div class="form-group">
-                        <button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+                        <button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;"><i class="fas fa-search"></i></button>
                         <button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
                     </div>
                 </div>
@@ -166,11 +166,16 @@ require_once("security.php");
                         <label>Company Subsidiary:</label>
                         <input type="text" id="crt_cmp_sbusidiary" placeholder="e.g. Michael"></input></br>
 
-
+                        <p id="wrongmsg">Fill All Fields!</p>
+                        
                     </div>
                     <div class="modal-footer">
+                    
+                    <i id="success" class="fas fa-check-circle"></i>
+                    <i id="wrong" class="fas fa-times-circle"></i>
+                    
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_create_cmp" type="button" class="btn btn-primary">Create</button>
+                        <button id="btn_create_cmp" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>
                     </div>
                 </div>
             </div>
@@ -195,10 +200,13 @@ require_once("security.php");
 
                         <input type="text" hidden="" id="updt_cmp_id" placeholder="cmp_id">
 
+                        <p id="wrongmsg">Fill All Fields!</p>
                     </div>
                     <div class="modal-footer">
+                    <i id="success" class="fas fa-check-circle"></i>
+                    <i id="wrong" class="fas fa-times-circle"></i>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_edit_cmp" type="button" class="btn btn-primary">Edit User</button>
+                        <button id="btn_edit_cmp" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>
                     </div>
                 </div>
             </div>

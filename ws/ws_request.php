@@ -168,9 +168,13 @@ try {
 					$result = $request->getSearchedResquestsForManager($key, $_GET["sort"], $_GET["show"], $_GET["sdate"], $_GET["edate"], $_GET["page"], $_GET["mgrID"]);
 				}
 				break;
+			case 25: 
+					{
+						$result=$request->getemphndrt($_GET["emp_id"]);
+					}
+					break;
 				
-				
-			case 25: {
+			case 26: {
 					//count all items for admin 
 					//GET items for admin
 					//check if keyword exist
@@ -182,7 +186,7 @@ try {
 					$result = $request->CountSearchedResquestsForOperator($key, $_GET["sort"], $_GET["show"], $_GET["oprid"]);
 				}
 				break;
-			case 26: {
+			case 27: {
 					//get all items for admin 
 					//GET items for admin
 					//check if keyword exist
@@ -194,6 +198,8 @@ try {
 					$result = $request->getSearchedResquestsForOperator($key, $_GET["sort"], $_GET["show"], $_GET["page"], $_GET["oprid"]);
 				}
 				break;
+
+			
 			default:
 				return 0;
 				break;

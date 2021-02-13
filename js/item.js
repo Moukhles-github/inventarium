@@ -375,7 +375,7 @@ $("#emp_ranks").click(function(){
                 else
                     btn_status_text = "Disable";
                 //item name                     //item label                   //item reservation                               //item warehouse                                 //item returnable                                       //item lifespan                    //item date                                 //item status                                           //item update                                                                                                                                       //item toggle status
-                $("#tbody_item").append("<tr><td>" + row.item_name + "</td><td>" + row.item_label + "</td ><td id='" + row.item_type_id + "'>"+ row.item_type_name +"</td></td><td id='" + row.item_reserve + "'> " + item_re(row.item_reserve) + " </td><td id='" + row.item_whs_id + "'>" + row.whs_label + "</td><td id='" + row.item_returnable + "'>" + item_re(row.item_returnable) + "</td><td id='"+ row.item_lifespan +"'>" + row.item_lifespan + " </td><td> " + row.item_entry_date + "</td><td id='" + row.item_status + "'>" + check_status(row.item_status) + "</td><td><button   style='margin-right: 4px;' id='updt" + row.item_id + "'  class='btn_modal_editwhs btn btn-primary' type='button' data-toggle='modal' data-target='#editwhousemodal'>Edit Item</button><button value='" + row.item_status + "' id='tog" + row.item_id + "' class='btntoggleact btn btn-primary'> " + btn_status_text + " </button></tr>");
+                $("#tbody_item").append("<tr><td>" + row.item_name + "</td><td>" + row.item_label + "</td ><td id='" + row.item_type_id + "'>"+ row.item_type_name +"</td></td><td id='" + row.item_reserve + "'> " + item_re(row.item_reserve) + " </td><td id='" + row.item_whs_id + "'>" + row.whs_label + "</td><td id='" + row.item_returnable + "'>" + item_re(row.item_returnable) + "</td><td id='"+ row.item_lifespan +"'>" + row.item_lifespan + " </td><td> " + row.item_entry_date + "</td><td id='" + row.item_status + "'>" + check_status(row.item_status) + "</td><td><button   style='margin-right: 4px;' id='updt" + row.item_id + "'  class='btn_modal_editwhs btn btn-primary' type='button' data-toggle='modal' data-target='#editwhousemodal'><i class='fas fa-edit'></i></button><button value='" + row.item_status + "' id='tog" + row.item_id + "' class='btntoggleact btn btn-primary'> " + btn_status_text + " </button></tr>");
 
             });
 
@@ -829,11 +829,13 @@ $("#emp_ranks").click(function(){
             success: function (data, textStatus, xhr) {
                 //		  		 $("#loadingImg").hide();				  
 
-                if (data == 0)
-                   window.location.reload();
+                if (data == 0){
+                $(".modal-footer #success").show();
+                setTimeout(function(){window.location.reload()}, 1000);
+            }
                 else {
                     data = JSON.parse(xhr.responseText);
-                    alert("no data");
+                   
                 }
             
             },

@@ -243,7 +243,7 @@ $(document).ready(function () {
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_whouse").append("<tr><td>" + row.whs_label + "</td><td id='" + row.whs_mgr_id + "'>" + row.emp_name + " " + row.emp_lname + "</td><td>" + row.whs_address + "<td> " + row.whs_date + "</td><td>" + check_status(row.whs_status) + "</td><td><button id='updt" + row.whs_id + "'  class='btn_modal_editwhs btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editwhousemodal'>Edit</button><button value='" + row.whs_status + "' id='tog" + row.whs_id + "'  style='margin-right: 4px;' class='btntoggleact btn btn-primary'> Toggle </button><button style='margin-right: 4px;' id='item"+ row.whs_id+"' class='itembtn btn btn-primary'> Items </button></td><</tr>");
+                    $("#tbody_whouse").append("<tr><td>" + row.whs_label + "</td><td id='" + row.whs_mgr_id + "'>" + row.emp_name + " " + row.emp_lname + "</td><td>" + row.whs_address + "<td> " + row.whs_date + "</td><td>" + check_status(row.whs_status) + "</td><td><button id='updt" + row.whs_id + "'  class='btn_modal_editwhs btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editwhousemodal'><i class='fas fa-edit'></i></button><button style='margin-right: 4px;' id='item"+ row.whs_id+"' class='itembtn btn btn-primary'> <i class='fas fa-tools'></i></button><button value='" + row.whs_status + "' id='tog" + row.whs_id + "'  style='margin-right: 4px;' class='btntoggleact btn btn-primary'> Toggle </button></td></tr>");
                 });
 				
 				
@@ -303,62 +303,9 @@ $(document).ready(function () {
         window.location.replace("warehouse.php?key=" + wsKeyword() + "&sort=" + wsOrder() + "&show=" + wsShowOrders() + "&page=1");
     });
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //get category function
-    // Populate Tables function to get users and specific data. 
-    function getcmp() {
-        $.ajax({
-            type: 'GET',
-            url: "ws/ws_company.php",
-            data: ({ op: 1 }),
-
-            dataType: 'json',
-            timeout: 5000,
-            success: function (data, textStatus, xhr) {
-
-                if (data == -1)
-                    alert("Data couldn't be loaded!");
-                else {
-                    data = JSON.parse(xhr.responseText);
-                    populatecmp(data);
-                }
-            },
-            error: function (xhr, status, errorThrown) {
-                alert(status + errorThrown);
-            }
-        });
-
-    }
-
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // function to insert data got by getusers(), to append it to a table. 
-    function populatecmp(data) {
-
-        if (data.length > 0) {
-
-            $("#tbody_company").empty();
-
-
-
-            $.each(data, function (index, row) {
-
-                var btn_status_text = "";
-
-                if (row.cmp_status == 0) {
-
-                    btn_status_text = "Enable";
-                }
-                else
-                    btn_status_text = "Disable";
-
-                $("#tbody_company").append("<tr><td>" + row.cmp_name + "</td><td>" + row.cmp_address + "</td><td>" + row.cmp_subsidiary + "</td><td>" + check_status(row.cmp_status) + "</td><td><button id='updt" + row.cmp_id + "'  class='btn_modal_editcmp' type='button' class='btn btn-primary' data-toggle='modal' data-target='#editcmpmodal'>Edit Warehouse</button><button value='" + row.cmp_status + "' id='tog" + row.cmp_id + "' class='btntoggleact'> " + btn_status_text + " </button></td><</tr>");
-
-            });
-
-        }
-
-    }
 
     //get category function
     // Populate Tables function to get users and specific data. 
@@ -407,7 +354,7 @@ $(document).ready(function () {
                 else
                     btn_status_text = "Disable";
 
-                $("#tbody_whouse").append("<tr><td>" + row.whs_label + "</td><td id='" + row.whs_mgr_id + "'>" + row.emp_name + " " + row.emp_lname + "</td><td>" + row.whs_address + "<td> " + row.whs_date + "</td><td>" + check_status(row.whs_status) + "</td><td><button id='updt" + row.whs_id + "'  class='btn_modal_editwhs btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editwhousemodal'>Edit User</button><button value='" + row.whs_status + "' id='tog" + row.whs_id + "'  style='margin-right: 4px;' class='btntoggleact btn btn-primary'> toggle </button><button style='margin-right: 4px;' id='item"+ row.whs_id+"' class='itembtn btn btn-primary'> items </button></td><</tr>");
+                $("#tbody_whouse").append("<tr><td>" + row.whs_label + "</td><td id='" + row.whs_mgr_id + "'>" + row.emp_name + " " + row.emp_lname + "</td><td>" + row.whs_address + "<td> " + row.whs_date + "</td><td>" + check_status(row.whs_status) + "</td><td><button id='updt" + row.whs_id + "'  class='btn_modal_editwhs btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editwhousemodal'><i class='fas fa-edit'></i></button><button value='" + row.whs_status + "' id='tog" + row.whs_id + "'  style='margin-right: 4px;' class='btntoggleact btn btn-primary'> toggle </button><button style='margin-right: 4px;' id='item"+ row.whs_id+"' class='itembtn btn btn-primary'> <i class='fas fa-tools'></i> </button></td><</tr>");
 
             });
 
@@ -496,6 +443,8 @@ $(document).ready(function () {
         $("#crt_whouse_mgr").empty();
         $("#crt_whs_mgr_id").val("");
         getwhsmgr();
+        $(".modal-content #wrongmsg").hide();
+        $(".modal-footer #wrong").hide();
         
     })
 
@@ -552,7 +501,8 @@ $(document).ready(function () {
             createwhs(whsname, whsmgr, whsaddress);
         }
         else {
-            alert("error")
+            $(".modal-content #wrongmsg").show();
+			$(".modal-footer #wrong").show();
         }
 
     })
@@ -578,8 +528,10 @@ $(document).ready(function () {
                     alert("No results");
 
                 else {
+                    
+					$(".modal-footer #success").show()
                     data = JSON.parse(xhr.responseText);
-                    window.location.reload();
+                    setTimeout(function(){window.location.reload()}, 1000);
                 }
             },
             error: function (xhr, status, errorThrown) {
@@ -611,6 +563,8 @@ $(document).ready(function () {
         $("#edt_whs_mgr_id").val(whs_mgr.attr('id'));
         $("#edt_whs_id").val(whs_id);
         getwhsmgred();
+        $(".modal-content #wrongmsg").hide();
+        $(".modal-footer #wrong").hide();
 
     })
 
@@ -676,7 +630,8 @@ $(document).ready(function () {
             updatewhs(whsid, whslabel, whsmgr, whsaddress);
         }
         else 
-        alert("error");
+        $(".modal-content #wrongmsg").show();
+        $(".modal-footer #wrong").show();
 
     })
 
@@ -701,8 +656,9 @@ $(document).ready(function () {
                 if (data == 0)
                    window.location.reload();
                 else {
+                    $(".modal-footer #success").show()
                     data = JSON.parse(xhr.responseText);
-                    alert("no data");
+                    setTimeout(function(){window.location.reload()}, 1000);
                 }
             },
             error: function (xhr, status, errorThrown) {
