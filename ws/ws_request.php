@@ -168,6 +168,32 @@ try {
 					$result = $request->getSearchedResquestsForManager($key, $_GET["sort"], $_GET["show"], $_GET["sdate"], $_GET["edate"], $_GET["page"], $_GET["mgrID"]);
 				}
 				break;
+				
+				
+			case 25: {
+					//count all items for admin 
+					//GET items for admin
+					//check if keyword exist
+					if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+						$key = NULL;
+					} else {
+						$key = $_GET["key"];
+					}
+					$result = $request->CountSearchedResquestsForOperator($key, $_GET["sort"], $_GET["show"], $_GET["oprid"]);
+				}
+				break;
+			case 26: {
+					//get all items for admin 
+					//GET items for admin
+					//check if keyword exist
+					if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
+						$key = NULL;
+					} else {
+						$key = $_GET["key"];
+					}
+					$result = $request->getSearchedResquestsForOperator($key, $_GET["sort"], $_GET["show"], $_GET["page"], $_GET["oprid"]);
+				}
+				break;
 			default:
 				return 0;
 				break;

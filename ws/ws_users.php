@@ -138,6 +138,23 @@ try {
 			case 14:
 				$result = $user->getManagerWithMostRequests();
 			break;
+				case 15: {
+					$result = $user->getLogin($_GET["uname"], $_GET["upwd"]);
+
+					if (is_array($result)) {
+						session_start();
+
+						//store id, uname, type in session, so it can be accessible in any php file
+						$_SESSION[ "uid" ] = $result[ "user_id" ];
+						$_SESSION[ "uname" ] = $result[ "user_name" ];
+						$_SESSION[ "utype" ] = $result[ "user_type" ];
+						sleep(2);
+
+						//store the type in result so to return it
+					}
+				}
+
+				break;
 				
 			default:
 				return 0;

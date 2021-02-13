@@ -208,6 +208,57 @@ class request
 			throw $e;
 		}
 	}
+	
+	
+	public function getSearchedResquestsForOperator($key, $sort, $show, $page, $oprID)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT request.rqst_id, user.user_name, item.item_name, item.item_label, request.rqst_status, request.rqst_date FROM request INNER JOIN item on request.rqst_item_id = item.item_id " . $this->ShowStatus($show);
+
+			if (!is_null($key)) {
+				$sqlQuery .= " AND (item.item_name LIKE '%" . $key . "%' OR request.rqst_id = '" . $key . "')";
+			}
+			
+			$sqlQuery .= " AND WHERE request.rqst_user_id = ".$oprID;
+
+			$offset = ($page - 1) * $this->itemsPerPage;
+
+			$sqlQuery .= " " . $this->orderStatus($sort) . " LIMIT " . $this->itemsPerPage . " OFFSET " . $offset;
+			
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sqlQuery);
+
+			//return the values
+			return ($result);
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	public function CountSearchedResquestsForOperator($key, $sort, $show, $oprID)
+	{
+		try {
+			//create sql query
+			$sqlQuery = "SELECT COUNT(*) FROM request INNER JOIN item on request.rqst_item_id = item.item_id " . $this->ShowStatus($show);
+
+			if (!is_null($key)) {
+				$sqlQuery .= " AND (item.item_name LIKE '%" . $key . "%' OR request.rqst_id = '" . $key . "')";
+			}
+			
+			$sqlQuery .= " AND WHERE request.rqst_user_id = ".$oprID;
+
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+
+			//return the values
+			return ceil($data[0]["COUNT(*)"] / $this->itemsPerPage);
+		}
+		//catch the execption and throw it back to the ws
+		catch (Exception $e) {
+			throw $e;
+		}
+	}
 
 	//set option
 	private function ShowStatus($status)
