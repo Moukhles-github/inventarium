@@ -216,7 +216,7 @@ class employees
 		try
 		{
 			//create sql query
-            $sqlQuery = "SELECT employee.emp_id, employee.emp_name, employee.emp_lname, company.cmp_name, workstation.wrkst_name, employee_rank.emp_rank_name FROM employee INNER JOIN company ON employee.emp_cmp_id = company.cmp_id INNER JOIN workstation ON employee.emp_wrkst_id = workstation.wrkst_id INNER JOIN employee_rank ON employee.emp_rank_id = employee_rank.emp_rank_id WHERE employee.emp_rfid = '$rfid'";
+            $sqlQuery = "SELECT employee.emp_id, employee.emp_name, employee.emp_lname, company.cmp_name, workstation.wrkst_id, workstation.wrkst_name, employee_rank.emp_rank_name FROM employee INNER JOIN company ON employee.emp_cmp_id = company.cmp_id INNER JOIN workstation ON employee.emp_wrkst_id = workstation.wrkst_id INNER JOIN employee_rank ON employee.emp_rank_id = employee_rank.emp_rank_id WHERE employee.emp_rfid = '$rfid'";
 			//execute and put result in a variable
 			$data = $this->db->getData($sqlQuery);
 			

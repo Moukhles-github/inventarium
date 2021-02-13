@@ -14,9 +14,8 @@ require_once("security.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Request</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/mgr.rqst.css">
-    <link rel="stylesheet" href="css/request.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -54,12 +53,12 @@ require_once("security.php");
         </div>
     </nav>
     <nav class="navbar-primary">
-        <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+       
         <ul class="navbar-primary-menu">
             <li>
-                <a href="whsmgr.dash.php"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
-                <a href="whsmgr.rqst.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
-                <a href="whsmgr.warehouse.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">My Warehouse</span></a>
+                <a href="whsmgr.dash.php"><i class="fas fa-chart-line"></i><span class="nav-label"> Dashboard</span></a>
+                <a href="whsmgr.rqst.php"><i class="fab fa-buffer"></i><span class="nav-label"> Requests</span></a>
+                <a href="whsmgr.warehouse.php"><i class="fas fa-warehouse"></i><span class="nav-label"> My Warehouse</span></a>
 
 
             </li>
@@ -74,49 +73,44 @@ require_once("security.php");
         <button type="button" id='exprqst' class='btn_modal_exprqst btn btn-primary' type='button' style='margin-right: 4px;' data-toggle='modal' data-target='#exprqstmodal'>Express Request</button>
 
         <?php
-			
-			//get initial values
-			$sort = "1";
-			$show = "0";
-			$rank = "-1";
-			$workstation = "-1";
-            $keyy = "";
-			//check if sort order is set
-			if(isset($_GET["sort"]) && ($_GET["sort"] != ""))
-			{
-				$sort = $_GET["sort"];
-            }
-            
-			//check if show option is set
-			if(isset($_GET["show"]) && ($_GET["show"] != ""))
-			{
-				$show = $_GET["show"];
-            }
-		
-			//initial date values
-			$startdate = "";
-			$enddate = "";
 
-			//check if start date is set
-			if(isset($_GET["sdate"]) && ($_GET["sdate"] != ""))
-			{
-				$startdate = $_GET["sdate"];
-			}
-			//check if end date is set
-			if(isset($_GET["edate"]) && ($_GET["edate"] != ""))
-			{
-				$enddate = $_GET["edate"];
-			}
+        //get initial values
+        $sort = "1";
+        $show = "0";
+        $rank = "-1";
+        $workstation = "-1";
+        $keyy = "";
+        //check if sort order is set
+        if (isset($_GET["sort"]) && ($_GET["sort"] != "")) {
+            $sort = $_GET["sort"];
+        }
 
-                        
-			//check if workstation option is set
-			if(isset($_GET["key"]) && ($_GET["key"] != ""))
-			{
-				$keyy = $_GET["key"];
-            }
+        //check if show option is set
+        if (isset($_GET["show"]) && ($_GET["show"] != "")) {
+            $show = $_GET["show"];
+        }
 
-			//create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
-			echo('<input type="hidden" class="sortlisthidden" id="sort'.$sort.'"><input type="hidden" class="showlisthidden" id="show'.$show.'"><input type="hidden" class="rankhidden" id="rank'.$rank.'"><input type="hidden" class="workstationlisthidden" id="workstation'.$workstation.'">');
+        //initial date values
+        $startdate = "";
+        $enddate = "";
+
+        //check if start date is set
+        if (isset($_GET["sdate"]) && ($_GET["sdate"] != "")) {
+            $startdate = $_GET["sdate"];
+        }
+        //check if end date is set
+        if (isset($_GET["edate"]) && ($_GET["edate"] != "")) {
+            $enddate = $_GET["edate"];
+        }
+
+
+        //check if workstation option is set
+        if (isset($_GET["key"]) && ($_GET["key"] != "")) {
+            $keyy = $_GET["key"];
+        }
+
+        //create 2 hidden inputs to hold the selected order because the selected value cannot be set directly from the pphp function
+        echo ('<input type="hidden" class="sortlisthidden" id="sort' . $sort . '"><input type="hidden" class="showlisthidden" id="show' . $show . '"><input type="hidden" class="rankhidden" id="rank' . $rank . '"><input type="hidden" class="workstationlisthidden" id="workstation' . $workstation . '">');
 
         ?>
 
@@ -124,7 +118,7 @@ require_once("security.php");
             <div style="float: left">
                 <div class='form-group'>
                     <div class="form-group">
-<!--
+                        <!--
                         <label for="order" style='margin-right: 10px'>Sort By:</label>
                         <select class="form-control" id="sortorder" style='width: 180px; margin-right: 20px;'>
                             <option value="1">UserName Asc</option>
@@ -154,62 +148,155 @@ require_once("security.php");
 
 
             <div style="float: left">
-				<div class='form-group' >
-					<div class="form-group" style="width: 200px;">
-					  <label for="order" style='margin-right: 10px'>Search:</label>
-					  
-						<input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"></input>
-						         		
-            		</div>
-            		
-            	</div>
+                <div class='form-group'>
+                    <div class="form-group" style="width: 200px;">
+                        <label for="order" style='margin-right: 10px'>Search:</label>
+
+                        <input type="text" class="searchbar form-control" placeholder="Search.." value="<?php echo $keyy ?>"></input>
+
+                    </div>
+
+                </div>
             </div>
-            
+
             <div style="float: left; margin-left: 20px">
-				<div class='form-group' style="float: left; margin-right: 5px;">
-					<label for="order" style='margin-right: 10px'>From:</label>		
-					<?php
-						echo('<input class="form-control datepicker" type="date" id="startdate" value="'.$startdate.'">');
-					?>
-				</div>
-				<div class='form-group' style="float: left">
-					<label for="order" style='margin-right: 10px'>To:</label>
-					<?php
-						echo('<input class="form-control datepicker" type="date" id="enddate" value="'.$enddate.'">');
-					?>
-				</div>
-			</div>
-            
+                <div class='form-group' style="float: left; margin-right: 5px;">
+                    <label for="order" style='margin-right: 10px'>From:</label>
+                    <?php
+                    echo ('<input class="form-control datepicker" type="date" id="startdate" value="' . $startdate . '">');
+                    ?>
+                </div>
+                <div class='form-group' style="float: left">
+                    <label for="order" style='margin-right: 10px'>To:</label>
+                    <?php
+                    echo ('<input class="form-control datepicker" type="date" id="enddate" value="' . $enddate . '">');
+                    ?>
+                </div>
+            </div>
+
             <div style="float: left; height: 74px; margin-left: 20px">
-            	<div class='form-group' >
-					 <div class="form-group">
-					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
-						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
-					</div>
-           		</div>
-			</div>
-       
+                <div class='form-group'>
+                    <div class="form-group">
+                        <button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;"><i class="fas fa-search"></i></button>
+                        <button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- express request!!      express request           express request -->
+        
+        
+        <div class="modal fade" id="exprqstmodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                   
+                    <div class="modal-body">
+                    <p>Express Request</p>
+                        <label>Item type</label>
+                        <select id='crt_exp_itemtype'></select></br>
+
+                        <label>Item</label>
+                        <Select id='crt_exp_item'><option selected disabled style="color:crimson !important"> Select an item type first! </option></Select></br>
+                        <label> Employee ID</label>
+                        <input type="text" class="emp_rfid"></input><button id="getemp"><i class="fas fa-money-check"></i></button></br>
+
+                        <ul id='empinfo'></ul>
+                     
+                        </br> 
+
+
+                        
+                        <input type="text" id="exp_item" placeholder="item_id" style="display:none" ></input>
+                        <input type="text" id="exp_fields" placeholder="fields" style="display:none"></input>
+                        <input type="text" id="exp_ret" placeholder="returnable" style="display:none"></input>
+                   
+
+
+                        
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button id='close_exp_form' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_exp_rqst" type="button" class="btn btn-primary">Create Request</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
+
+
+<!-- Handle Modal -->
+        <div class="modal fade" id="handlemodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                   
+                    <div class="modal-body">
+                    <p>Handle Item</p></br>
+                        
+                        <label> Employee ID</label>
+                        <input type="text" class="emp_rfid"></input><button id="hndgetemp"><i class="fas fa-money-check"></i></button></br>
+
+                        <ul id='hndempinfo'></ul>
+                     
+                    </div>
+                    <div class="modal-footer">
+                        <button id='close_exp_form' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_exp_rqst" type="button" class="btn btn-primary">Create Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!-- return modal -->
+        <div class="modal fade" id="returnmodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                   
+                    <div class="modal-body">
+                    <p>Handle Item</p></br>
+                        
+                        <label> Employee ID</label>
+                        <input type="text" class="emp_rfid"></input><button id="hndgetemp"><i class="fas fa-money-check"></i></button></br>
+
+                        <ul id='hndempinfo'></ul>
+                     
+                    </div>
+                    <div class="modal-footer">
+                        <button id='close_exp_form' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_exp_rqst" type="button" class="btn btn-primary">Create Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- /////////////////////////////////////////////////////////////////////////// -->
 
         <!-- edit users Modal -->
         <div class="modal fade" id="rqstinfomodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="requestmodalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    
                     <div class="modal-body">
-                     <ul id="rqstinfoul"></ul>
-                     
+                    <p>Request Detailed Information</p>
+                        <ul id="rqstinfoul"></ul>
 
+
+                        
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_edit_user" type="button" class="btn btn-primary">Edit User</button>
+                        
                     </div>
                 </div>
             </div>
@@ -224,21 +311,16 @@ require_once("security.php");
                     <th scope="col">User</th>
                     <th scope="col">item</th>
                     <th scope="col">Facility</th>
-                    <th  value="
-                    <?php 
-					if($sort == 1)
-					{
-						echo 0;
-					}
-					else if ($sort == 2)
-					{
-						echo 1;
-					}
-					else
-					{
-						echo 1;
-					}
-					?>
+                    <th value="
+                    <?php
+                    if ($sort == 1) {
+                        echo 0;
+                    } else if ($sort == 2) {
+                        echo 1;
+                    } else {
+                        echo 1;
+                    }
+                    ?>
                     " id="datesortheader" scope="col">Date<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 4px;" src="media/Images/arrows.png"></th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>

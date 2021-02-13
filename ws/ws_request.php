@@ -168,6 +168,13 @@ try {
 					$result = $request->getSearchedResquestsForManager($key, $_GET["sort"], $_GET["show"], $_GET["sdate"], $_GET["edate"], $_GET["page"], $_GET["mgrID"]);
 				}
 				break;
+
+			case 25: 
+				{
+					$result=$request->getemphndrt($_GET["emp_id"]);
+
+				}
+				break;
 			default:
 				return 0;
 				break;

@@ -15,7 +15,8 @@ require_once ("security.php");
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pyramid Login</title>
 
-  <link rel="stylesheet" href="css/mgr.rqst.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./css/mgr.items.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -49,12 +50,11 @@ require_once ("security.php");
     </div>
   </nav>
   <nav class="navbar-primary">
-    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
     <ul class="navbar-primary-menu">
       <li>
-      <a href="whsmgr.dash.php"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
-        <a href="whsmgr.rqst.php"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Requests</span></a>
-        <a href="whsmgr.warehouse.php"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">My Warehouse</span></a>
+      <a href="whsmgr.dash.php"><i class="fas fa-chart-line"></i><span class="nav-label">  Dashboard</span></a>
+				<a href="whsmgr.rqst.php"><i class="fab fa-buffer"></i><span class="nav-label">  Requests</span></a>
+				<a href="whsmgr.warehouse.php"><i class="fas fa-warehouse"></i><span class="nav-label">  My Warehouse</span></a>
         
     
       </li>
@@ -154,7 +154,7 @@ require_once ("security.php");
             <div style="float: left; height: 74px; margin-left: 20px">
             	<div class='form-group' >
 					 <div class="form-group">
-					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Search</button>
+					 	<button id="searchbutton" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;"><i class="fas fa-search"></i></button>
 						<button id="clearfilters" class="btn btn-primary" style="height: 30px; margin-top: 26px; width:auto;">Clear</button>
 					</div>
            		</div>
@@ -201,11 +201,11 @@ require_once ("security.php");
                     " id="labelsortheader" scope="col">Label<img style="height: 12px; width: 10px; float: left; margin-top: 4px; margin-right: 5px;" src="media/Images/arrows.png"></th>
                     <th scope="col">type</th>
                     <th scope="col">reservation</th>
-                    <th scope="col">warehouse</th>
                     <th scope="col">returnable</th>
                     <th scope="col">lifespan</th>
                     <th scope="col">entry date</th>
                     <th scope="col">status</th>
+                    <th scope="col">actions</th>
                 </tr>
             </thead>
             <tbody id="tbody_mgr_whs">

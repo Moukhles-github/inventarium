@@ -74,6 +74,21 @@ class request
 		}
 	}
 
+	public function getemphndrt($emp_id)
+	{
+		$sql="SELECT employee.emp_name, employee.emp_lname FROM employee WHERE employee.emp_id = $emp_id";
+		try {
+
+			//execute and put result in a variable
+			$result = $this->db->getData($sql);
+
+			//return the values
+			return ($result);
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+
 
 
 	/////////////////////////////////////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
