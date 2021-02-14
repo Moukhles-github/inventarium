@@ -155,6 +155,12 @@ try {
 				}
 
 				break;
+				case 16: {
+					$result = $user->getFullOperatorInfo($_GET["oprid"]);
+					}
+				
+
+				break;
 				
 			default:
 				return 0;
