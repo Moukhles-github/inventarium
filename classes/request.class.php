@@ -333,6 +333,21 @@ class request
 				throw $e;
 			}
 	}
+	
+	public function placeRequest($rqst_user, $rqst_item, $rqst_wrkst, $rqst_ret, $rqst_emp)
+	{	 
+			$sql="INSERT INTO `request` (`rqst_id`, `rqst_user_id`, `rqst_item_id`, `rqst_wrkst_id`, `rqst_res`, `rqst_ret`, `rqst_status`, `rqst_date`, `rqst_acc_date`, `rqst_handled_date`, `rqst_denied_date`, `rqst_returned_date`, `rqst_handler_id`, `rqst_returner_id`) VALUES (NULL, '$rqst_user', '$rqst_item', '$rqst_wrkst', '0', '$rqst_ret', '0', CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, NULL, NULL, $rqst_emp, NULL)";
+			try {
+
+				//execute and put result in a variable
+				$result = $this->db->ExecuteQuery($sql);
+	
+				//return the values
+				return ($result);
+			} catch (Exception $e) {
+				throw $e;
+			}
+	}
 
 
 
