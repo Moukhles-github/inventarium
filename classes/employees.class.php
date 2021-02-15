@@ -230,6 +230,25 @@ class employees
 		}
 	}
 	
+	public function getWorkstationEmployees($wrksid)
+	{
+		try
+		{
+			//create sql query
+            $sqlQuery = "SELECT employee.emp_id, employee.emp_name FROM employee WHERE employee.emp_wrkst_id = '$wrksid'";
+			//execute and put result in a variable
+			$data = $this->db->getData($sqlQuery);
+			
+			//return the values
+			return $data;
+		}
+		//catch the execption and throw it back to the ws
+		catch(Exception $e)
+		{
+			throw $e;
+		}
+	}
+	
 	public function countEmployeesForStats()
 	{
 		try

@@ -423,7 +423,7 @@ class users
 		try
 		{
 			//create sql query
-            $sqlQuery = "SELECT user.user_name AS userName, employee.emp_ssn AS SSN, employee.emp_name AS firstName, employee.emp_lname AS lastName, employee.emp_ph_nb AS phoneNumber, employee.emp_address AS address, employee.emp_join_date AS joinDate, workstation.wrkst_name AS workstationName, employee.emp_fouls AS fouls, employee.emp_rfid AS RFID, company.cmp_name AS companyName FROM user, employee, company, workstation WHERE user.user_emp_id = employee.emp_id AND company.cmp_id = employee.emp_cmp_id AND employee.emp_wrkst_id = workstation.wrkst_id AND user.user_id = ".$id;
+            $sqlQuery = "SELECT user.user_name AS userName, employee.emp_ssn AS SSN, employee.emp_name AS firstName, employee.emp_lname AS lastName, employee.emp_ph_nb AS phoneNumber, employee.emp_address AS address, employee.emp_join_date AS joinDate, workstation.wrkst_name AS workstationName, workstation.wrkst_id AS workstationID, employee.emp_fouls AS fouls, employee.emp_rfid AS RFID, company.cmp_name AS companyName FROM user, employee, company, workstation WHERE user.user_emp_id = employee.emp_id AND company.cmp_id = employee.emp_cmp_id AND employee.emp_wrkst_id = workstation.wrkst_id AND user.user_id = ".$id;
 			
 			//execute and put result in a variable
 			$result = $this->db->getData($sqlQuery);

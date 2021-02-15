@@ -112,6 +112,10 @@ try {
                     $result = $item->getSearchedItemsByManager($key, $_GET["sort"], $_GET["show"], $_GET["type"], $_GET["mgrid"],  $_GET["page"] );
                 }
                 break;
+			case 15: {
+                    $result = $item->getItems();
+                }
+                break;
 			default:
 				return 0;
 				break;

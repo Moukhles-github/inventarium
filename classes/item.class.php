@@ -35,6 +35,19 @@ class item
         }
     }
 
+    public function getitems()
+    {
+        $sql = "SELECT item.item_id, item.item_name FROM item";
+
+        try {
+            $result = $this->db->getData($sql);
+
+            return ($result);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
     public function toggleitem($itemid, $liveval)
     {
         $sql = "UPDATE `item` SET `item_status` = '$liveval' WHERE `item`.`item_id` = $itemid;"; 

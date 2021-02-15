@@ -89,6 +89,10 @@ try {
                 $result = $employees->countEmployeesPerYear();
             }
             break;
+            case 11: {
+                $result = $employees->getWorkstationEmployees($_GET["wrksid"]);
+            }
+            break;
 			default:
 				return 0;
 				break;
