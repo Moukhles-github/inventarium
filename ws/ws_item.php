@@ -113,7 +113,7 @@ try {
                 }
                 break;
 			case 15: {
-                    $result = $item->getItems();
+                    $result = $item->getItems($_GET["typeID"]);
                 }
                 break;
 			default:

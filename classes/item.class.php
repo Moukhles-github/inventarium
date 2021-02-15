@@ -35,9 +35,9 @@ class item
         }
     }
 
-    public function getitems()
+    public function getitems($typeID)
     {
-        $sql = "SELECT item.item_id, item.item_name FROM item";
+        $sql = "SELECT item.item_id, item.item_name FROM item WHERE item.item_type_id=".$typeID;
 
         try {
             $result = $this->db->getData($sql);
