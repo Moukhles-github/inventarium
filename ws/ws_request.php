@@ -1,20 +1,5 @@
 <?php
 
-//this web service can handle 7 types of requets based on a parameter op
-/*
-	 op=1 (login)
-	 op=2 (check if username)
-	 op=3 (add user) 
-	 op=4 (update user)
-	 op=5 (deactivate user)
-	 op=6 (logout)
-	 op=7 (get users)
-	 op=8 (update user)
-	 op=9 (get active users)
-	 op=10 (get type 1 users)
-	 op=11(get type 2 users)
-	 
-*/
 
 header('Access-Control-Allow-Origin: *');
 require_once('../classes/request.class.php');
@@ -47,9 +32,8 @@ try {
 				}
 				break;
 			case 5: {
-					//count all items for admin 
-					//GET items for admin
-					//check if keyword exist
+
+
 					if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
 						$key = NULL;
 					} else {
@@ -59,8 +43,6 @@ try {
 				}
 				break;
 			case 6: {
-					//get all items for admin 
-					//GET items for admin
 					//check if keyword exist
 					if ((!isset($_GET["key"])) || ($_GET["key"] == "")) {
 						$key = NULL;
@@ -107,43 +89,42 @@ try {
 				}
 				break;
 
-			case 16:
-				{
+			case 16: {
 					$result = $request->expresrqst($_GET["user_id"], $_GET["rqst_item"], $_GET["wrkst_id"], $_GET["ret"], $_GET["rqst_emp"]);
-				}	
+				}
 				break;
-				
+
 			case 17: {
 					$result = $request->countHandledRequestsByWarehoue($_GET["mgr_id"]);
 				}
 				break;
-				
+
 			case 18: {
 					$result = $request->countHandledRequestsByWorkstation($_GET["mgr_id"]);
 				}
 				break;
-				
+
 			case 19: {
 					$result = $request->getDailyRequestsAVGByWarehouse($_GET["mgr_id"]);
 				}
 				break;
-				
+
 			case 20: {
 					$result = $request->getMonthlyApprovedRequestsAVGByWarehouse($_GET["mgr_id"]);
 				}
 				break;
-				
+
 			case 21: {
 					$result = $request->getMonthlyDeniedRequestsAVGByWarehouse($_GET["mgr_id"]);
 				}
 				break;
-				
+
 			case 22: {
 					$result = $request->getMonthlyRequestsByWorkstation($_GET["mgr_id"]);
 				}
 				break;
-				
-				
+
+
 			case 23: {
 					//count all items for admin 
 					//GET items for admin
@@ -168,12 +149,11 @@ try {
 					$result = $request->getSearchedResquestsForManager($key, $_GET["sort"], $_GET["show"], $_GET["sdate"], $_GET["edate"], $_GET["page"], $_GET["mgrID"]);
 				}
 				break;
-			case 25: 
-					{
-						$result=$request->getemphndrt($_GET["emp_id"]);
-					}
-					break;
-				
+			case 25: {
+					$result = $request->getemphndrt($_GET["emp_id"]);
+				}
+				break;
+
 			case 26: {
 					//count all items for admin 
 					//GET items for admin
@@ -199,7 +179,7 @@ try {
 				}
 				break;
 
-			
+
 			default:
 				return 0;
 				break;

@@ -107,7 +107,7 @@ class users
 	function getusers()
 	{
 
-		$sql = "SELECT user_id, user_name, user_status, employee.emp_name, user_type_id, user_type.user_type_name FROM `user`, `employee`, user_type where user.user_emp_id = employee.emp_id and user.user_type = user_type.user_type_id";
+		$sql = "SELECT user_id, user_name, user_status, employee.emp_name, user_type_id, user_type.user_type_name FROM user INNER JOIN employee ON user.user_emp_id = employee.emp_id INNER JOIN user_type ON user_type.user_type_id = user.user_type WHERE user.user_type != 0";
 
 		try {
 			$data = $this->db->getData($sql);
@@ -176,6 +176,20 @@ class users
 		} catch (Exception $e) {
 			throw $e;
 		}
+	}
+	// reset user password 
+	public function resetpwd($newpwd, $userid)
+	{
+			try {
+				$hashedPass = password_hash($newpwd, PASSWORD_DEFAULT);
+				$sql = "UPDATE user SET user_pwd = '$hashedPass' WHERE user.user_id = $userid";
+	
+				$result = $this->db->ExecuteQuery($sql);
+	
+				return $result;
+			} catch (Exception $e) {
+				throw $e;
+			}
 	}
 
 	//deactivate user
@@ -275,7 +289,7 @@ class users
 		try
 		{
 			//create sql query
-            $sqlQuery = "SELECT user_id, user_name, user_status, employee.emp_name, user_type_id, user_type.user_type_name FROM `user`, `employee`, user_type WHERE user.user_emp_id = employee.emp_id AND user.user_type = user_type.user_type_id".$this->ShowStatus($show);
+            $sqlQuery = "SELECT user_id, user_name, user_status, employee.emp_name, user_type_id, user_type.user_type_name FROM user INNER JOIN employee ON user.user_emp_id = employee.emp_id INNER JOIN user_type ON user_type.user_type_id = user.user_type WHERE user.user_type != 0".$this->ShowStatus($show);
 
             if($rank != -1)
 			{

@@ -334,7 +334,7 @@ $(document).ready(function () {
 				else
 					btn_status_text = "Disable";
 
-				$("#tbody_users").append("<tr><td>" + row.user_name + "</td><td>" + row.emp_name + "</td><td id='" + row.user_type_id + "'>" + row.user_type_name + "</td><td>" + check_status(row.user_status) + "</td><td><button id='updt" + row.user_id + "'  class='btn_modal_edituser btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editusermodal'><i class='fas fa-edit'></i></button><button value='" + row.user_status + "' id='tog" + row.user_id + "' class='btntoggleact btn btn-primary'> " + btn_status_text + " </button></td></tr>");
+				$("#tbody_users").append("<tr><td>" + row.user_name + "</td><td>" + row.emp_name + "</td><td id='" + row.user_type_id + "'>" + row.user_type_name + "</td><td>" + check_status(row.user_status) + "</td><td><button id='updt" + row.user_id + "'  class='btn_modal_edituser btn btn-primary'  style='margin-right: 4px;' type='button' data-toggle='modal' data-target='#editusermodal'><i class='fas fa-edit'></i></button><button value='" + row.user_status + "' id='tog" + row.user_id + "' class='btntoggleact btn btn-primary'> " + btn_status_text + " </button><button id='res" + row.user_id + "' style='margin-left: 5px !important;' type='button' class='btn_reset_pwd btn btn-primary' data-toggle='modal' data-target='#resetpwd'>Reset Pass</button></td></tr>");
 
 			});
 
@@ -476,7 +476,7 @@ $(document).ready(function () {
 		$("#cuser_type").val("");
 		$("#cuser_emp_id").val("");
 		$(".modal-content #wrongmsg").hide();
-			$(".modal-footer #wrong").hide();
+		$(".modal-footer #wrong").hide();
 	});
 
 	$("#user_type").change(function () {
@@ -600,7 +600,7 @@ $(document).ready(function () {
 		$("#updt_user_type_tb").val(act_type.attr('id'));
 		edpopUsertype(act_type)
 		$(".modal-content #wrongmsg").hide();
-			$(".modal-footer #wrong").hide();
+		$(".modal-footer #wrong").hide();
 	})
 	//Populate drop down user types
 	function edpopUsertype(user_act_type) {
@@ -696,8 +696,85 @@ $(document).ready(function () {
 
 				else {
 					$(".modal-footer #success").show()
-                    data = JSON.parse(xhr.responseText);
-                    setTimeout(function(){window.location.reload()}, 1000);
+					data = JSON.parse(xhr.responseText);
+					setTimeout(function () { window.location.reload() }, 1000);
+
+				}
+			},
+			error: function (xhr, status, errorThrown) {
+
+				alert(status + errorThrown);
+			}
+		});
+	}
+
+
+	////// Reset Users password 
+	$(document).on("click", ".btn_reset_pwd", function () {
+		$("#cnfresetpwd").val("");
+		$("#rstpwd").val("");
+		$(".modal-content #notmatch").hide();
+		$(".modal-content #wrongmsg").hide();
+		$(".modal-footer #wrong").hide();
+		var userid = $(this).attr('id');
+		var usrid = userid.substr(3, userid.length);
+		$("#rstuserid").val(usrid);
+
+	})
+
+	$("#btn_reset_pwd").click(function () {
+		$(".modal-content #notmatch").hide();
+		$(".modal-content #wrongmsg").hide();
+		$(".modal-footer #wrong").hide();
+		var userid = $("#rstuserid").val();
+		var pass = $("#rstpwd").val();
+		var cnfpass = $("#cnfresetpwd").val();
+
+		if (pass != "" || cnfpass != "") {
+
+			if (pass == cnfpass) {
+				reset_pwd(userid, pass);
+
+			}
+			else {
+				$(".modal-content #notmatch").show();
+
+			}
+		}
+		else {
+			$(".modal-content #wrongmsg").show();
+			$(".modal-footer #wrong").show();
+		}
+
+	})
+
+
+
+
+	function reset_pwd(usrid, pwd) {
+		$.ajax({
+			type: 'GET',
+			url: "./ws/ws_users.php",
+			data: ({
+				op: 16,
+				pwd: pwd,
+				user_id: usrid
+
+			}),
+
+			dataType: 'json',
+			timeout: 5000,
+			success: function (data, textStatus, xhr) {
+
+
+				if (data != 0)
+					alert("No results");
+
+				else {
+					$(".modal-footer #success").show()
+					data = JSON.parse(xhr.responseText);
+
+					setTimeout(function () { window.location.reload() }, 1000);
 
 				}
 			},

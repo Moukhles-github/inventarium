@@ -70,7 +70,7 @@ require_once("security.php");
         <h1> My Requests</h1>
         <input type="text" hidden="" id="rqstmgrid" value="<?php echo $_SESSION['uid'] ?>"></input>
 
-        <button type="button" id='exprqst' class='btn_modal_exprqst btn btn-primary' type='button' style='margin-right: 4px;' data-toggle='modal' data-target='#exprqstmodal'>Express Request</button>
+        <button type="button" id='exprqst' class='btn_modal_exprqst btn btn-primary' type='button' style='margin-right: 4px;' data-toggle='modal' data-target='#exprqstmodal'>Express Request <i class="fas fa-fast-forward"></i>   </button>
 
         <?php
 
@@ -137,6 +137,7 @@ require_once("security.php");
                         <label for="order" style='margin-right: 10px'>Show Requests:</label>
                         <select class="form-control" id="showbystatus" style='width: 180px; margin-right: 20px;'>
                             <option value="0">All</option>
+                            <option value="-1">Cancelled</option>
                             <option value="1">Waiting</option>
                             <option value="2">Accepted</option>
                             <option value="3">Handled</option>
@@ -199,9 +200,9 @@ require_once("security.php");
                         <label>Item</label>
                         <Select id='crt_exp_item'><option selected disabled style="color:crimson !important"> Select an item type first! </option></Select></br>
                         <label> Employee ID</label>
-                        <input type="text" class="emp_rfid"></input><button id="getemp"><i class="fas fa-money-check"></i></button></br>
+                        <input type="text" class="emp_rfid"></input><button class="getemp"><i class="fas fa-money-check"></i></button></br>
 
-                        <ul id='empinfo'></ul>
+                        <ul class='empinfo'></ul>
                      
                         </br> 
 
@@ -213,14 +214,16 @@ require_once("security.php");
                    
 
 
-                        
+                        <p id="wrongmsg">Fill All Fields!</p>
 
 
                         
                     </div>
                     <div class="modal-footer">
+                    <i id="success" class="fas fa-check-circle"></i>
+                    <i id="wrong" class="fas fa-times-circle"></i>
                         <button id='close_exp_form' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_exp_rqst" type="button" class="btn btn-primary">Create Request</button>
+                        <button id="btn_exp_rqst" type="button" class="btn btn-primary">Express it!</button>
                     </div>
                 </div>
             </div>
@@ -229,7 +232,7 @@ require_once("security.php");
 
 
 <!-- Handle Modal -->
-        <div class="modal fade" id="handlemodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
+        <div class="modal fade" id="handlemodal" tabindex="" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                    
@@ -237,14 +240,17 @@ require_once("security.php");
                     <p>Handle Item</p></br>
                         
                         <label> Employee ID</label>
-                        <input type="text" class="emp_rfid"></input><button id="hndgetemp"><i class="fas fa-money-check"></i></button></br>
+                        <input type="text" class="emp_rfid"></input><button class="getemp"><i class="fas fa-money-check"></i></button></br>
+                        <input type="text" id='hndrqstid' hidden></input>
 
-                        <ul id='hndempinfo'></ul>
-                     
+                        <ul class='empinfo'></ul>
+                        <p id="wrongmsg">Fill All Fields!</p>
                     </div>
                     <div class="modal-footer">
-                        <button id='close_exp_form' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_exp_rqst" type="button" class="btn btn-primary">Create Request</button>
+                    <i id="success" class="fas fa-check-circle"></i>
+                    <i id="wrong" class="fas fa-times-circle"></i>
+                        <button id='close_hnd_close' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_hnd_rqst" type="button" class="btn btn-primary">Handle Item</button>
                     </div>
                 </div>
             </div>
@@ -256,18 +262,21 @@ require_once("security.php");
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                    
-                    <div class="modal-body">
-                    <p>Handle Item</p></br>
+                <div class="modal-body">
+                    <p>Return Item</p></br>
                         
                         <label> Employee ID</label>
-                        <input type="text" class="emp_rfid"></input><button id="hndgetemp"><i class="fas fa-money-check"></i></button></br>
+                        <input type="text" class="emp_rfid"></input><button class="getemp"><i class="fas fa-money-check"></i></button></br>
+                        <input type="text" id='rtrqstid' hidden></input>
 
-                        <ul id='hndempinfo'></ul>
-                     
+                        <ul class='empinfo'></ul>
+                        <p id="wrongmsg">Fill All Fields!</p>
                     </div>
                     <div class="modal-footer">
-                        <button id='close_exp_form' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_exp_rqst" type="button" class="btn btn-primary">Create Request</button>
+                    <i id="success" class="fas fa-check-circle"></i>
+                    <i id="wrong" class="fas fa-times-circle"></i>
+                        <button id='close_rt_form' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_rt_rqst" type="button" class="btn btn-primary">Create Request</button>
                     </div>
                 </div>
             </div>
@@ -281,7 +290,7 @@ require_once("security.php");
 
         <!-- /////////////////////////////////////////////////////////////////////////// -->
 
-        <!-- edit users Modal -->
+        
         <div class="modal fade" id="rqstinfomodal" tabindex="-1" role="dialog" aria-labelledby="rqstinfomodalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -291,9 +300,13 @@ require_once("security.php");
                         <ul id="rqstinfoul"></ul>
 
 
-                        
-                        
+                        <button type='button' class='btn btn-primary' id='btnaccept'>Accept</button>
+                        <button id='btncancel' type='button' class='btn btn-primary'>Cancel</button>
+                        <button type='button' id='hndrqstbtn' class='btn_modal_exprqst btn btn-primary' style='margin-right: 4px;' data-toggle='modal' data-target='#handlemodal'>handle</button>
+                        <button type='button' id='returnbtn' class='btn_modal_exprqst btn btn-primary'  data-toggle='modal' data-target='#returnmodal'>Return</button>
+                        <p id="wrongmsg">Fill All Fields!</p>
                     </div>
+                            
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         

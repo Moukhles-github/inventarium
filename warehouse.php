@@ -208,9 +208,9 @@ require_once("security.php");
                         <label for="warehouse_address"> Warehouse location: </label>
                         <input type="text" id="edt_whouse_address" placeholder="any location"></input></br>
 
-                        <input type="text" hidden="" id="edt_whs_id" placeholder="whs_id"></input></br>
+                        <input type="text" hidden id="edt_whs_id" placeholder="whs_id"></input></br>
 
-                        <input type="text" hidden="" id="edt_whs_mgr_id" placeholder="mgr_id"></input></br>
+                        <input type="text"  hidden id="edt_whs_mgr_id" placeholder="mgr_id"></input></br>
                         <p id="wrongmsg">Fill All Fields!</p>
                     </div>
                     <div class="modal-footer">

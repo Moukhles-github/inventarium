@@ -284,5 +284,50 @@ margin-top: 32px !important;
   font-size: medium;
 }
 
+#handlemodal, #returnmodal{
+  z-index: 10000000000000000 !important;
+   
+}
+
+#handlemodal .modal-content, #returnmodal .modal-content
+{
+  margin-top: 45%;
+}
+.modal.in {
+  background-color: rgba(0,0,0,0.5);
+}
 
 
+
+.modal-content p
+{
+  font-size: large;
+}
+
+
+.modal-footer #wrong
+{
+  color: red; 
+  /* font-size: medium; */
+  margin-right: 150px;
+  text-align: center; 
+   display: none;
+}
+
+.modal-footer #success{
+  color: green;
+  /* font-size: medium; */
+  margin-right: 150px;
+  /* text-align: center; */
+  display: none;
+}
+
+.modal-content #wrongmsg {
+  margin-top: 10px;
+  font-size: 15px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: red;
+  text-align: center ;
+  margin-bottom: 5px !important;
+display: none;
+}

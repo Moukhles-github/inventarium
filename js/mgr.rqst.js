@@ -220,7 +220,7 @@ $(document).ready(function () {
         }
         else {
             $.each(data, function (index, row) {
-                $("#tbody_rqst").append("<tr><td>" + row.rqst_id + "</td><td> " + row.user_name + "</td><td> " + row.item_label + " </td><td>" + row.wrkst_name + "</td><td>" + row.rqst_date + " </td><td>" + check_status(row.rqst_status) + "</td><td><button id='info" + row.rqst_id + "'  class='btn_modal_inforqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#rqstinfomodal'><i class='fas fa-info-circle'></i></button><button type='button' class='btn btn-primary' id='btnaccept'>Accept</button><button id='btncancel' type='button' class='btn btn-primary'>Cancel</button><button type='button' id='hndrqstbtn' class='btn_modal_exprqst btn btn-primary' style='margin-right: 4px;' data-toggle='modal' data-target='#handlemodal'>handle</button><button type='button' id='returnbtn' class='btn_modal_exprqst btn btn-primary'  data-toggle='modal' data-target='#returnmodal'>Return</button></td></tr>");
+                $("#tbody_rqst").append("<tr><td>" + row.rqst_id + "</td><td> " + row.user_name + "</td><td> " + row.item_label + " </td><td>" + row.wrkst_name + "</td><td>" + row.rqst_date + " </td><td>" + check_status(row.rqst_status) + "</td><td><button id='info" + row.rqst_id + "'  class='btn_modal_inforqst btn btn-primary' type='button' style='margin-right: 4px;'  data-toggle='modal' data-target='#rqstinfomodal'><i class='fas fa-info-circle'></i></button></td></tr>");
             });
         }
 
@@ -292,21 +292,27 @@ $(document).ready(function () {
         switch (statusval) {
             case '0':
                 {
+
+                    $("#btnaccept").show();
                     return "Waiting";
+
                 }
 
             case '1':
                 {
+                    $("#btnaccept").hide();
                     return "accepted";
                 }
 
             case '2':
                 {
+                    $("#btnaccept").hide();
                     return "handled";
                 }
 
             case '3':
                 {
+                    $("#btnaccept").hide();
                     return "returned";
                 }
 
@@ -401,7 +407,7 @@ $(document).ready(function () {
 
             case '3':
                 {
-                    return "returned";
+                    return "Complete";
                 }
 
             default:
@@ -442,8 +448,8 @@ $(document).ready(function () {
 
 
             $.each(data, function (index, row) {
-                
-                $("#rqstinfoul").append("<label>Request Number:</label><p>#" + row.rqst_id + "</p><label>Employee Requesting: </label><p>" + row.emp_name + " " + row.emp_lname + "</p><label>Item Label</label><p>" + row.item_label + "</p><label>Warehouse:</label><p>" + row.whs_label + "</p><label>Facility:</label><p>" + row.wrkst_name + "</p><label>Date Requested:</label><p>" + row.rqst_date + "</p><label>Current Request Status:</label><p>" + check_status(row.rqst_status) + "</p><label> Properties</label><p>" + resval(row.rqst_res) + "</p><p>" + retval(row.rqst_ret) + "</p><label>Accepted Date</label><p>" + accval(row.rqst_res, row.rqst_acc_date) + "</p><label>Handled Date</label><p>" + hndlval(row.rqst_handled_date) + "</p><label>Denied Date</label><p>" + dndval(row.rqst_denied_date) + "</p><label>Returned Date</label><p>" + retdateval(row.rqst_ret, row.rqst_returned_date) + "</p>");
+                controlbtn(row.rqst_status, row.rqst_returnable);
+                $("#rqstinfoul").append("<label>Request Number:</label><p>#" + row.rqst_id + "</p><label>Employee Requesting: </label><p>" + row.emp_name + " " + row.emp_lname + "</p><label>Item Label</label><p>" + row.item_label + "</p><label>Warehouse:</label><p>" + row.whs_label + "</p><label>Facility:</label><p>" + row.wrkst_name + "</p><label>Date Requested:</label><p>" + row.rqst_date + "</p><label>Current Request Status:</label><p>" + check_status(row.rqst_status) + "</p><label> Properties</label><p>" + resval(row.rqst_res) + "</p><p>" + retval(row.rqst_ret) + "</p><label>Accepted Date</label><p>" + accval(row.rqst_res, row.rqst_acc_date, row.rqst_status) + "</p><label>Handled Date</label><p>" + hndlval(row.rqst_handled_date, row.rqst_handler_id, row.rqst_status) + " <p id='hndler'><p></p></p><label>Denied Date</label><p>" + dndval(row.rqst_denied_date) + "</p><label>Returned Date</label><p>" + retdateval(row.rqst_ret, row.rqst_returned_date, row.rqst_returner_id, row.rqst_status) + "<p id='rter'><p/></p>");
 
             });
 
@@ -483,24 +489,33 @@ $(document).ready(function () {
         }
     }
 
-    function accval(val, accdate) {
-        if (val == 1 && !accdate) {
-            return "Not Accepted Yet";
+    function accval(val, accdate, status) {
+        if (val == 1 && status == 0) {
+            return "Not accepted yet";
         }
         else if (val == 0) {
-            return "No Reservation Needed";
+            return "No Acceptance Needed";
         }
-        else {
+        else if (val == 1 && accdate != "" && status > 0) {
             return accdate;
         }
+        else if (status == -1) {
+            return "Cancelled"
+        }
+
     }
 
-    function hndlval(val) {
-        if (!val) {
-            return "Not handled Yet";
-        }
-        else {
+    function hndlval(val, hndler, status) {
+        if (status >= 2) {
+            getempshd(hndler);
             return val;
+        }
+        else if (status > 0 && status < 2) {
+            return "Not Handled Yet";
+        }
+
+        else if (status == -1) {
+            return "-"
         }
     }
 
@@ -513,95 +528,171 @@ $(document).ready(function () {
         }
     }
 
-    function retdateval(val, retval) {
-        if (!val && retval == 1) {
-            return "Not returned Yet"
-        }
-        else if (val == "" && retval == 0) {
-            return "-"
-        }
-        else {
+    function retdateval(val, retval, retname, status) {
+        if (val == 1 && status == 3) {
+            getempstr(retname);
             return retval;
         }
-
-    }
-
-    function handlerval(val) {
-        if (!val) {
-            return "Not Handled Yet";
+        else if (val == 0) {
+            return "Not Returnable";
         }
-        else {
-            return val;
-        }
-    }
-
-    function returnerval(val) {
-        if (!val) {
+        else if (val == 1 && !retval) {
             return "Not Returned Yet";
         }
-        else {
-            return val;
+
+    }
+
+    //// get handler employee name 
+    function getempshd(empid) {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_request.php",
+            data: ({
+                op: 25,
+                emp_id: empid
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    parsehandler(data);
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+    }
+
+    function parsehandler(data) {
+        if (data.length > 0) {
+
+            $.each(data, function (index, row) {
+
+                $("#hndler").text(row.emp_name + " " + row.emp_lname);
+
+            });
+
         }
     }
 
-    function btnstatus(status) {
+    //////get returner employee name 
+    function getempstr(empid) {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_request.php",
+            data: ({
+                op: 25,
+                emp_id: empid
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    parserter(data);
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+    }
+
+    function parserter(data) {
+        if (data.length > 0) {
+
+            $.each(data, function (index, row) {
+
+                $("#rter").text(row.emp_name + " " + row.emp_lname);
+
+            });
+
+        }
+    }
+
+    //////button control\\\ 
+    function controlbtn(status, retval) {
+
         switch (status) {
             case '-1':
                 {
-                    $("#btnaccept").hide();
-                    $("#btnhandle").hide();
-                    $("#btnreturn").hide();
+                    $("#btnaccept").show();
+                    $("#btnaccept").text("Reaccept");
                     $("#btncancel").hide();
+                    $("#hndrqstbtn").hide();
+                    $("#returnbtn").hide();
                 }
                 break;
             case '0':
                 {
                     $("#btnaccept").show();
-                    $("#btnhandle").hide();
-                    $("#btnreturn").hide();
                     $("#btncancel").show();
-
+                    $("#hndrqstbtn").hide();
+                    $("#returnbtn").hide();
                 }
                 break;
             case '1':
                 {
-                    $("#btnhandle").show();
-                    $("#btncancel").show();
                     $("#btnaccept").hide();
-                    $("#btnreturn").hide();
+                    $("#btncancel").show();
+                    $("#hndrqstbtn").show();
+                    $("#returnbtn").hide()
                 }
                 break;
             case '2':
                 {
                     $("#btnaccept").hide();
-                    $("#btnhandle").hide();
                     $("#btncancel").hide();
+                    $("#hndrqstbtn").hide();
+
+                    if (retval != 0) {
+                        $("#returnbtn").show();
+                    }
+                    else {
+                        $("#returnbtn").hide();
+                    }
                 }
+
                 break;
             case '3':
                 {
                     $("#btnaccept").hide();
-                    $("#btnhandle").hide();
-                    $("#btnreturn").hide();
                     $("#btncancel").hide();
+                    $("#hndrqstbtn").hide();
+                    $("#returnbtn").hide();
                 }
-
+                break;
             default:
-                {
-                    return "no status available";
-                }
+                alert('status error');
+                break;
+
         }
     }
+
+
 
     ////////////////////////////////// Request Handling \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     ////////////////////////// accept item \\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     $("#btnaccept").click(function () {
-        var rqstid = $(this).siblings('ul').children().siblings().eq(0).text();
-        acceptitem(rqstid);
+        var rqstid = $(this).siblings('ul').children().siblings().eq(1).text();
+        acceptitem(rqstid.substr(1, rqstid.length));
 
     });
+
 
 
     function acceptitem(rqstid) {
@@ -622,8 +713,8 @@ $(document).ready(function () {
                     alert("Data couldn't be loaded!");
                 else {
                     data = JSON.parse(xhr.responseText);
-
-                    window.location.reload();
+                    $(".modal-footer #success")
+                    setTimeout(function () { window.location.reload() }, 1200);
                 }
             },
             error: function (xhr, status, errorThrown) {
@@ -636,8 +727,8 @@ $(document).ready(function () {
     /////// cancel item \\\\\\\\\\\\\
 
     $("#btncancel").click(function () {
-        var rqstid = $(this).siblings('ul').children().siblings().eq(0).text();
-        cancelitem(rqstid);
+        var rqstid = $(this).siblings('ul').children().siblings().eq(1).text();
+        cancelitem(rqstid.substr(1, rqstid.length));
 
     })
 
@@ -661,8 +752,8 @@ $(document).ready(function () {
                     alert("Data couldn't be loaded!");
                 else {
                     data = JSON.parse(xhr.responseText);
-                    alert("item canceled");
-                    window.location.reload();
+                    $(".modal-footer #success")
+                    setTimeout(function () { window.location.reload() }, 1200);
                 }
             },
             error: function (xhr, status, errorThrown) {
@@ -672,12 +763,126 @@ $(document).ready(function () {
 
     }
 
+    /////////// Handle request \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    $("#hndrqstbtn").click(function () {
+        var reqid = $(this).siblings('ul').children().siblings().eq(1).text()
+        $("#hndrqstid").val(reqid.substr(1, reqid.length));
+    })
+
+    $("#btn_hnd_rqst").click(function () {
+        var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
+        var rqstid = $("#hndrqstid").val();
+
+
+        if ($("#emp_rfid").val() =! "") {
+                handleitem(rqstid, empid);
+        }
+        else{
+            
+            $(".modal-body #wrongmsg").show();
+            $(".modal-footer #wrong").show();
+        }
+    })
+
+
+
+    function handleitem(rqstid, emp_id) {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_request.php",
+            data: ({
+                op: 7,
+                rqst_id: rqstid,
+                emp_id: emp_id
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    $(".modal-footer success")
+                    setTimeout(function () { window.location.reload() }, 1200);
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+    }
+
+    /////////////////////////////////////////////////// return item \\\\\\\\\\\\
+
+    $("#returnbtn").click(function () {
+
+        var reqid = $(this).siblings('ul').children().siblings().eq(1).text()
+        $("#rtrqstid").val(reqid.substr(1, reqid.length));
+        if (!canScan) {
+            canScan = true;
+        }
+
+    })
+
+    $("#btn_rt_rqst").click(function () {
+        canScan = false;
+        var reqid = $("#rtrqstid").val();
+        var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
+
+        if (reqid == "" || empid == "") {
+            alert("empty vals");
+        }
+        else {
+            returnitem(reqid, empid);
+            if (canScan) {
+                canScan = false;
+            }
+        }
+
+    })
+
+
+
+    function returnitem(rqstid, emp_id) {
+        $.ajax({
+            type: 'GET',
+            url: "ws/ws_request.php",
+            data: ({
+                op: 10,
+                rqst_id: rqstid,
+                emp_id: emp_id
+
+            }),
+
+            dataType: 'json',
+            timeout: 5000,
+            success: function (data, textStatus, xhr) {
+
+                if (data == -1)
+                    alert("Data couldn't be loaded!");
+                else {
+                    data = JSON.parse(xhr.responseText);
+                    $(".modal-footer success");
+                    setTimeout(function () { window.location.reload() }, 1200);
+                }
+            },
+            error: function (xhr, status, errorThrown) {
+                alert(status + errorThrown);
+            }
+        });
+    }
 
 
     ////////////////////////////   Express Request \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
     $("#exprqst").click(function () {
+        $(".modal-content #wrongmsg").hide();
+        $(".modal-content #wrong").hide();
+        $(".modal-footer #success").hide();
         $("#crt_exp_itemtype").empty();
         populateitemtype();
 
@@ -788,6 +993,11 @@ $(document).ready(function () {
 
     //// rfid scanning
     var canScan = false;
+    $("#close_rt_form").click(function () {
+        if (canScan) {
+            canScan = false;
+        }
+    })
 
     $("#exprqst").click(function () {
         if (!canScan) {
@@ -795,11 +1005,24 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on("click", ".btn_edit_employee", function () {
+
+    $("#hndrqstbtn").click(function () {
         if (!canScan) {
             canScan = true;
         }
     });
+    $("#close_hnd_close").click(function () {
+        if (canScan) {
+            canScan = false;
+        }
+    })
+
+    $("#btn_hnd_rqst").click(function () {
+        if (canScan) {
+            canScan = false;
+        }
+
+    })
 
     $("#close_exp_form").click(function () {
         if (canScan) {
@@ -844,7 +1067,8 @@ $(document).ready(function () {
     }
     // get emp rfid 
 
-    $("#getemp").click(function () {
+    $(".getemp").click(function () {
+        $(".empinfo").empty();
         if ($(".emp_rfid").val() != "") {
             var rfid = $(".emp_rfid").val();
             popemprfid(rfid);
@@ -888,7 +1112,7 @@ $(document).ready(function () {
 
             $.each(data, function (index, row) {
 
-                $("#empinfo").append("<li id='" + row.emp_id + "'>" + row.emp_name + " " + row.emp_lname + "</li><li>" + row.cmp_name + "</li><li id='" + row.wrkst_id + "'>" + row.wrkst_name + "</li>");
+                $(".empinfo").append("<li id='" + row.emp_id + "'>" + row.emp_name + " " + row.emp_lname + "</li><li>" + row.cmp_name + "</li><li id='" + row.wrkst_id + "'>" + row.wrkst_name + "</li>");
 
             });
 
@@ -904,26 +1128,26 @@ $(document).ready(function () {
         var user = $("#rqstmgrid").val();
         var fields = $("#exp_fields").val();
 
-        if(wrkstid == "" || empid == "" || itemid =="" || ret == "" || fields == "" )
-        {
-            alert("life is shit ");
+        if (wrkstid == "" || empid == "" || itemid == "" || ret == "" || fields == "") {
+            $(".modal-content #wrongmsg").show();
+            $(".modal-content #wrong").show();
+
         }
         else {
             exprqst(wrkstid, user, empid, itemid, ret);
         }
     })
 
-    function exprqst(wrkst,user, emp, item, ret)
-    {
+    function exprqst(wrkst, user, emp, item, ret) {
         $.ajax({
             type: 'GET',
             url: "ws/ws_request.php",
             data: ({
                 op: 16,
-                user_id: user, 
-                rqst_item: item, 
-                wrkst_id: wrkst, 
-                ret: ret, 
+                user_id: user,
+                rqst_item: item,
+                wrkst_id: wrkst,
+                ret: ret,
                 rqst_emp: emp
             }),
 
@@ -935,7 +1159,8 @@ $(document).ready(function () {
                     alert("Data couldn't be loaded!");
                 else {
                     data = JSON.parse(xhr.responseText);
-                    window.location.reload();
+                    $(".modal-footer #success")
+                    setTimeout(function () { window.location.reload() }, 1200);
 
                 }
             },
@@ -944,7 +1169,7 @@ $(document).ready(function () {
             }
         });
     }
-    
+
 })
 
 

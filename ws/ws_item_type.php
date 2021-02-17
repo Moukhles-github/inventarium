@@ -24,35 +24,37 @@ $result = 0;
 
 
 try {
-    if (isset($_GET["op"])) //check if op exists
-    {
-        $op = $_GET["op"];
+	if (isset($_GET["op"])) //check if op exists
+	{
+		$op = $_GET["op"];
 
 
-        switch ($op) { //get all ranks
-            case 1: {
-                    $result = $itemtype->getitemtype();
-                }
+		switch ($op) { //get all ranks
+			case 1: {
+					$result = $itemtype->getitemtype();
+				}
 				break;
-				// case 2:{
-				// 	$result = $ranks->toggleRanks($_GET["rank_id"], $_GET["liveval"]);
-				// } 
-				// break;
-				// case 3: {
-				// 	$result = $ranks->createranks($_GET["rank_name"]);
-				// }
-				// break;
-				// case 4: 
-				// 	{
-				// 		$result = $ranks->updateranks($_GET["rank_id"], $_GET["rank_name"]);
-						
-				// 	}
-				// 	break;
-            default:
-                return 0;
-                break;
-        }
-    }
+			case 2: {
+					$result = $itemtype->getalltypes();
+				}
+				break;
+			case 3: {
+					$result = $itemtype->toggletype($_GET['type_id'], $_GET['liveval']);
+				}
+				break;
+			case 4: {
+					$result = $itemtype->createtype($_GET['type_name']);
+				}
+				break;
+			case 5: {
+					$result = $itemtype->updatetype($_GET['type_id'], $_GET['type_name']);
+				}
+				break;
+			default:
+				return 0;
+				break;
+		}
+	}
 
 	header("Content-type:application/json");
 	echo json_encode($result);

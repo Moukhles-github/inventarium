@@ -155,7 +155,11 @@ try {
 				}
 
 				break;
-				
+			case 16: 
+				{
+					$result = $user->resetpwd($_GET['pwd'], $_GET['user_id']);
+				}
+				break;			
 			default:
 				return 0;
 				break;

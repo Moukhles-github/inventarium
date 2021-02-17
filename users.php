@@ -184,6 +184,7 @@ require_once("security.php");
                         <Select id="emp_id">
 
                         </Select></br>
+
                         <label for="username">Create Username:</label>
                         <input type="text" id="new_usrname" placeholder="e.g. Myusername"></input></br>
                         <label>Create a password:</label>
@@ -243,7 +244,38 @@ require_once("security.php");
             </div>
         </div>
 
+        <!-- Reset password -->
 
+        <div class="modal fade" id="resetpwd" tabindex="-1" role="dialog" aria-labelledby="createusermodalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                    <p> Reset Password </p>
+                    <label>New Password:</label>
+                        <input type="password" id="rstpwd" placeholder="New password" ></input>
+                        
+                    <label>Confirm Password:</label>
+                    <input type="password" id="cnfresetpwd" placeholder="New password" ></input>
+
+                    </br> 
+                    <input type="text" id="rstuserid" hidden></input>
+
+
+
+                        <p id="notmatch" hidden>Passwords dont match!</p>
+                        <p id="wrongmsg">Fill All Fields!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <i id="success" class="fas fa-check-circle"></i>
+                        <i id="wrong" class="fas fa-times-circle"></i>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_reset_pwd" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <table class="table" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; width: 100%">

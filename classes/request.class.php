@@ -335,7 +335,7 @@ class request
 
 	public function acceptrqstitem($rqstid)
 	{
-		$sql = "UPDATE request SET request.rqst_status = 1, request.rqst_acc_date = CURRENT_DATE WHERE rqst_id = $rqstid";
+		$sql = "UPDATE request SET request.rqst_status = 1, request.rqst_acc_date = CURRENT_DATE, request.rqst_denied_date = null WHERE rqst_id = $rqstid";
 		try {
 
 			//execute and put result in a variable

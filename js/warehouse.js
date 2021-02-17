@@ -559,16 +559,18 @@ $(document).ready(function () {
         var whs_id = btn_id.substr(4, btn_id.length);
         $("#edt_whouse_Label").val($(this).parent().siblings().eq(0).text());
         $("#edt_whouse_address").val($(this).parent().siblings().eq(2).text());
-        var whs_mgr = $(this).parent().siblings().eq(2);
+        var whs_mgr = $(this).parent().siblings().eq(1);
         $("#edt_whs_mgr_id").val(whs_mgr.attr('id'));
         $("#edt_whs_id").val(whs_id);
-        getwhsmgred();
+        getwhsmgred(whs_mgr);
         $(".modal-content #wrongmsg").hide();
         $(".modal-footer #wrong").hide();
 
     })
 
-    function getwhsmgred() {
+    function getwhsmgred(mgr) {
+        var id = mgr.attr('id');
+        var mgrname = mgr.text();
 
         $.ajax({
             type: 'GET',
@@ -587,7 +589,7 @@ $(document).ready(function () {
 
                 else {
                     data = JSON.parse(xhr.responseText);
-                    parsewhsmgred(data);
+                    parsewhsmgred(data, id, mgrname);
                 }
             },
             error: function (xhr, status, errorThrown) {
@@ -597,8 +599,8 @@ $(document).ready(function () {
         });
     }
 
-    function parsewhsmgred(data) {
-        $("#edt_whouse_mgr").append('<option value="" disabled selected>Select a mgr</option>')
+    function parsewhsmgred(data ,mgrid, mgrtext) {
+        $("#edt_whouse_mgr").append('<option value="'+ mgrid +'" >'+ mgrtext +'</option>')
         $.each(data, function (index, row) {
             $("#edt_whouse_mgr").append('<option value="' + row.user_id + '">' + row.emp_name + " " + row.emp_lname + '</option>');
         });
@@ -630,8 +632,10 @@ $(document).ready(function () {
             updatewhs(whsid, whslabel, whsmgr, whsaddress);
         }
         else 
+        {
         $(".modal-content #wrongmsg").show();
         $(".modal-footer #wrong").show();
+        }
 
     })
 
@@ -653,8 +657,8 @@ $(document).ready(function () {
             success: function (data, textStatus, xhr) {
 
 
-                if (data == 0)
-                   window.location.reload();
+                if (data < 0)
+                   alert("Couldnt load")
                 else {
                     $(".modal-footer #success").show()
                     data = JSON.parse(xhr.responseText);

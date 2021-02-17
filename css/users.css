@@ -285,6 +285,16 @@ margin-top: 32px !important;
 
 }
 
+.modal-content #notmatch{
+  margin-top: 10px;
+  font-size: 15px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: red;
+  text-align: center ;
+  margin-bottom: 5px !important;
+display: none;
+}
+
 #emp_id, #user_type, #updt_user_type {
   font-family: Georgia, 'Times New Roman', Times, serif;
   margin: 5px;

@@ -244,7 +244,7 @@ $(document).ready(function () {
         else
             {
                 $.each(data, function(index, row){
-                    $("#tbody_ranks").append("<tr><td>" + row.emp_rank_name + "</td><td>" + check_status(row.emp_rank_status) + "</td><td><button id='updt" + row.emp_rank_id + "'  class='btn_modal_editrank btn btn-primary' type='button' data-toggle='modal' data-target='#editrankmodal'><i class='fas fa-edit'></i></button><button style='margin-left: 4px;' value='" + row.emp_rank_status + "' id='tog" + row.emp_rank_id + "' class='btntoggleact btn btn-primary'>Toggle</button></td><</tr>");
+                    $("#tbody_ranks").append("<tr><td>" + row.emp_rank_name + "</td><td>" + check_status(row.emp_rank_status) + "</td><td><button id='updt" + row.emp_rank_id + "'  class='btn_modal_editrank btn btn-primary' type='button' data-toggle='modal' data-target='#editrankmodal'><i class='fas fa-edit'></i></button><button style='margin-left: 4px;' value='" + row.emp_rank_status + "' id='tog" + row.emp_rank_id + "' class='btntoggleact btn btn-primary'>Toggle</button></td></tr>");
                 });
             }
 		
@@ -428,7 +428,7 @@ $(document).ready(function () {
 
     }
 
-
+//////////////////////// CREATE RANKKS
     $(document).on("click", "#btn_modal_crt_cmp" , function(){
         $("#crt_rank_name").val("");
         $("#crt_cmp_address").val("");

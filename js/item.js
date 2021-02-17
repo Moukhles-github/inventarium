@@ -473,48 +473,12 @@ $("#emp_ranks").click(function(){
         $('input[name="returnable"]').prop('checked', false);
 		$("#edt_item_whs").empty();
 		$("#edt_item_type").empty();
-        getwhs();
+        $("#crt_whs_id").val($("#whs_id").val());
+        
         getitemtype();
 
 
     });
-
-    function getwhs() {
-        $.ajax({
-            type: 'GET',
-            url: "ws/ws_warehouse.php",
-            data: ({
-                op: 7,
-            }),
-            dataType: 'json',
-            timeout: 5000,
-            success: function (data, textStatus, xhr) {
-
-
-                if (data == 0) {
-                    alert("no result");
-                } else {
-                    data = JSON.parse(xhr.responseText);
-					
-                    parsewhs(data);
-                }
-            },
-            error: function (xhr, status, errorThrown) {
-
-                alert(status + errorThrown);
-            }
-        });
-    }
-
-    function parsewhs(data) {
-        $("#crt_item_whs").append('<option value="" disabled selected>Select a type</option>');
-        $("#edt_item_whs").append('<option value="" disabled selected>Select a type</option>');
-        $.each(data, function (index, row) {
-            $("#crt_item_whs").append('<option value="' + row.whs_id + '">' + row.whs_label + '</option>');
-			$("#edt_item_whs").append('<option value="' + row.whs_id + '">' + row.whs_label + '</option>');
-        });
-
-    }
 
     $("#crt_item_whs").change(function () {
 
@@ -579,7 +543,7 @@ $("#emp_ranks").click(function(){
 
     }
 
-    $("#edt_item_type").change(function () {
+    $("#crt_item_type").change(function () {
 
         var change_type = $(this).children("option:selected").val();
         $("#crt_type_id").val(change_type);
@@ -656,8 +620,6 @@ $("#emp_ranks").click(function(){
         var itemtypeid = itemtype.attr('id');
         var itemres = $(this).parent().siblings().eq(3);
         var itemresid = itemres.attr('id');
-        var itemwhs = $(this).parent().siblings().eq(4);
-        var itemwhsid = itemwhs.attr('id');
         var itemret = $(this).parent().siblings().eq(5);
         var itemretid = itemret.attr('id');
         var itemlife = $(this).parent().siblings().eq(6);
@@ -665,7 +627,7 @@ $("#emp_ranks").click(function(){
 
         /////////////////////////////////
         $("#edt_item_id").val(itemid);
-        $("#edt_whs_id").val(itemwhsid);
+        $("#edt_whs_id").val($("#whs_id").val());
         $("#edt_item_name").val(itemname);
         $("#edt_item_label").val(itemlabel);
         $("#edt_res_id").val(itemresid);
@@ -675,7 +637,6 @@ $("#emp_ranks").click(function(){
         
     });
 
-	getedtwhs();
     getedtitemtype();
 	
     function getedtitemtype() {
@@ -704,13 +665,7 @@ $("#emp_ranks").click(function(){
         });
     }
 
-//    function parseitemtype(data) {
-//        $("#edt_item_type").append('<option value="" disabled selected>Select a type</option>')
-//        $.each(data, function (index, row) {
-//            $("#edt_item_type").append('<option value="' + row.item_type_id + '">' + row.item_type_name + '</option>');
-//        });
-//
-//    }
+
 
     $("#edt_item_type").change(function () {
 
@@ -718,39 +673,8 @@ $("#emp_ranks").click(function(){
         $("#edt_type_id").val(change_type);
     });
 
-    function getedtwhs() {
-        $.ajax({
-            type: 'GET',
-            url: "ws/ws_warehouse.php",
-            data: ({
-                op: 7,
-            }),
-            dataType: 'json',
-            timeout: 5000,
-            success: function (data, textStatus, xhr) {
+    
 
-
-                if (data == 0) {
-                    alert("no result");
-                } else {
-                    data = JSON.parse(xhr.responseText);
-                    parsewhs(data);
-                }
-            },
-            error: function (xhr, status, errorThrown) {
-
-                alert(status + errorThrown);
-            }
-        });
-    }
-
-//    function parsewhs(data) {
-//        $("#edt_item_whs").append('<option value="" disabled selected>Select a type</option>')
-//        $.each(data, function (index, row) {
-//            $("#edt_item_whs").append('<option value="' + row.whs_id + '">' + row.whs_label + '</option>');
-//        });
-//
-//    }
 
     $("#edt_item_whs").change(function () {
 
@@ -845,7 +769,11 @@ $("#emp_ranks").click(function(){
             }
         });
     }
+$("#itemtype").click(function(){
 
+
+    window.location.href = "itemtype.php";
+})
 
 
 

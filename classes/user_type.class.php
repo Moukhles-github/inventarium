@@ -40,4 +40,5 @@ class user_type
 		}
 	}
 	
+	
 }

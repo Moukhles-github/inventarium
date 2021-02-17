@@ -76,6 +76,8 @@ require_once("security.php");
             Create item <i id="crt_sign" class="fas fa-plus-square"></i>
         </button>
 
+        <button id="itemtype" type="button" class="gotoitemtype">Item Types</button>
+
 
         <?php
 
@@ -196,9 +198,6 @@ require_once("security.php");
                         <input type="radio" id="crt_rb_resno" name="reservation" value="0">
                         <label for="no">No</label> </br>
 
-                        <label for="item_whs">item warehouse:</label>
-                        <select id="crt_item_whs"></select></br>
-
                         <label for="item_returnable">item returnable:</label>
                         <input type="radio" id="crt_rt_yes" name="returnable" value="1">
                         <label for="yes">Yes</label>
@@ -248,10 +247,9 @@ require_once("security.php");
                         <input type="radio" id="edt_rb_resyes" name="edtreservation" value="1">
                         <label for="yes">Yes</label>
                         <input type="radio" id="edt_rb_resno" name="edtreservation" value="0">
-                        <label for="no">No</label> </br></br>
+                        <label for="no">No</label> </br>
 
-                        <label for="item_whs">Warehouse:</label></br>
-                        <select id="edt_item_whs"></select></br>
+                        
 
 
                         <label for="item_returnable">Returnable:</label>

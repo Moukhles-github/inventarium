@@ -33,7 +33,7 @@
                     <span class="icon-bar"></span>
                 
                 </button>
-                <a class="navbar-brand" href="#home" id="logo1"><img id="logo"  src="MEDIA/Images/inventarium-icon.png" ></a> 
+                <a class="navbar-brand" href="#home" id="logo1"><img id="logo"  src="MEDIA/Images/stock.png" ></a> 
             </div>
             
             

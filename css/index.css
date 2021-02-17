@@ -29,14 +29,14 @@ html, body {
 .navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a.active {
     
     color: white;
-    background-color: #FF6000;
+    background-color: #3f6184;
 
 }
 
 .navbar-default .navbar-nav > .active > a {
     
     color: white !important;
-    background-color: #FF6000 !important;
+    background-color: #3f6184 !important;
     
     
 }
@@ -51,21 +51,12 @@ html, body {
 }
 
 
-#logo1 {
-    
-     margin-left: 20px !important;
-    
+#logo{
+	max-width: 64px !important;
 }
-
-
-#logo {
-    width: 100%; 
-    max-width: 70px; 
-    height: auto; 
-   
-    
-    
-    
+#logo1 {
+	margin-left: 30px !important;
+	margin-top: -8px !important;
 }
  
 #home {
@@ -82,7 +73,7 @@ html, body {
 
 #portalbutton {
     
-    background-color:#FF6000; 
+    background-color:#3f6184; 
     border: none !important;
     color: white;
     font-size: 1.75em;
@@ -140,7 +131,7 @@ footer {
     background-color: #f9fbfc; 
     padding: 5% 5% 10% 5%;
     color: #363636; 
-    border-top: 7px solid #FF6000;
+    border-top: 7px solid #3f6184;
     font-size: 24px;
     font-family: sans-serif;
     
@@ -175,7 +166,7 @@ footer {
 
 .fa:hover {
     
-    color: #FF6000; 
+    color: #3f6184; 
     text-decoration: none;
      
 }
