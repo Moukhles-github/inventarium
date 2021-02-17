@@ -756,7 +756,7 @@ $(document).ready(function () {
 			type: 'GET',
 			url: "./ws/ws_users.php",
 			data: ({
-				op: 16,
+				op: 17,
 				pwd: pwd,
 				user_id: usrid
 

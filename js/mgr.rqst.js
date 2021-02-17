@@ -536,8 +536,12 @@ $(document).ready(function () {
         else if (val == 0) {
             return "Not Returnable";
         }
-        else if (val == 1 && !retval) {
+        else if (val == 1 || !retval) {
             return "Not Returned Yet";
+        }
+        else if(status == -1)
+        {
+            return "-";
         }
 
     }
@@ -770,11 +774,11 @@ $(document).ready(function () {
     })
 
     $("#btn_hnd_rqst").click(function () {
-        var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
-        var rqstid = $("#hndrqstid").val();
-
-
-        if ($("#emp_rfid").val() =! "") {
+        // var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
+        // var rqstid = $("#hndrqstid").val();
+        if ($("#emp_rfid").val() != "") {
+            var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
+            var rqstid = $("#hndrqstid").val();
                 handleitem(rqstid, empid);
         }
         else{
