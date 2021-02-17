@@ -229,13 +229,13 @@ class request
 	{
 		try {
 			//create sql query
-			$sqlQuery = "SELECT request.rqst_id, user.user_name, item.item_name, item.item_label, request.rqst_status, request.rqst_date FROM request INNER JOIN item on request.rqst_item_id = item.item_id " . $this->ShowStatus($show);
+			$sqlQuery = "SELECT request.rqst_id, user.user_name, item.item_name, item.item_label, request.rqst_status, request.rqst_date FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id " . $this->ShowStatus($show);
 
 			if (!is_null($key)) {
 				$sqlQuery .= " AND (item.item_name LIKE '%" . $key . "%' OR request.rqst_id = '" . $key . "')";
 			}
 			
-			$sqlQuery .= " AND WHERE request.rqst_user_id = ".$oprID;
+			$sqlQuery .= " AND request.rqst_user_id = ".$oprID;
 
 			$offset = ($page - 1) * $this->itemsPerPage;
 
@@ -255,13 +255,13 @@ class request
 	{
 		try {
 			//create sql query
-			$sqlQuery = "SELECT COUNT(*) FROM request INNER JOIN item on request.rqst_item_id = item.item_id " . $this->ShowStatus($show);
+			$sqlQuery = "SELECT COUNT(*) FROM request INNER JOIN user on request.rqst_user_id = user.user_id INNER JOIN item on request.rqst_item_id = item.item_id " . $this->ShowStatus($show);
 
 			if (!is_null($key)) {
 				$sqlQuery .= " AND (item.item_name LIKE '%" . $key . "%' OR request.rqst_id = '" . $key . "')";
 			}
 			
-			$sqlQuery .= " AND WHERE request.rqst_user_id = ".$oprID;
+			$sqlQuery .= " AND request.rqst_user_id = ".$oprID;
 
 			//execute and put result in a variable
 			$data = $this->db->getData($sqlQuery);
@@ -294,6 +294,9 @@ class request
 			case 4:
 				return " WHERE (request.rqst_status = 3)";
 				break;
+			case -1:
+				return " WHERE (request.rqst_status = -1)";
+				break;
 			default:
 				return " WHERE (1=1)";
 				break;
@@ -319,6 +322,21 @@ class request
 	public function expresrqst($rqst_user, $rqst_item, $rqst_wrkst, $rqst_ret, $rqst_emp)
 	{	 
 			$sql="INSERT INTO `request` (`rqst_id`, `rqst_user_id`, `rqst_item_id`, `rqst_wrkst_id`, `rqst_res`, `rqst_ret`, `rqst_status`, `rqst_date`, `rqst_acc_date`, `rqst_handled_date`, `rqst_denied_date`, `rqst_returned_date`, `rqst_handler_id`, `rqst_returner_id`) VALUES (NULL, '$rqst_user', '$rqst_item', '$rqst_wrkst', '0', '$rqst_ret', '2', CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, NULL, NULL, $rqst_emp, NULL)";
+			try {
+
+				//execute and put result in a variable
+				$result = $this->db->ExecuteQuery($sql);
+	
+				//return the values
+				return ($result);
+			} catch (Exception $e) {
+				throw $e;
+			}
+	}
+	
+	public function placeRequest($rqst_user, $rqst_item, $rqst_wrkst, $rqst_ret, $rqst_emp)
+	{	 
+			$sql="INSERT INTO `request` (`rqst_id`, `rqst_user_id`, `rqst_item_id`, `rqst_wrkst_id`, `rqst_res`, `rqst_ret`, `rqst_status`, `rqst_date`, `rqst_acc_date`, `rqst_handled_date`, `rqst_denied_date`, `rqst_returned_date`, `rqst_handler_id`, `rqst_returner_id`) VALUES (NULL, '$rqst_user', '$rqst_item', '$rqst_wrkst', '0', '$rqst_ret', '0', CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, NULL, NULL, $rqst_emp, NULL)";
 			try {
 
 				//execute and put result in a variable
@@ -589,6 +607,8 @@ class request
 			throw $e;
 		}
 	}
+	
+	
 	
 }
 

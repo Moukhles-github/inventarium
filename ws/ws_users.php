@@ -155,11 +155,18 @@ try {
 				}
 
 				break;
-			case 16: 
+				case 16: {
+					$result = $user->getFullOperatorInfo($_GET["oprid"]);
+					}
+				
+
+				break;
+			case 17: 
 				{
 					$result = $user->resetpwd($_GET['pwd'], $_GET['user_id']);
 				}
-				break;			
+				break;
+
 			default:
 				return 0;
 				break;

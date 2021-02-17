@@ -1,1 +1,0 @@
-17/02/2021 > 11:33:06 AM: SQL (SELECT COUNT(*) FROM request INNER JOIN item on request.rqst_item_id = item.item_id  WHERE (1=1) AND WHERE request.rqst_user_id = 14)

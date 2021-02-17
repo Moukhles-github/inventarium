@@ -178,8 +178,11 @@ try {
 					$result = $request->getSearchedResquestsForOperator($key, $_GET["sort"], $_GET["show"], $_GET["page"], $_GET["oprid"]);
 				}
 				break;
-
-
+			case 28:
+				{
+					$result = $request->placeRequest($_GET["user_id"], $_GET["rqst_item"], $_GET["wrkst_id"], $_GET["ret"], $_GET["rqst_emp"]);
+				}	
+				break;
 			default:
 				return 0;
 				break;

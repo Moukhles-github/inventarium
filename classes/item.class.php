@@ -35,6 +35,19 @@ class item
         }
     }
 
+    public function getitems($typeID)
+    {
+        $sql = "SELECT item.item_id, item.item_name FROM item WHERE item.item_type_id=".$typeID;
+
+        try {
+            $result = $this->db->getData($sql);
+
+            return ($result);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
     public function toggleitem($itemid, $liveval)
     {
         $sql = "UPDATE `item` SET `item_status` = '$liveval' WHERE `item`.`item_id` = $itemid;"; 
