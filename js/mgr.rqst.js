@@ -510,7 +510,7 @@ $(document).ready(function () {
             getempshd(hndler);
             return val;
         }
-        else if (status > 0 && status < 2) {
+        else if (status <= 0 || status<= 1 ||  status <= 2) {
             return "Not Handled Yet";
         }
 
@@ -774,16 +774,15 @@ $(document).ready(function () {
     })
 
     $("#btn_hnd_rqst").click(function () {
-        // var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
-        // var rqstid = $("#hndrqstid").val();
-        if ($("#emp_rfid").val() != "") {
+       
+        if ($(".emp_rfid").val() != "") {
             var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
             var rqstid = $("#hndrqstid").val();
                 handleitem(rqstid, empid);
         }
         else{
             
-            $(".modal-body #wrongmsg").show();
+            $("#handlemodal .modal-body #wrongmsg").show();
             $(".modal-footer #wrong").show();
         }
     })
@@ -809,7 +808,7 @@ $(document).ready(function () {
                     alert("Data couldn't be loaded!");
                 else {
                     data = JSON.parse(xhr.responseText);
-                    $(".modal-footer success")
+                    $(".modal-footer #success").show();
                     setTimeout(function () { window.location.reload() }, 1200);
                 }
             },
@@ -832,18 +831,15 @@ $(document).ready(function () {
     })
 
     $("#btn_rt_rqst").click(function () {
-        canScan = false;
-        var reqid = $("#rtrqstid").val();
-        var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
-
-        if (reqid == "" || empid == "") {
-            alert("empty vals");
+        if ($(".emp_rfid").val() != "") {
+            var empid = $(this).parent().siblings('.modal-body').children().siblings('ul').children().siblings().eq(0).attr('id');
+            var rqstid = $("#rtrqstid").val();
+                returnitem(rqstid, empid);
         }
-        else {
-            returnitem(reqid, empid);
-            if (canScan) {
-                canScan = false;
-            }
+        else{
+            
+            $("#handlemodal .modal-body #wrongmsg").show();
+            $(".modal-footer #wrong").show();
         }
 
     })
@@ -869,7 +865,7 @@ $(document).ready(function () {
                     alert("Data couldn't be loaded!");
                 else {
                     data = JSON.parse(xhr.responseText);
-                    $(".modal-footer success");
+                    $(".modal-footer #success").show();
                     setTimeout(function () { window.location.reload() }, 1200);
                 }
             },

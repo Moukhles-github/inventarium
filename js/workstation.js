@@ -431,7 +431,7 @@ $(document).ready(function () {
 
                 if (data != -1) {
                     $(".modal-footer #success").show();
-                    setTimeout(function () { window.location.replace() }, 1000);
+                    setTimeout(function () { window.location.reload() }, 1000);
                 }
                 else {
                     data = JSON.parse(xhr.responseText);
@@ -451,7 +451,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: "ws/ws_workstations",
+            url: "./ws/ws_workstations",
             data: ({
                 op: 6
             }),
@@ -480,7 +480,7 @@ $(document).ready(function () {
 
         $("#wkrst_mgr").append('<option value="" disabled selected>Select a Manager</option>')
         $.each(data, function (index, row) {
-            $("#wkrst_mgr").append('<option value="' + row.user_id + '">' + row.user_name + '</option>');
+            $("#wkrst_mgr").append('<option value="' + row.user_id + '">' + row.emp_name +' '+ row.emp_lname +'</option>');
         });
 
     }

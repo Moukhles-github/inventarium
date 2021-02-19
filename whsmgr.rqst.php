@@ -276,7 +276,7 @@ require_once("security.php");
                     <i id="success" class="fas fa-check-circle"></i>
                     <i id="wrong" class="fas fa-times-circle"></i>
                         <button id='close_rt_form' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btn_rt_rqst" type="button" class="btn btn-primary">Create Request</button>
+                        <button id="btn_rt_rqst" type="button" class="btn btn-primary">Return item</button>
                     </div>
                 </div>
             </div>
@@ -304,7 +304,7 @@ require_once("security.php");
                         <button id='btncancel' type='button' class='btn btn-primary'>Cancel</button>
                         <button type='button' id='hndrqstbtn' class='btn_modal_exprqst btn btn-primary' style='margin-right: 4px;' data-toggle='modal' data-target='#handlemodal'>handle</button>
                         <button type='button' id='returnbtn' class='btn_modal_exprqst btn btn-primary'  data-toggle='modal' data-target='#returnmodal'>Return</button>
-                        <p id="wrongmsg">Fill All Fields!</p>
+                        
                     </div>
                             
                     <div class="modal-footer">

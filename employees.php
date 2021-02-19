@@ -222,8 +222,8 @@ require_once ("security.php");
 						<select id="emp_wrks"></select></br>
 						<label>Rank:</label>
 						<select id="emp_rank"></select></br>
-						<label>Fouls:</label>
-						<input type="number" id="emp_fouls" value="0"></input></br>
+						<label hidden>Fouls:</label>
+						<input type="number" id="emp_fouls" value="0" hidden></input></br>
 						<label>RFID:</label>
 						<input type="text" id="emp_rfid" ></input></br>
 						<input type="number" hidden="" id="emp_id">

@@ -37,7 +37,7 @@ class item
 
     public function getitems($typeID)
     {
-        $sql = "SELECT item.item_id, item.item_name FROM item WHERE item.item_type_id=".$typeID;
+        $sql = "SELECT item.item_id, item.item_name FROM item WHERE item.item_status = 1 AND item.item_type_id=".$typeID;
 
         try {
             $result = $this->db->getData($sql);
@@ -182,7 +182,7 @@ class item
     }
 	
 	
-	public $itemsPerPage = 20;
+	public $itemsPerPage = 7;
 	
 		public function getSearchedItems($key, $sort, $show, $type, $whsid, $page)
 	{
@@ -199,7 +199,7 @@ class item
 
             if(! is_null($key))
 			{
-				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = ".$key.")";
+				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = '".$key."')";
             }
             
             $offset = ($page -1) * $this->itemsPerPage;
@@ -234,7 +234,7 @@ class item
 
             if(! is_null($key))
 			{
-				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = ".$key.")";
+				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = '".$key."')";
             }
 			
 			//execute and put result in a variable
@@ -265,7 +265,7 @@ class item
 
             if(! is_null($key))
 			{
-				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = ".$key.")";
+				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = '".$key."')";
             }
             
             $offset = ($page -1) * $this->itemsPerPage;
@@ -300,7 +300,7 @@ class item
 
             if(! is_null($key))
 			{
-				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = ".$key.")";
+				$sqlQuery.= " AND (item.item_name LIKE '%".$key."%' OR item.item_label LIKE '%".$key."%' OR item.item_id = '".$key."')";
             }
 			
 			//execute and put result in a variable

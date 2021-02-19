@@ -76,7 +76,7 @@ require_once("security.php");
             Create item <i id="crt_sign" class="fas fa-plus-square"></i>
         </button>
 
-        <button id="itemtype" type="button" class="gotoitemtype">Item Types</button>
+        <button id="itemtype" type="button" class="gotoitemtype btn btn-primary">Item Types</button>
 
 
         <?php
